@@ -1,0 +1,7 @@
+name             'pitchhub'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures pitchhub'
+long_description 'Installs/Configures pitchhub'
+version          '0.1.0'

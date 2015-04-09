@@ -1,0 +1,77 @@
+# encoding: utf-8
+# This file originally created at http://rove.io/b1d8d1c8809fa324118e5fa9ce21b275
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = 'precise64'
+  config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
+
+  config.ssh.forward_agent = true
+
+  config.vm.synced_folder '../', '/pitchhub'
+
+
+  config.vm.network :forwarded_port, guest: 3000, host: 3000
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  config.vm.network "forwarded_port", guest: 80, host: 8080 #HTTP
+  config.vm.network "forwarded_port", guest: 443, host: 4443 #HTTPS
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "172.28.128.3"
+
+  config.trigger.after [:provision, :up, :reload] do
+    system('echo "
+        rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 8080
+        rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 4443
+        rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 3000 -> 127.0.0.1 port 3000
+  " | sudo pfctl -ef - > /dev/null 2>&1; echo "==> Fowarding Ports: 80 -> 8080, 443 -> 4443, 3000 -> 3000 & enabling pf"')
+  end
+
+  config.trigger.after [:halt, :destroy] do
+    system("sudo pfctl -df /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding & disabling pf'")
+  end
+
+  config.vm.provision :chef_solo do |chef|
+
+    chef.version = '12.2.1'
+    chef.install = 'force'
+
+    chef.cookbooks_path = ["cookbooks"]
+    chef.add_recipe :apt
+
+    chef.add_recipe 'mongodb::10gen_repo'
+    chef.add_recipe 'mongodb::default'
+
+    # chef.add_recipe 'redis'
+    chef.add_recipe 'rvm::vagrant'
+    chef.add_recipe 'rvm::system'
+
+    $ruby_19_version = "ruby-1.9.3"
+    $ruby_21_version = "ruby-2.1.5"
+    $rails_gemset = "rails"
+
+    chef.json = {
+        :rvm => {
+            :default_ruby  => $ruby_21_version,
+            :rubies        => [$ruby_21_version],
+            :global_gems     => [
+                { :name   => 'bundler' },
+                { :name    => 'rake' },
+                { :name   => 'rubygems-bundler',
+                  :action  => 'remove'
+                }
+            ]
+        }
+    }
+  end
+
+  config.vm.provision "shell", path: "stubs/setup.sh"
+
+end
