@@ -6,26 +6,33 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = 'precise64'
-  config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
-
+  config.vm.box = 'ubuntu/trusty64'
+  config.vm.hostname = 'pitchbox'
+  config.vm.box_url = 'http://files.vagrantup.com/trusty64.box'
   config.ssh.forward_agent = true
-
   config.vm.synced_folder '../', '/pitchhub'
 
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+  end
 
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
+  if Vagrant.has_plugin?("vagrant-cachier")
+    # Configure cached packages to be shared between instances of the same base box.
+    # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
+    config.cache.scope = :box
+  end
 
   # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # within the machine from a port on the host machine.
   config.vm.network "forwarded_port", guest: 80, host: 8080 #HTTP
   config.vm.network "forwarded_port", guest: 443, host: 4443 #HTTPS
+  config.vm.network "forwarded_port", guest: 3000, host: 3000 #Rails
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "172.28.128.3"
 
+  #Ensure our ports are forwarded
   config.trigger.after [:provision, :up, :reload] do
     system('echo "
         rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 8080
@@ -33,45 +40,80 @@ Vagrant.configure("2") do |config|
         rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 3000 -> 127.0.0.1 port 3000
   " | sudo pfctl -ef - > /dev/null 2>&1; echo "==> Fowarding Ports: 80 -> 8080, 443 -> 4443, 3000 -> 3000 & enabling pf"')
   end
-
   config.trigger.after [:halt, :destroy] do
     system("sudo pfctl -df /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding & disabling pf'")
   end
 
   config.vm.provision :chef_solo do |chef|
 
+    #Ensure the Chef 12.2.1 is used to provision and install the cookbooks
     chef.version = '12.2.1'
-    chef.install = 'force'
-
+    #chef.install = 'force'
     chef.cookbooks_path = ["cookbooks"]
-    chef.add_recipe :apt
 
-    chef.add_recipe 'mongodb::10gen_repo'
+    chef.add_recipe :apt
+    chef.add_recipe 'rvm::system'
+    chef.add_recipe 'rvm::vagrant'
+    chef.add_recipe 'rvm::user'
+    chef.add_recipe 'mongodb::mongodb_org_repo'
     chef.add_recipe 'mongodb::default'
 
-    # chef.add_recipe 'redis'
-    chef.add_recipe 'rvm::vagrant'
-    chef.add_recipe 'rvm::system'
-
-    $ruby_19_version = "ruby-1.9.3"
     $ruby_21_version = "ruby-2.1.5"
-    $rails_gemset = "rails"
 
     chef.json = {
         :rvm => {
-            :default_ruby  => $ruby_21_version,
-            :rubies        => [$ruby_21_version],
-            :global_gems     => [
-                { :name   => 'bundler' },
-                { :name    => 'rake' },
-                { :name   => 'rubygems-bundler',
-                  :action  => 'remove'
+            :user_installs => [
+                {
+                    :user => "vagrant",
+                    :default_ruby => $ruby_21_version,
+                    :rubies => [$ruby_21_version],
+                    :global_gems => [
+                        { :name => 'bundler' }
+                    ]
                 }
-            ]
+            ],
+            vagrant: {
+                system_chef_solo: "/opt/chef/bin/chef-solo"
+            }
         }
     }
+
+    # chef.json = {
+    #     :rvm => {
+    #         :rubies        => [$ruby_21_version],
+    #         :global_gems     => [
+    #             { :name   => 'bundler' },
+    #             { :name    => 'rake' },
+    #             { :name   => 'rubygems-bundler',
+    #               :action  => 'remove'
+    #             }
+    #         ],
+    #         :user_installs => [
+    #             {
+    #                 :user => 'vagrant',
+    #                 :rubies => [$ruby_21_version],
+    #                 :default_ruby => $ruby_21_version,
+    #                 :gems => {
+    #                     'ruby-2.1.5' => [ {:name    => 'bundler' } ]
+    #                 }
+    #             }
+    #         ],
+    #         :vagrant => {
+    #             :system_chef_solo => '/usr/bin/chef-solo'
+    #         },
+    #         :default_ruby  => $ruby_21_version
+    #     }
+    # }
+
   end
 
-  config.vm.provision "shell", path: "stubs/setup.sh"
+  #setup pitchhub's gems
+  config.vm.provision "shell", path: "scripts/setup.sh"
+
+  #setup pitchhub's helpful aliases
+  aliasesPath = File.expand_path("scripts/aliases")
+  if File.exists? aliasesPath then
+    config.vm.provision "file", source: aliasesPath, destination: "~/.bash_aliases"
+  end
 
 end

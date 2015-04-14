@@ -1,0 +1,8 @@
+alias ..="cd .."
+alias ...="cd ../.."
+
+alias h='cd ~'
+alias c='clear'
+
+alias pup="rails s -b 0.0.0.0"
+alias pcd="cd /pitchhub/"

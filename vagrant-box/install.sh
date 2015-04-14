@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 
-bundle install
-bundle exec berks vendor ./cookbooks
+echo '################################'
+echo '# Installing chef cookbooks... #'
+echo '################################'
+berks vendor ./cookbooks
+
+echo '##################################'
+echo '# All set, ready for vagrant up! #'
+echo '##################################'
