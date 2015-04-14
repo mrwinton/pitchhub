@@ -22,88 +22,51 @@ Vagrant.configure("2") do |config|
     config.cache.scope = :box
   end
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine.
-  config.vm.network "forwarded_port", guest: 80, host: 8080 #HTTP
-  config.vm.network "forwarded_port", guest: 443, host: 4443 #HTTPS
-  config.vm.network "forwarded_port", guest: 3000, host: 3000 #Rails
+  # Forward the Rails server default port to the host
+  config.vm.network :forwarded_port, guest: 3000, host: 3000
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "172.28.128.3"
 
-  #Ensure our ports are forwarded
-  config.trigger.after [:provision, :up, :reload] do
-    system('echo "
-        rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 8080
-        rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 4443
-        rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 3000 -> 127.0.0.1 port 3000
-  " | sudo pfctl -ef - > /dev/null 2>&1; echo "==> Fowarding Ports: 80 -> 8080, 443 -> 4443, 3000 -> 3000 & enabling pf"')
-  end
-  config.trigger.after [:halt, :destroy] do
-    system("sudo pfctl -df /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding & disabling pf'")
-  end
-
+  # Use Chef Solo to provision our virtual machine
   config.vm.provision :chef_solo do |chef|
 
     #Ensure the Chef 12.2.1 is used to provision and install the cookbooks
     chef.version = '12.2.1'
-    #chef.install = 'force'
     chef.cookbooks_path = ["cookbooks"]
 
-    chef.add_recipe :apt
-    chef.add_recipe 'rvm::system'
-    chef.add_recipe 'rvm::vagrant'
-    chef.add_recipe 'rvm::user'
+    chef.add_recipe 'apt'
+    chef.add_recipe 'nodejs'
+    # RVM for rubies management
+    chef.add_recipe "rvm::vagrant"
+    chef.add_recipe "rvm::system"
     chef.add_recipe 'mongodb::mongodb_org_repo'
     chef.add_recipe 'mongodb::default'
 
     $ruby_21_version = "ruby-2.1.5"
 
+    # Install Ruby 2.2.1 and Bundler
     chef.json = {
-        :rvm => {
-            :user_installs => [
-                {
-                    :user => "vagrant",
-                    :default_ruby => $ruby_21_version,
-                    :rubies => [$ruby_21_version],
-                    :global_gems => [
-                        { :name => 'bundler' }
-                    ]
-                }
+        # Installing The latest ruby version
+        rvm: {
+            default_ruby: 'ruby-2.1.5',
+
+            # Installing multiple ruby versions
+            rubies: ['ruby-2.1.5'],
+
+            # Gems that will be accessed globally
+            global_gems: [
+                { name: :thin },
+                { name: :bundler }
             ],
+
+            # Somehow needed for Vagrant
             vagrant: {
-                system_chef_solo: "/opt/chef/bin/chef-solo"
+                system_chef_solo: '/opt/vagrant_ruby/bin/chef-solo'
             }
         }
     }
-
-    # chef.json = {
-    #     :rvm => {
-    #         :rubies        => [$ruby_21_version],
-    #         :global_gems     => [
-    #             { :name   => 'bundler' },
-    #             { :name    => 'rake' },
-    #             { :name   => 'rubygems-bundler',
-    #               :action  => 'remove'
-    #             }
-    #         ],
-    #         :user_installs => [
-    #             {
-    #                 :user => 'vagrant',
-    #                 :rubies => [$ruby_21_version],
-    #                 :default_ruby => $ruby_21_version,
-    #                 :gems => {
-    #                     'ruby-2.1.5' => [ {:name    => 'bundler' } ]
-    #                 }
-    #             }
-    #         ],
-    #         :vagrant => {
-    #             :system_chef_solo => '/usr/bin/chef-solo'
-    #         },
-    #         :default_ruby  => $ruby_21_version
-    #     }
-    # }
 
   end
 
