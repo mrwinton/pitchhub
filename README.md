@@ -99,7 +99,7 @@ Chef behaves more often than not but if Chef is running anything lower than Chef
 
 ## Virtual Machine Management
 
-When done just log out with `^D` and suspend the virtual machine
+When done just log out with `^D` or `exit` and suspend the virtual machine
 
     host $ vagrant suspend
 
@@ -134,13 +134,9 @@ You're ready to start tinkering now I know but there's just a few more things yo
 
 Pitchhub as a few handy commands that make things a little easier:
 
- - ```sh
-$ pcd # will cd into the pitchhub directory where our code lives
-```
+    $ pcd # will cd into the pitchhub directory where our code lives
 
- - ```sh
-$ pup # starts the rails server at localhost:3000/ - to exit hit `ctrl-c`
-```
+    $ pup # starts the rails server at localhost:3000/ - to exit hit `ctrl-c`
 
 When you're running the server take your favourite web browser and navigate to [localhost:3000](http://localhost:3000/) and you should see the index page!
 
