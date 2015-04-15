@@ -8,8 +8,6 @@ gem 'rails', '4.2.1'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
@@ -23,8 +21,13 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Pitchhub gems
-gem 'mongoid', '~> 4', github: 'mongoid/mongoid'
+gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
+
+group :development do
+  gem 'metric_fu'
+  gem 'better_errors'
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

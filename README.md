@@ -130,9 +130,9 @@ Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more
 
 ## Running
 
-You're ready to start tinkering now I know but there's just a few more things you should know first.
+Nealy there! Install the gems with `bundle install` and you're ready to start tinkering now.
 
-Pitchhub as a few handy commands that make things a little easier:
+Our pitchbox VM has a few handy commands that make things a little easier:
 
     $ pcd # will cd into the pitchhub directory where our code lives
 

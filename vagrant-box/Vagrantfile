@@ -70,9 +70,6 @@ Vagrant.configure("2") do |config|
 
   end
 
-  #setup pitchhub's gems
-  config.vm.provision "shell", path: "scripts/setup.sh"
-
   #setup pitchhub's helpful aliases
   aliasesPath = File.expand_path("scripts/aliases")
   if File.exists? aliasesPath then

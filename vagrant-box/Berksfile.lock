@@ -7,8 +7,8 @@ DEPENDENCIES
     path: .
     metadata: true
   rvm
-    git: git://github.com/martinisoft/chef-rvm.git
-    revision: 4c2590f385d88dd402022b53746eab8acaa00dc5
+    git: git://github.com/mrwinton/chef-rvm.git
+    revision: bcb4a8ab8bf79cb1bdda9d44232fad12259c9efc
     branch: master
 
 GRAPH
@@ -43,7 +43,7 @@ GRAPH
     build-essential (>= 0.0.0)
     yum (~> 3.0)
     yum-epel (>= 0.0.0)
-  rvm (0.10.1)
+  rvm (0.9.2)
     chef_gem (>= 0.0.0)
     java (>= 0.0.0)
   windows (1.36.6)
