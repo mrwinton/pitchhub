@@ -1,0 +1,45 @@
+/*
+ *  Document   : styles.scss
+ *  Author     : pixelcave
+ *  Description: The main SASS file where all required variables and styles are imported
+ *
+ */
+
+/* Bootstrap Framework */
+@import "bootstrap.scss";
+
+/* Template Variables */
+@import "variables.scss";
+
+/* Font Icons (minified) */
+@import "plugins/font_awesome.scss";
+@import "plugins/glyphicons.scss";
+
+/* Plugins */
+@import "plugins/full_calendar.scss";
+@import "plugins/dropzone.scss";
+@import "plugins/chosen.scss";
+@import "plugins/datepicker.scss";
+@import "plugins/bootstrap_colorpicker.scss";
+@import "plugins/prism.scss";
+@import "plugins/magnific_popup.scss";
+@import "plugins/datatables.scss";
+@import "plugins/easy_pie_chart.scss";
+@import "plugins/css3_animations.scss";
+@import "plugins/timepicker.scss";
+@import "plugins/tags_input.scss";
+@import "plugins/slider.scss";
+@import "plugins/nprogress.scss";
+@import "plugins/select2.scss";
+
+/* Main */
+@import "main/layout.scss";
+@import "main/header.scss";
+@import "main/sidebar_nav.scss";
+@import "main/content.scss";
+@import "main/pages.scss";
+@import "main/bs_overwrite.scss";
+@import "main/extras.scss";
+
+/* Themes */
+@import "themes.scss";
