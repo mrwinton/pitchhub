@@ -1,15 +1,15 @@
 /*
- *  Document   : styles.scss
- *  Author     : pixelcave
+ *  Document   : vendor_styles.scss
+ *  Author     : pixelcave / michael winton
  *  Description: The main SASS file where all required variables and styles are imported
  *
  */
 
+/* Variables */
+@import "variables.scss";
+
 /* Bootstrap Framework */
 @import "bootstrap.scss";
-
-/* Template Variables */
-@import "variables.scss";
 
 /* Font Icons (minified) */
 @import "plugins/font_awesome.scss";
@@ -31,15 +31,3 @@
 @import "plugins/slider.scss";
 @import "plugins/nprogress.scss";
 @import "plugins/select2.scss";
-
-/* Main */
-@import "main/layout.scss";
-@import "main/header.scss";
-@import "main/sidebar_nav.scss";
-@import "main/content.scss";
-@import "main/pages.scss";
-@import "main/bs_overwrite.scss";
-@import "main/extras.scss";
-
-/* Themes */
-@import "themes.scss";

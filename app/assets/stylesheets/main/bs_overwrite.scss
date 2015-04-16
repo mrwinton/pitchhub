@@ -579,7 +579,7 @@ a.list-group-item:focus {
 }
 
 a.list-group-item.active > .badge {
-    background: asset_data_url("/template/ie8_opacity_dark_40.png") repeat;
+    background: asset_data_url("template/ie8_opacity_dark_40.png") repeat;
     background: rgba(0, 0, 0, 0.4);
     color: #ffffff;
 }
@@ -661,7 +661,8 @@ a.list-group-item.active > .badge {
 }
 
 .nav-pills > li.active > a > .badge {
-    background: asset_data_url("/template/ie8_opacity_dark_20.png") repeat;
+//    background: asset_data_url("template/ie8_opacity_dark_20.png") repeat;
+    background: asset_data_url("template/ie8_opacity_dark_20.png") repeat;
     background: rgba(0, 0, 0, 0.2);
     color: #ffffff;
 }
@@ -1512,7 +1513,7 @@ code {
 
 .carousel-control.left:hover,
 .carousel-control.right:hover {
-    background: asset_data_url("/template/ie8_opacity_dark_30.png") repeat;
+    background: asset_data_url("template/ie8_opacity_dark_30.png") repeat;
     background: rgba(0, 0, 0, 0.30);
 }
 

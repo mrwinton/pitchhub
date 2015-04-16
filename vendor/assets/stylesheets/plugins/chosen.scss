@@ -7,7 +7,7 @@
  *
  */
 
-/* $group Base */
+/* @group Base */
 .chosen-container {
     position: relative;
     display: inline-block;
@@ -38,8 +38,8 @@
     cursor: pointer;
 }
 
-/* $end */
-/* $group Single Chosen */
+/* @end */
+/* @group Single Chosen */
 .chosen-container-single .chosen-single {
     position: relative;
     display: block;
@@ -128,8 +128,8 @@
     left: -9999px;
 }
 
-/* $end */
-/* $group Results */
+/* @end */
+/* @group Results */
 .chosen-container .chosen-results {
     position: relative;
     overflow-x: hidden;
@@ -176,8 +176,8 @@
     text-decoration: underline;
 }
 
-/* $end */
-/* $group Multi Chosen */
+/* @end */
+/* @group Multi Chosen */
 .chosen-container-multi .chosen-choices {
     position: relative;
     overflow: hidden;
@@ -266,8 +266,8 @@
     cursor: default;
 }
 
-/* $end */
-/* $group Active  */
+/* @end */
+/* @group Active  */
 .chosen-container-active .chosen-single {
     border: 1px solid $color_highlight;
 }
@@ -294,8 +294,8 @@
     color: #111 !important;
 }
 
-/* $end */
-/* $group Disabled Support */
+/* @end */
+/* @group Disabled Support */
 .chosen-disabled {
     opacity: 0.5 !important;
     cursor: default;
@@ -307,8 +307,8 @@
     cursor: default;
 }
 
-/* $end */
-/* $group Right to Left */
+/* @end */
+/* @group Right to Left */
 .chosen-rtl {
     text-align: right;
 }
@@ -378,8 +378,8 @@
     background-position: -12px 2px;
 }
 
-/* $end */
-/* $group Retina compatibility */
+/* @end */
+/* @group Retina compatibility */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
@@ -396,4 +396,4 @@ only screen and (min-device-pixel-ratio: 1.5) {
         background-repeat: no-repeat !important;
     }
 }
-/* $end */
+/* @end */
