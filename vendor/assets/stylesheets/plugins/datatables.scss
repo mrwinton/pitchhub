@@ -97,11 +97,11 @@ table.table thead .sorting_desc_disabled {
     background-size: 19px 19px;
 }
 
-.table thead .sorting { background-image: url('../img/jquery.datatables/sort_both.png'); }
-.table thead .sorting_asc { background-image: url('../img/jquery.datatables/sort_asc.png'); }
-.table thead .sorting_desc { background-image: url('../img/jquery.datatables/sort_desc.png'); }
-.table thead .sorting_asc_disabled { background-image: url('../img/jquery.datatables/sort_asc_disabled.png'); }
-.table thead .sorting_desc_disabled { background-image: url('../img/jquery.datatables/sort_desc_disabled.png'); }
+.table thead .sorting { background-image: asset_data_url('jquery.datatables/sort_both.png'); }
+.table thead .sorting_asc { background-image: asset_data_url('jquery.datatables/sort_asc.png'); }
+.table thead .sorting_desc { background-image: asset_data_url('jquery.datatables/sort_desc.png'); }
+.table thead .sorting_asc_disabled { background-image: asset_data_url('jquery.datatables/sort_asc_disabled.png'); }
+.table thead .sorting_desc_disabled { background-image: asset_data_url('jquery.datatables/sort_desc_disabled.png'); }
 
 table.dataTable thead > tr > th {
     padding-left: 18px;
@@ -149,9 +149,9 @@ only screen and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-device-pixel-ratio: 1.5) {
 
-    .table thead .sorting { background-image: url('../img/jquery.datatables/sort_both@2x.png'); }
-    .table thead .sorting_asc { background-image: url('../img/jquery.datatables/sort_asc@2x.png'); }
-    .table thead .sorting_desc { background-image: url('../img/jquery.datatables/sort_desc@2x.png'); }
-    .table thead .sorting_asc_disabled { background-image: url('../img/jquery.datatables/sort_asc_disabled@2x.png'); }
-    .table thead .sorting_desc_disabled { background-image: url('../img/jquery.datatables/sort_desc_disabled@2x.png'); }
+    .table thead .sorting { background-image: asset_data_url('jquery.datatables/sort_both@2x.png'); }
+    .table thead .sorting_asc { background-image: asset_data_url('jquery.datatables/sort_asc@2x.png'); }
+    .table thead .sorting_desc { background-image: asset_data_url('jquery.datatables/sort_desc@2x.png'); }
+    .table thead .sorting_asc_disabled { background-image: asset_data_url('jquery.datatables/sort_asc_disabled@2x.png'); }
+    .table thead .sorting_desc_disabled { background-image: asset_data_url('jquery.datatables/sort_desc_disabled@2x.png'); }
 }

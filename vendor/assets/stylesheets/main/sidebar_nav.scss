@@ -28,7 +28,7 @@
     font-size: 18px;
     display: block;
     color: #ffffff;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_15.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_15.png') repeat;
     background: rgba(0, 0, 0, 0.15);
 }
 
@@ -63,7 +63,7 @@ a.sidebar-title:focus {
 /* Sidebar User */
 .sidebar-user {
     padding-left: 88px;
-    background: url('@{assets_folder}/template/ie8_opacity_light_10.png') repeat;
+    background: asset_data_url('template/ie8_opacity_light_10.png') repeat;
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -74,7 +74,7 @@ a.sidebar-title:focus {
     padding: 2px;
     margin-left: -78px;
     border-radius: 34px;
-    background: url('@{assets_folder}/template/ie8_opacity_light_75.png') repeat;
+    background: asset_data_url('template/ie8_opacity_light_75.png') repeat;
     background: rgba(255, 255, 255, 0.75);
 }
 
@@ -116,7 +116,7 @@ a.sidebar-title:focus {
     margin: 0;
     padding-top: 12px;
     padding-bottom: 6px;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_15.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_15.png') repeat;
     background: rgba(0, 0, 0, 0.15);
     opacity: .5;
     filter: alpha(opacity=50);
@@ -172,7 +172,7 @@ a.sidebar-title:focus {
     width: 52px;
     height: 52px;
     border-radius: 25px;
-    background: url('@{assets_folder}/template/ie8_opacity_light_10.png') repeat;
+    background: asset_data_url('template/ie8_opacity_light_10.png') repeat;
     background: rgba(255, 255, 255, 0.10);
 }
 
@@ -196,7 +196,7 @@ a.sidebar-title:focus {
 .chat-users a.chat-user-online,
 .chat-users a.chat-user-away,
 .chat-users a.chat-user-busy {
-    background: url('@{assets_folder}/template/ie8_opacity_light_75.png') repeat;
+    background: asset_data_url('template/ie8_opacity_light_75.png') repeat;
     background: rgba(255, 255, 255, 0.75);
 }
 
@@ -242,7 +242,7 @@ a.sidebar-title:focus {
     list-style: none;
     margin: 0;
     padding: 5px 0;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_20.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_20.png') repeat;
     background: rgba(0, 0, 0, 0.20);
 }
 
@@ -255,7 +255,7 @@ a.sidebar-title:focus {
     width: 180px;
     margin-right: 20px;
     border-right: 3px solid #fff;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_40.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_40.png') repeat;
     background: rgba(0, 0, 0, 0.40);
 }
 
@@ -270,7 +270,7 @@ a.sidebar-title:focus {
 .chat-form {
     margin: 0;
     padding: 5px 10px;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_40.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_40.png') repeat;
     background: rgba(0, 0, 0, 0.40);
 }
 
@@ -303,14 +303,14 @@ a.sidebar-title:focus {
 .sidebar-nav li.active > a {
     color: #ffffff;
     text-decoration: none;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_15.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_15.png') repeat;
     background: rgba(0, 0, 0, 0.15);
 }
 
 .sidebar-nav a.active {
     padding-left: 5px;
     border-left: 5px solid $color_highlight;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_30.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_30.png') repeat;
     background: rgba(0, 0, 0, 0.3);
 }
 
@@ -364,7 +364,7 @@ a.sidebar-title:focus {
     padding: 0;
     margin: 0;
     display: none;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_30.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_30.png') repeat;
     background: rgba(0, 0, 0, 0.3);
 }
 
@@ -387,7 +387,7 @@ a.sidebar-title:focus {
 }
 
 .sidebar-nav ul ul {
-    background: url('@{assets_folder}/template/ie8_opacity_dark_40.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_40.png') repeat;
     background: rgba(0, 0, 0, 0.4);
 }
 

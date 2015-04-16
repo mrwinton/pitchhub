@@ -62,7 +62,7 @@
     left: 0;
     right: 0;
     color: #ffffff;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_60.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_60.png') repeat;
     background: rgba(0, 0, 0, 0.6);
 }
 
@@ -361,7 +361,7 @@
     width: 100%;
     padding: 15px;
     margin: 0;
-    background: url('@{assets_folder}/template/ie8_opacity_dark_60.png') repeat;
+    background: asset_data_url('template/ie8_opacity_dark_60.png') repeat;
     background: rgba(0, 0, 0, 0.6);
 }
 
