@@ -661,7 +661,6 @@ a.list-group-item.active > .badge {
 }
 
 .nav-pills > li.active > a > .badge {
-//    background: asset_data_url("template/ie8_opacity_dark_20.png") repeat;
     background: asset_data_url("template/ie8_opacity_dark_20.png") repeat;
     background: rgba(0, 0, 0, 0.2);
     color: #ffffff;
