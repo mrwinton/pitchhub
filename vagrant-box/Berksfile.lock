@@ -6,10 +6,10 @@ DEPENDENCIES
   pitchhub
     path: .
     metadata: true
-  rvm
-    git: git://github.com/mrwinton/chef-rvm.git
-    revision: bcb4a8ab8bf79cb1bdda9d44232fad12259c9efc
-    branch: master
+  rbenv
+    git: https://github.com/aminin/chef-rbenv
+    revision: 9c8688dbffb79269385581b6aa518c5ba456f154
+  ruby_build
 
 GRAPH
   7-zip (1.0.2)
@@ -18,8 +18,7 @@ GRAPH
   ark (0.9.0)
     7-zip (>= 0.0.0)
     windows (>= 0.0.0)
-  build-essential (2.2.2)
-  chef_gem (0.1.0)
+  build-essential (2.2.3)
   chef_handler (1.1.6)
   homebrew (1.12.0)
     build-essential (>= 2.1.2)
@@ -39,13 +38,14 @@ GRAPH
   python (1.4.6)
     build-essential (>= 0.0.0)
     yum-epel (>= 0.0.0)
+  rbenv (0.7.3)
+    java (> 1.4.0)
+    ruby_build (>= 0.0.0)
+  ruby_build (0.8.0)
   runit (1.5.18)
     build-essential (>= 0.0.0)
     yum (~> 3.0)
     yum-epel (>= 0.0.0)
-  rvm (0.9.2)
-    chef_gem (>= 0.0.0)
-    java (>= 0.0.0)
   windows (1.36.6)
     chef_handler (>= 0.0.0)
   yum (3.5.4)

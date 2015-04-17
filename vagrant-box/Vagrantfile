@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = 'pitchbox'
   config.vm.box_url = 'http://files.vagrantup.com/trusty64.box'
   config.ssh.forward_agent = true
-  config.vm.synced_folder '../', '/pitchhub'
+  config.vm.synced_folder '../', '/pitchhub', type: "nfs"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -36,44 +36,47 @@ Vagrant.configure("2") do |config|
     chef.version = '12.2.1'
     chef.cookbooks_path = ["cookbooks"]
 
+    # Handy install tool
     chef.add_recipe 'apt'
+
+    # Installs a JavaScript runtime
     chef.add_recipe 'nodejs'
-    # RVM for rubies management
-    chef.add_recipe "rvm::vagrant"
-    chef.add_recipe "rvm::system"
+
+    # Rbenv for rubies management
+    chef.add_recipe 'ruby_build'
+    chef.add_recipe 'rbenv::user'
+    chef.add_recipe 'rbenv::vagrant'
+    #
+    # # Installs Mongo with the default configuration
     chef.add_recipe 'mongodb::mongodb_org_repo'
     chef.add_recipe 'mongodb::default'
 
-    $ruby_21_version = "ruby-2.1.5"
+    $ruby_version = "2.2.1"
 
-    # Install Ruby 2.2.1 and Bundler
+    # Rbenv options
     chef.json = {
-        # Installing The latest ruby version
-        rvm: {
-            default_ruby: 'ruby-2.1.5',
-
-            # Installing multiple ruby versions
-            rubies: ['ruby-2.1.5'],
-
-            # Gems that will be accessed globally
-            global_gems: [
-                { name: :thin },
-                { name: :bundler }
-            ],
-
-            # Somehow needed for Vagrant
-            vagrant: {
-                system_chef_solo: '/opt/vagrant_ruby/bin/chef-solo'
-            }
+        'rbenv'=> {
+            'user_installs'=> [{
+               'user'=> 'vagrant',
+               'rubies'=> [$ruby_version],
+               'global'=> $ruby_version,
+               'gems'=> {
+                   $ruby_version => [
+                       { 'name'=> "bundler" }
+                   ]
+               }
+           }]
         }
     }
 
   end
 
-  #setup pitchhub's helpful aliases
+  #setup pitchhub's helpful aliases and bundler
   aliasesPath = File.expand_path("scripts/aliases")
   if File.exists? aliasesPath then
     config.vm.provision "file", source: aliasesPath, destination: "~/.bash_aliases"
   end
+
+
 
 end
