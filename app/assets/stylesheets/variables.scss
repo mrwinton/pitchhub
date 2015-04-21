@@ -1,9 +1,18 @@
 /*
  *  Document   : variables.scss
- *  Author     : pixelcave
+ *  Author     : pixelcave / michael winton
  *  Description: SASS variables for changing color theme and other options
  *
  */
+
+/*
+ * General
+ *
+ */
+
+$background_color_body:         #151515;                    // The background color of the body (visible in boxed layout)
+$max_width_boxed_layout:        1280px;                     // The maximun width of boxed layout (must be larger larger than 1200px)
+$border_width_button:           0;                          // 0 or 1px
 
 /*
  * Color Theme
@@ -12,6 +21,7 @@
 
 /* Main Colors */
 $color_dark:                    #394263;                    // Main dark color - Used mainly for sidebars' background and text color
+$color_dark_bg:                 #36353A;
 $color_highlight:               #1bbae1;                    // Main highlight color - Used for highlighting and as a primary color
 $color_light_main:              #eaedf1;                    // Main light color - Used mainly for main content background
 $color_light_secondary:         #dbe1e8;                    // Secondary light color - Used mainly for borders
