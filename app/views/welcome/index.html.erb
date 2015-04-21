@@ -8,44 +8,56 @@
     <%= javascript_include_tag 'frontend/pages/home', 'data-turbolinks-track' => true %>
 <% end %>
 
-<div>
-  <div class="carousel-inner">
-    <div class="active item">
-      <section class="site-section site-section-light site-section-top themed-img-default">
-        <div class="container">
-
-          <h1 class="text-center animation-slideUp hidden-xs">for ideas...</h1>
-          <h2 class="text-center push hidden-xs">
-            <strong>
-                                <span id="hero-text" class="tagline">
+<section id='banner'>
+  <div class='wrap'>
+    <div class='copy-wrap'>
+      <h2>
+       <span id="hero-text" class="tagline">Let's collaborate to
                                     <span id="hero-word-switcher" class="in">
-                                        <span class="active" data-oid="0"> communicate</span>
-                                        <span data-oid="1"> share</span>
-                                        <span data-oid="2"> engage</span>
-                                    </span>
+                                        <span class="active" data-oid="0"> grow </span>
+                                        <span data-oid="1"> solve </span>
+                                        <span data-oid="2"> develop </span>
+                                    </span>  ideas
                                 </span>
-            </strong>
-          </h2>
-
-          <!--<p class="text-center">-->
-            <!--<img class="img-responsive img-center" src="img/home-extended.png" alt="Beer app's home screen">-->
-          <!--</p>-->
-        </div>
-      </section>
+      </h2>
+      <p>
+        innovation. innovation. innovation. innovation. innovation. innovation. innovation. innovation.
+      </p>
     </div>
   </div>
-</div>
+  <a class="scroll" data-role="scroll-trigger" href="#search"><i class='fa fa-chevron-down'></i></a>
+</section>
+
+<section id="search" class="site-content bg-alt site-section">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 site-block">
+        <h3 class="h2 site-heading"><strong>Help solve an idea...</strong></h3>
+        <hr>
+
+      </div>
+
+      <div class="col-sm-6 col-md-6 site-block">
+        <h3 class="h2 site-heading"><strong>Add an idea of yours...</strong></h3>
+        <hr>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="site-content site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 site-block">
+        <h3 class="h2 site-heading"><strong>Trending</strong></h3>
+        <hr>
 
 
-
-<!--<section class="site-content site-section">-->
-  <!--<div class="container">-->
-    <!--<div class="site-block text-center">-->
-      <!--<h2>Super sweet apps from <strong>only $20/mo</strong></h2>-->
-      <!--<a class="text-medium" href="{{ URL::route('frontend.howitworks') }}">Tell me more</a>-->
-    <!--</div>-->
-    <!--<hr>-->
-  <!--</div>-->
-<!--</section>-->
-
+      </div>
+    </div>
+  </div>
+</section>
 

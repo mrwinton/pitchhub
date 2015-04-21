@@ -24,6 +24,11 @@
     padding-bottom: 1px;
 }
 
+.bg-alt {
+  background-color: $color_dark_bg;
+  color: $color_light_main;
+}
+
 .site-section-top {
     padding-top: 114px;
     overflow: hidden;

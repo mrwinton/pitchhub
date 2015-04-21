@@ -8,11 +8,12 @@
  */
 
 header {
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     padding: 25px 0;
-    color: #ffffff;
+    color: $color_pitch_primary_text;
     background: asset_data_url('template/ie8_opacity_dark_20.png');
     background: rgba(0, 0, 0, 0);
     z-index: 1000;
@@ -20,29 +21,18 @@ header {
     transition: all ease-out 0.25s;
 }
 
-header.header-scroll {
-    padding: 10px 0;
-    background: asset_data_url('template/ie8_opacity_dark_60.png');
-    background: rgba(54, 53, 58, 0.9);
-}
-
-header.header-scroll:hover {
-  background: rgba(54, 53, 58, 1);
-}
-
 /* Logo */
 a.site-logo {
     display: block;
     float: left;
-    color: #ffffff;
     font-size: 24px;
     height: 34px;
     line-height: 34px;
 }
 
 a.site-logo:hover {
-    color: #ffffff;
     text-decoration: none;
+    color: $color_pitch_primary_text;
 }
 
 a.site-logo > i {
@@ -90,7 +80,6 @@ header nav {
 .site-nav a {
     display: block;
     font-size: 13px;
-    color: #ffffff;
     font-weight: 600;
     padding: 0 10px;
     margin: 2px 5px;

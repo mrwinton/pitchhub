@@ -2,38 +2,36 @@
   position:relative;
   display:inline-block;
   vertical-align:top;
-//  -webkit-transition:width 400ms cubic-bezier(0.215,0.61,0.355,1);
-//  -moz-transition:width 400ms cubic-bezier(0.215,0.61,0.355,1);
-//  -ms-transition:width 400ms cubic-bezier(0.215,0.61,0.355,1);
-  transition:width 800ms cubic-bezier(0.215,0.61,0.355,1);
-//  transition:width 1.0s cubic-bezier(0.215,0.61,0.355,1);
+  -webkit-transition:width 1000ms cubic-bezier(0.215,0.61,0.355,1);
+  -moz-transition:width 1000ms cubic-bezier(0.215,0.61,0.355,1);
+  transition:width 1.0s cubic-bezier(0.215,0.61,0.355,1);
   white-space:nowrap;
-  margin-right:-5px;
 }
 
 #hero-word-switcher.in span {
-//  -webkit-transform-origin:center 35px;
-//  -moz-transform-origin:center 35px;
+  -webkit-transform-origin:center 35px;
+  -moz-transform-origin:center 35px;
   transform-origin:center 35px;
   transform: rotateX(180deg);
   opacity: 0;
+  color: $color_pitch_accent;
 }
 
 #hero-word-switcher.in span.inactive {
-//  -webkit-animation:leave-word 300ms cubic-bezier(.215,.61,.355,1);
-//  -moz-animation:leave-word 300ms cubic-bezier(.215,.61,.355,1);
+  -webkit-animation:leave-word 600ms;
+  -moz-animation:leave-word 600ms;
   transform: rotateX(180deg);
-  animation:leave-word 1.0s;
+  animation:leave-word 0.6s;
 }
 
 @keyframes leave-word {
   0% {
     transform: rotateX(0deg);
-    opacity: 1;
+    opacity: 0.4;
   }
   35% {
     transform: rotateX(-80deg);
-    opacity: 1;
+    opacity: 0.2;
   }
   65% {
     transform: rotateX(-20deg);
@@ -48,10 +46,9 @@
 #hero-word-switcher.in span.active {
   opacity: 1;
   transform: rotateX(0deg);
-//  -webkit-animation:enter-word 300ms 100ms cubic-bezier(.215,.61,.355,1);
-//  -moz-animation:enter-word 300ms 100ms cubic-bezier(.215,.61,.355,1);
+  -webkit-animation:enter-word 1000ms;
+  -moz-animation:enter-word 1000ms;
   animation: enter-word 1.0s;
-//  animation:enter-word 300ms 100ms cubic-bezier(.215,.61,.355,1);
 }
 
 @keyframes enter-word {
@@ -73,7 +70,6 @@
 }
 
 #hero-word-switcher span {
-//  visibility:hidden;
   position:absolute;
   left:0;
 }

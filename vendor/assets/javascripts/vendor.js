@@ -8,4 +8,5 @@
 // require jquery_ujs
 //= require vendor/jquery-1.11.2.min
 //= require vendor/bootstrap.min
+//= require vendor/plugins
 //= require turbolinks
