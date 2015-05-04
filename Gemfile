@@ -47,5 +47,12 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Behavioural tests with Rails integration
+  gem 'cucumber-rails', :require => false
+
+  # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing.
+  # (only supports truncation with MongoDB as of 4/5/15)
+  gem 'database_cleaner'
 end
 

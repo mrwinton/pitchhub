@@ -130,7 +130,7 @@ Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more
 
 ## Running
 
-Nealy there! Install the gems with `bundle install && rbenv rehash` and you're ready to start tinkering now.
+Nearly there! Install the gems with `bundle install && rbenv rehash` and you're ready to start tinkering now.
 
 Our pitchbox VM has a few handy commands that make things a little easier:
 
