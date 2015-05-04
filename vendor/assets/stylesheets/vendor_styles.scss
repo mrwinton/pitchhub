@@ -1,0 +1,33 @@
+/*
+ *  Document   : vendor_styles.scss
+ *  Author     : pixelcave / michael winton
+ *  Description: The main SASS file where all required variables and styles are imported
+ *
+ */
+
+/* Variables */
+@import "variables.scss";
+
+/* Bootstrap Framework */
+@import "bootstrap.scss";
+
+/* Font Icons (minified) */
+@import "plugins/font_awesome.scss";
+@import "plugins/glyphicons.scss";
+
+/* Plugins */
+@import "plugins/full_calendar.scss";
+@import "plugins/dropzone.scss";
+@import "plugins/chosen.scss";
+@import "plugins/datepicker.scss";
+@import "plugins/bootstrap_colorpicker.scss";
+@import "plugins/prism.scss";
+@import "plugins/magnific_popup.scss";
+@import "plugins/datatables.scss";
+@import "plugins/easy_pie_chart.scss";
+@import "plugins/css3_animations.scss";
+@import "plugins/timepicker.scss";
+@import "plugins/tags_input.scss";
+@import "plugins/slider.scss";
+@import "plugins/nprogress.scss";
+@import "plugins/select2.scss";

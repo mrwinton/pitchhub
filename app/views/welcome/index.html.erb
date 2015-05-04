@@ -1,0 +1,63 @@
+<% content_for :custom_head do %>
+    <!-- page specific head attributes -->
+<% end %>
+
+<% content_for :custom_body do %>
+    <!-- page specific body attributes -->
+    <%= javascript_include_tag 'frontend/frontend_application', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'frontend/pages/home', 'data-turbolinks-track' => true %>
+<% end %>
+
+<section id='banner'>
+  <div class='wrap'>
+    <div class='copy-wrap'>
+      <h2>
+       <span id="hero-text" class="tagline">Let's collaborate to
+                                    <span id="hero-word-switcher" class="in">
+                                        <span class="active" data-oid="0"> grow </span>
+                                        <span data-oid="1"> solve </span>
+                                        <span data-oid="2"> develop </span>
+                                    </span>  ideas
+                                </span>
+      </h2>
+      <p>
+        innovation. innovation. innovation. innovation. innovation. innovation. innovation. innovation.
+      </p>
+    </div>
+  </div>
+  <a class="scroll" data-role="scroll-trigger" href="#search"><i class='fa fa-chevron-down'></i></a>
+</section>
+
+<section id="search" class="site-content bg-alt site-section">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 site-block">
+        <h3 class="h2 site-heading"><strong>Help solve an idea...</strong></h3>
+        <hr>
+
+      </div>
+
+      <div class="col-sm-6 col-md-6 site-block">
+        <h3 class="h2 site-heading"><strong>Add an idea of yours...</strong></h3>
+        <hr>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="site-content site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 site-block">
+        <h3 class="h2 site-heading"><strong>Trending</strong></h3>
+        <hr>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+

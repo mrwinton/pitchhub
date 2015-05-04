@@ -6,4 +6,5 @@ cookbook "apt"
 cookbook "build-essential"
 cookbook "mongodb"
 cookbook 'nodejs'
-cookbook "rvm", git: 'git://github.com/mrwinton/chef-rvm.git', branch: "master"
+cookbook 'ruby_build'
+cookbook 'rbenv', git: 'https://github.com/aminin/chef-rbenv'

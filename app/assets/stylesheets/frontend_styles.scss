@@ -1,0 +1,21 @@
+/*
+ *  Document   : styles.scss
+ *  Author     : pixelcave / michael winton
+ *  Description: The main SASS file where all required variables and styles are imported
+ *
+ */
+
+/* Variables used in 'main/' and 'themes' */
+@import "variables";
+
+/* Main */
+@import "frontend/layout.scss";
+@import "frontend/header.scss";
+@import "frontend/content.scss";
+@import "frontend/pages.scss";
+@import "frontend/bs_overwrite.scss";
+@import "frontend/extras.scss";
+@import "frontend/word_switcher.scss";
+
+/* Themes */
+@import "themes";
