@@ -10,7 +10,7 @@ Feature: new user registration
 
   Scenario: new user goes through the setup wizard
     When I fill in the following:
-      | profile_first_name | O             |
+      | first_name | O             |
     And I follow "awesome_button"
     And I confirm the alert
     Then I should be on the stream page
@@ -19,14 +19,14 @@ Feature: new user registration
 
   Scenario: new user tries to XSS itself
     When I fill in the following:
-      | profile_first_name | <script>alert(0)// |
-    And I focus the "follow_tags" field
+      | first_name | <script>alert(0)// |
+    And I focus the "location" field
     Then I should see a flash message containing "Hey, <script>alert(0)//!"
 
   Scenario: new user does not add any tags in setup wizard and cancel the alert
     When I fill in the following:
-      | profile_first_name | some name     |
-    And I focus the "follow_tags" field
+      | first_name | some name     |
+    And I focus the "location" field
     Then I should see a flash message containing "Hey, some name!"
     When I follow "awesome_button"
     And I reject the alert
@@ -38,33 +38,6 @@ Feature: new user registration
     And I confirm the alert
     Then I should be on the stream page
     And I close the publisher
-
-  Scenario: new user without any tags posts first status message
-    When I follow "awesome_button"
-    And I confirm the alert
-    Then I should be on the stream page
-    When I submit the publisher
-    Then "Hey everyone, I’m #newhere." should be post 1
-
-  Scenario: new user with some tags posts first status message
-    When I fill in the following:
-      | profile_first_name | some name        |
-    And I fill in "tags" with "#rockstar"
-    And I press the first ".as-result-item" within "#as-results-tags"
-    And I follow "awesome_button"
-    Then I should be on the stream page
-    When I submit the publisher
-    Then "Hey everyone, I’m #newhere. I’m interested in #rockstar." should be post 1
-
-  Scenario: closing a popover clears getting started
-    When I follow "awesome_button"
-    And I confirm the alert
-    Then I should be on the stream page
-    And I have turned off jQuery effects
-    And I wait for the popovers to appear
-    And I click close on all the popovers
-    And I close the publisher
-    Then I should not see "Welcome to diaspora*"
 
   Scenario: user fills in bogus data - client side validation
     When I log out manually

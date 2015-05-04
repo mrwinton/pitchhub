@@ -1,8 +1,6 @@
 Feature: edit profile
   As a user, I want to edit my profile so that the recommender is more accurate
 
-  @wip
-
   Scenario: editing profile fields
     Given I am signed in
     And I go to the edit profile page
@@ -19,5 +17,5 @@ Feature: edit profile
     And I should see a flash message indicating success
     And the "first_name" field should contain "Foo"
     And the "last_name" field should contain "Bar"
-    And I should see "interests"
+    And the "interests" field should contain "science"
     And the "location" field should be filled with "Wellington"
