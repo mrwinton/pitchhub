@@ -14,7 +14,7 @@ Feature: search for users and hashtags
     When I enter "science" in the search input
     Then I should see "science within ".ac_even"
 
-  Scenario: search for a nonnexistent term
+  Scenario: search for a nonexistent term
     When I enter "gobble-de-gook" in the search input
     Then I should see "gobble-de-gook" within ".ac_even"
 

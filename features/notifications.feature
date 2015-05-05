@@ -20,5 +20,6 @@ Feature: notifications
     Then I should see 1 notification
 
   @wip
-  #Scenario: scrollbar shows up when >5 notifications
-  #Scenario: dropdown will load more elements when bottom is reached
+  Scenario: scrollbar shows up when >5 notifications
+
+  Scenario: dropdown will load more elements when bottom is reached
