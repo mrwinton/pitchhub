@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
+
+# Authentication
+gem 'devise'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -48,8 +50,18 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
+  # RSpec (unit tests, some integration tests)
+  gem 'rspec-rails'
+
   # Behavioural tests with Rails integration
+  gem 'capybara'
   gem 'cucumber-rails', :require => false
+  gem 'selenium-webdriver'
+
+  # General helpers
+  gem 'webmock', :require => false
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
 
   # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing.
   # (only supports truncation with MongoDB as of 4/5/15)

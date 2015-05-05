@@ -18,4 +18,4 @@ Feature: edit profile
     And the "first_name" field should contain "Foo"
     And the "last_name" field should contain "Bar"
     And the "interests" field should contain "science"
-    And the "location" field should be filled with "Wellington"
+    And the "location" field should contain "Wellington"
