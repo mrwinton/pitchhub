@@ -14,10 +14,6 @@ And(/^a user with email "([^"]*)" posts a pitch with title "([^"]*)"$/) do |arg1
   pending
 end
 
-And(/^I am on the pitch's page with title "([^"]*)"$/) do |arg|
-  pending
-end
-
 When(/^I focus the annotate field$/) do
   pending
 end

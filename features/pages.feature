@@ -6,7 +6,6 @@ Feature: pages load
     | Foo	      | foo@foo.foo       |
     | Bar      	  | bar@bar.bar       |
 
-  @wip
   Scenario: index as guest
     Given I am not signed in
     And I go to the index page
