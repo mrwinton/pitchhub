@@ -25,6 +25,9 @@
 
 </head>
 <body>
+<!--TODO devise requires these to be in application.html.erb-->
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
 
 <%= content_for?(:content) ? yield(:content) : yield %>
 

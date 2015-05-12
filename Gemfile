@@ -25,6 +25,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Pitchhub gems
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
+gem "mongoid-paperclip", :require => "mongoid_paperclip"
+# gem 'delayed_job_mongoid'
+
+# https://github.com/mauriciozaffari/mongoid_search
+# https://github.com/pokonski/public_activity
+gem 'mongoid_search'
+gem 'public_activity'
 
 group :development do
   gem 'metric_fu'
