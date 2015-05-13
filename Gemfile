@@ -33,6 +33,9 @@ gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem 'mongoid_search'
 gem 'public_activity'
 
+# https://github.com/alexreisner/geocoder
+gem 'geocoder'
+
 group :development do
   gem 'metric_fu'
   gem 'better_errors'

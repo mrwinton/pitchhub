@@ -1,5 +1,11 @@
 class User
   include Mongoid::Document
+  include Mongoid::Paperclip
+  include Geocoder::Model::Mongoid
+
+  geocoded_by :address # can also be an IP address
+  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? } # auto-fetch coordinates if it's not present or updated
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -37,10 +43,13 @@ class User
   field :first_name, type: String
   field :last_name, type: String
 
-  has_mongoid_attached_file :avatar
+  field :coordinates, :type => Array
+  field :address
 
-  embeds_many :custom_groups, class_name: "DisclosureScope"
+  has_mongoid_attached_file :avatar_image
+  validates_attachment_content_type :avatar_image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
-  embeds_many :pitch_card_relation, class_name: "PitchCardRelation"
+  has_many :custom_group_scopes, class_name: "DisclosureScope"
+  embeds_many :pitch_card_relations, class_name: "PitchCardRelation"
 
 end

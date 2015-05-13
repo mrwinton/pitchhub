@@ -46,8 +46,8 @@ Vagrant.configure("2") do |config|
     chef.add_recipe 'ruby_build'
     chef.add_recipe 'rbenv::user'
     chef.add_recipe 'rbenv::vagrant'
-    #
-    # # Installs Mongo with the default configuration
+
+    # Installs Mongo with the default configuration
     chef.add_recipe 'mongodb::mongodb_org_repo'
     chef.add_recipe 'mongodb::default'
 

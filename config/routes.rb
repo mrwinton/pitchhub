@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users
+  resources :users
+  resources :pitch_cards
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
