@@ -5,6 +5,7 @@ gem 'rails', '4.2.1'
 
 # Authentication
 gem 'devise'
+gem 'devise-bootstrap-views'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -26,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
+gem "mongoid-enum"
 # gem 'delayed_job_mongoid'
 
 # https://github.com/mauriciozaffari/mongoid_search

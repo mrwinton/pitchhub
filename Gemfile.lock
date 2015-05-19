@@ -129,6 +129,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-bootstrap-views (0.0.5)
     diff-lcs (1.2.5)
     domain_name (0.5.23)
       unf (>= 0.0.5, < 1.0.0)
@@ -201,6 +202,8 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.6.0)
+    mongoid-enum (0.2.0)
+      mongoid (~> 4.0)
     mongoid-paperclip (0.0.9)
       paperclip (>= 2.3.6)
     mongoid_search (0.3.2)
@@ -382,12 +385,14 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
+  devise-bootstrap-views
   factory_girl_rails
   geocoder
   jbuilder (~> 2.0)
   jquery-rails
   metric_fu
   mongoid!
+  mongoid-enum
   mongoid-paperclip
   mongoid_search
   public_activity
