@@ -8,5 +8,7 @@
 // require jquery_ujs
 //= require vendor/jquery-1.11.2.min
 //= require vendor/bootstrap.min
+//= require vendor/pnotify.custom.min
 //= require vendor/plugins
+//= require vendor/simple_flash.js
 //= require turbolinks

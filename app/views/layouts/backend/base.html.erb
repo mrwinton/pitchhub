@@ -1,10 +1,30 @@
 <% content_for :content do %>
 
-    <div id="page-top" class="page-container">
+	<div id="page-wrapper">
 
-    <%= yield %>
+	  	<div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
 
-    </div>
+		  <%= render :partial => '/shared/backend/sidebar' %>
+
+		  <!-- Main Container -->
+		  <div id="main-container">
+
+			<%= render :partial => '/shared/backend/header' %>
+
+			<!-- Page content -->
+			<div id="page-content">
+
+				<%= yield %>
+
+			</div>
+
+			<%= render :partial => '/shared/backend/footer' %>
+
+		  </div>
+
+		</div>
+
+	</div>
 
     <a href="#" id="to-top"><i class="fa fa-angle-up"></i></a>
 

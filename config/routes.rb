@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
 
-  # devise_for :users
+  devise_for :users
 
-  devise_for :users, :skip => [:sessions]
-  as :user do
-    get 'signin' => 'devise/sessions#new', :as => :new_user_session
-    post 'signin' => 'devise/sessions#create', :as => :user_session
-    delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
+  devise_scope :user do
+    match '/users/sign_out' => "devise/sessions#destroy", via: [:get, :delete]
   end
 
-  resources :users
+  # resources :users
   resources :pitch_cards
+
+  authenticated :user do
+    root :to => "dashboard#index", as: :authenticated_root
+  end
+
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

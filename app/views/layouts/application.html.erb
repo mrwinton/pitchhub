@@ -17,7 +17,6 @@
   <link rel="shortcut icon" href="<%= asset_path 'favicon.png' %>">
 
   <%= stylesheet_link_tag    'vendor', media: 'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'head', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
@@ -26,8 +25,17 @@
 </head>
 <body>
 <!--TODO devise requires these to be in application.html.erb-->
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<% if notice || alert %>
+	<div class="hidden">
+	  <div id="flash" class="<%= notice ? "notice" : ""%><%= alert ? "error" : ""%>">
+		<% if notice %>
+			<p><%= notice %></p>
+		<% elsif alert %>
+			<p><%= alert %></p>
+		<% end %>
+	  </div>
+	</div>
+<% end %>
 
 <%= content_for?(:content) ? yield(:content) : yield %>
 
