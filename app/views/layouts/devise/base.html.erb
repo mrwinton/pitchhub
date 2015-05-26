@@ -1,14 +1,17 @@
 <% content_for :custom_head do %>
 	<!-- page specific head attributes -->
-	<%= stylesheet_link_tag 'frontend', media: 'all', 'data-turbolinks-track' => true %>
+	<%= stylesheet_link_tag 'backend', media: 'all', 'data-turbolinks-track' => true %>
 <% end %>
 
 <% content_for :content do %>
 
+	<div id="auth-background"></div>
+
     <div id="page-top" class="page-container">
 
 	  <div class="row">
-		<div class="col-md-4 col-md-offset-4">
+
+		<div>
 
 		  <%= yield %>
 

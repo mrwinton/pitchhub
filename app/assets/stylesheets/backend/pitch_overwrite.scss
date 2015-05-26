@@ -1,0 +1,50 @@
+.text-primary,
+.text-primary:hover,
+a,
+a:hover,
+a:focus,
+a.text-primary,
+a.text-primary:hover,
+a.text-primary:focus {
+  color: inherit;
+}
+
+a.sidebar-brand:hover,
+a.sidebar-brand:focus,
+a.sidebar-title:hover,
+a.sidebar-title:focus {
+  background: rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav.navbar-nav-custom > li.open > a,
+.nav.navbar-nav-custom > li > a:hover,
+.nav.navbar-nav-custom > li > a:focus {
+  background-color: #ffffff;//$color_dark;
+  color: inherit;
+}
+
+.nav.navbar-nav-custom > li > a:hover {
+  color: inherit;
+}
+
+body #auth-background{
+  background-color: #EEEEEE;
+  position:absolute;
+  top:0; right:0;
+  bottom:0; left:0;
+  z-index: -1;
+}
+
+#login-container > .block-bordered{
+  border: thin;
+}
+
+.btn-primary{
+  background-color: $color_pitch_primary;
+}
+
+.btn-primary:hover{
+  background-color: $color_pitch_dark_primary;
+}

@@ -31,9 +31,10 @@ $color_pitch_divider:           #B6B6B6;
 
 
 /* Main Colors */
-$color_dark:                    #394263;                    // Main dark color - Used mainly for sidebars' background and text color
+$color_dark:                    #2c3e50;//#394263;                    // Main dark color - Used mainly for sidebars' background and text color
 $color_dark_bg:                 #36353A;
-$color_highlight:               $color_pitch_dark_primary;                    // Main highlight color - Used for highlighting and as a primary color
+$color_highlight:               $color_pitch_dark_primary;
+$color_backend_highlight:       #34495e;
 $color_light_main:              #eaedf1;                    // Main light color - Used mainly for main content background
 $color_light_secondary:         #dbe1e8;                    // Secondary light color - Used mainly for borders
 $color_light_ultra:             #f9fafc;                    // Secondary ultra light color - Used mainly for light navbar and block's header background

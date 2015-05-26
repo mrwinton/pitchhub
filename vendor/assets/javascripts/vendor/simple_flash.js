@@ -18,11 +18,27 @@ $(function() {
             type = "error"
         }
 
-        new PNotify({
+        var opts = {
             text: message,
+            closer: false,
+            sticker: false,
             type: type,
-            icon: false
-        });
+            icon: false,
+            nonblock: {
+                nonblock: true,
+                nonblock_opacity: .2
+            }
+        };
+
+        var context = $("#page-content");
+
+        if (context.length>0) {
+            opts.addclass = "push-stack";
+        } else {
+            opts.addclass = "push-stack-more";
+        }
+
+        new PNotify(opts);
 
     }
 

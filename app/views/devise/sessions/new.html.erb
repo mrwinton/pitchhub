@@ -1,27 +1,41 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4><%= t('.sign_in', :default => "Sign in") %></h4>
+<div id="login-container">
+  <h1 class="text-center push-top-bottom animation-fadeInQuickInv">
+	PitchHub
+  </h1>
+  <div class="block block-bordered">
+	<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form", class: "form-horizontal form-bordered form-control-borderless" }) do |f| %>
+	  <div class="form-group">
+		<div class="col-xs-12">
+		  <%= f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Enter your email..." %>
+		</div>
+	  </div>
+	  <div class="form-group">
+		<div class="col-xs-12">
+		  <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg",  placeholder: "Enter your password..." %>
+		</div>
+	  </div>
+	  <div class="form-group form-actions">
+		<% if devise_mapping.rememberable? %>
+			<div class="col-xs-6">
+
+			  <label class="switch switch-primary">
+				<%= f.check_box :remember_me %>
+				<span></span>
+			  </label>
+			  Remember Me?
+
+			</div>
+		<% end %>
+		<div class="col-xs-6 text-right">
+		  <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-sm btn-primary" %>
+		</div>
+	  </div>
+		<%= render "devise/shared/links" %>
+
+		</form>
+	<% end %>
   </div>
-  <div class="panel-body">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
-      <div class="form-group">
-        <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-      </div>
-      <% if devise_mapping.rememberable? %>
-        <div class="checkbox">
-          <label>
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </label>
-        </div>
-        <% end %>
-      <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-primary" %>
-    <% end %>
-  </div>
+  <footer class="text-muted text-center">
+	<small><span id="year-copy"></span> &copy; <a href="/">PitchHub</a></small>
+  </footer>
 </div>
-<%= render "devise/shared/links" %>
