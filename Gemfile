@@ -29,6 +29,7 @@ gem 'bson_ext'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem "mongoid-enum"
 # gem 'delayed_job_mongoid'
+gem 'active_link_to', '~> 1.0.3'
 
 # https://github.com/mauriciozaffari/mongoid_search
 # https://github.com/pokonski/public_activity
