@@ -1,4 +1,13 @@
-<p id="notice"><%= notice %></p>
+<% content_for :custom_head do %>
+	<!-- page specific head attributes -->
+	<%= stylesheet_link_tag 'backend', media: 'all', 'data-turbolinks-track' => true %>
+<% end %>
+
+<% content_for :custom_body do %>
+	<!-- page specific body attributes -->
+	<%= javascript_include_tag 'backend/backend_application', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'backend/pages/dashboard', 'data-turbolinks-track' => true %>
+<% end %>
 
 <%= link_to 'Edit', edit_pitch_card_path(@pitch_card) %> |
 <%= link_to 'Back', pitch_cards_path %>

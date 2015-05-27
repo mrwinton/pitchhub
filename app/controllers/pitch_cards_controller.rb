@@ -1,4 +1,6 @@
 class PitchCardsController < ApplicationController
+  layout 'backend/base'
+
   before_action :set_pitch_card, only: [:show, :edit, :update, :destroy]
 
   # GET /pitch_cards
