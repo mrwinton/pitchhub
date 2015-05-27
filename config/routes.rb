@@ -2,10 +2,6 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  devise_scope :user do
-    match '/users/sign_out' => "devise/sessions#destroy", via: [:get, :delete]
-  end
-
   # resources :users
   resources :pitch_cards
 
