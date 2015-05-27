@@ -12,3 +12,4 @@
 //= require vendor/plugins
 //= require vendor/simple_flash.js
 //= require turbolinks
+//= require jquery_ujs
