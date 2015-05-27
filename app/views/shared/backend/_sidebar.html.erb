@@ -13,7 +13,9 @@
 	  <!-- Sidebar Navigation -->
 	  <ul class="sidebar-nav">
 		<li>
-		  <a href="#"><i class="fa fa-th-list sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+		  <%= active_link_to("/") do %>
+			  <i class="fa fa-th-list sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span>
+		  <% end %>
 		</li>
 		<li class="sidebar-header">
 		  <span class="sidebar-header-title">Pitch Cards</span>
