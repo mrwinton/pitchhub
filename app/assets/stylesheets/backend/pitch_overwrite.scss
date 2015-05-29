@@ -48,3 +48,17 @@ body #auth-background{
 .btn-primary:hover{
   background-color: $color_pitch_dark_primary;
 }
+
+.pitch-point-textarea{
+  height: 1em;
+}
+
+.select-chosen{
+  width: 80%;
+  display: block;
+}
+
+textarea.form-control{
+  height: 63px;
+}
+

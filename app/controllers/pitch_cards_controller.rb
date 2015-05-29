@@ -2,6 +2,7 @@ class PitchCardsController < ApplicationController
   layout 'backend/base'
 
   before_action :set_pitch_card, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /pitch_cards
   # GET /pitch_cards.json
@@ -16,6 +17,7 @@ class PitchCardsController < ApplicationController
 
   # GET /pitch_cards/new
   def new
+    @pitch_points = ["Value Proposition", "Business Opportunity", "Resources", "Solution", "Facilitation"]
     @pitch_card = PitchCard.new
   end
 
