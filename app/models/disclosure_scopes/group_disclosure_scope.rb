@@ -1,0 +1,2 @@
+class GroupDisclosureScope < DisclosureScope
+end

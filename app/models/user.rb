@@ -49,7 +49,12 @@ class User
   has_mongoid_attached_file :avatar_image
   validates_attachment_content_type :avatar_image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
-  has_many :custom_group_scopes, class_name: "DisclosureScope"
-  embeds_many :pitch_card_relations, class_name: "PitchCardRelation"
+  has_many :my_groups, class_name: "Group"
+  has_and_belongs_to_many :groups, class_name: "Group"
+
+  has_many :init_pitch_cards, class_name: "PitchCard"
+  has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard"
+
+
 
 end

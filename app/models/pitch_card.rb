@@ -8,12 +8,12 @@ class PitchCard
 
   enum :status, [:active, :complete]
 
-  has_one :initiator, class_name: "User"
-  has_many :administrator, class_name: "User"
+  belongs_to :initiator, class_name: "User"
+  has_and_belongs_to_many :collaborators, class_name: "User"
 
-  field :title, type: String
-  field :overview, type: String
+  embeds_many :pitch_points, class_name: "PitchPoint"
 
-  field :overview, type: String
+  embeds_one :user_scope, class_name: "DisclosureScope"
+  embeds_one :content_scope, class_name: "DisclosureScope"
 
 end
