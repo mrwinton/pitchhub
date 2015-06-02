@@ -17,7 +17,13 @@ class PitchCardsController < ApplicationController
 
   # GET /pitch_cards/new
   def new
-    @pitch_points = ["Value Proposition", "Business Opportunity", "Resources", "Solution", "Facilitation"]
+    # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
+    @pitch_points = [ { :name => "Value Proposition",     :tooltip => "tool tip 1",     :placeholder => "What's the value?"},
+                      { :name => "Business Opportunity",  :tooltip => "tool tip 2",     :placeholder => "What's the business opportunity?"},
+                      { :name => "Resources",             :tooltip => "tool tip 3",     :placeholder => "What resources will be required?"},
+                      { :name => "Solution",              :tooltip => "tool tip 4",     :placeholder => "What's the solution?"},
+                      { :name => "Facilitation",          :tooltip => "tool tip 5",     :placeholder => "Looking for partners?"},
+                      { :name => "Voting",                :tooltip => "tool tip 6",     :placeholder => "Have a question to go with you pitch card?"} ]
     @pitch_card = PitchCard.new
   end
 

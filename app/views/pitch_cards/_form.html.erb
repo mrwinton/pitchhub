@@ -1,96 +1,65 @@
-<%= form_for(@pitch_card, :html => {:class => 'form-horizontal form-bordered'}) do |f| %>
-	<% if @pitch_card.errors.any? %>
-		<div id="error_explanation">
-		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch_card from being saved:</h2>
+<div class="block block-bordered pitch-card">
 
-		  <ul>
-			<% @pitch_card.errors.full_messages.each do |message| %>
-				<li><%= message %></li>
-			<% end %>
-		  </ul>
-		</div>
-	<% end %>
+  <%= form_for(@pitch_card, :html => {:class => 'form-horizontal form-bordered'}) do |f| %>
+	  <% if @pitch_card.errors.any? %>
+		  <div id="error_explanation">
+			<h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch_card from being saved:</h2>
 
-
-
-	<% for point in @pitch_points %>
-		<% formatted_point = point.downcase.tr(' ', '-')%>
-		<div class="form-group">
-
-		  <div class="col-md-3">
-			<label class="control-label" for="<%= formatted_point %>-textarea-input"><%= point %></label>
-			<select id="<%= formatted_point %>-select" name="<%= formatted_point %>-select" class="select-chosen">
-			  <option value="include">Include</option>
-			  <option value="invite">Invite</option>
-			  <option value="exclude">Exclude</option>
-			</select>
+			<ul>
+			  <% @pitch_card.errors.full_messages.each do |message| %>
+				  <li><%= message %></li>
+			  <% end %>
+			</ul>
 		  </div>
-		  <div class="col-md-9">
-			<textarea id="<%= formatted_point %>-textarea-input" name="<%= formatted_point %>-textarea-input" class="form-control" placeholder="One o'clock, Two o'clock, Three o'clock... Rock"></textarea>
+	  <% end %>
+
+	  <% @pitch_points.each do |point| %>
+		  <% css_point = point[:name].downcase.tr(' ', '-')%>
+		  <% image_point = point[:name].downcase.tr(' ', '_')%>
+		  <% image_selected = 'points/selected/'+image_point+'.png'%>
+		  <% image_deselected = 'points/deselected/'+image_point+'.png'%>
+
+		  <div id="<%= css_point %>" class="form-group">
+
+			<div class="col-md-2">
+			  <a id="<%= css_point %>-selector" class="pitch-point-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
+				<div class="text-center">
+				  <%= image_tag_with_at2x image_selected, :class => "pitch-point-image" %>
+				  <%= image_tag_with_at2x image_deselected, :class => "pitch-point-image hidden" %>
+				</div>
+			  </a>
+			</div>
+			<div class="col-md-10">
+			  <textarea id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"></textarea>
+			</div>
+
+			<input id="<%= css_point %>-selected" value="selected" hidden/>
+
 		  </div>
+	  <% end %>
+
+	  <div class="form-group">
+		<div class="col-xs-6">
+
+		  who can see me
 
 		</div>
-	<% end %>
+		<div class="col-xs-6">
 
-	<div class="form-group">
-	  <div class="col-xs-6">
+		  who can see content
 
-		<label class="switch switch-primary">
-		  <input type="checkbox">
-		  <span></span>
-		</label>
-		Include facilitation suggestions
-
+		</div>
 	  </div>
-	  <div class="col-xs-6">
 
-		<label class="switch switch-primary">
-		  <input type="checkbox">
-		  <span></span>
-		</label>
-		Include voting
-
+	  <div class="form-group form-actions">
+		<div class="actions text-center">
+		  <%= f.submit "Submit", class: "btn btn-primary" %>
+		</div>
 	  </div>
-	</div>
+  <% end %>
 
-	<!--<div class="form-group">-->
+</div>
 
-	<!--<div class="col-md-3">-->
-	<!--<label class="control-label" for="value-proposition-textarea-input">Business Opportunity</label>-->
-	<!--</div>-->
-	<!--<div class="col-md-9">-->
-	<!--<textarea id="value-proposition-textarea-input" name="value-proposition-textarea-input" class="form-control" placeholder="One o'clock, Two o'clock, Three o'clock... Rock"></textarea>-->
-	<!--</div>-->
+<%= button_to 'Back', pitch_cards_path, class: "btn btn-alt btn-default" %>
 
-	<!--</div>-->
-	<!--<div class="form-group">-->
-
-	<!--<div class="col-md-3">-->
-	<!--<label class="control-label" for="value-proposition-textarea-input">Resources</label>-->
-	<!--</div>-->
-	<!--<div class="col-md-9">-->
-	<!--<textarea id="value-proposition-textarea-input" name="value-proposition-textarea-input" class="form-control" placeholder="One o'clock, Two o'clock, Three o'clock... Rock"></textarea>-->
-	<!--</div>-->
-
-	<!--</div>-->
-	<!--<div class="form-group">-->
-
-	<!--<div class="col-md-3">-->
-	<!--<label class="control-label" for="value-proposition-textarea-input">Solution</label>-->
-	<!--</div>-->
-	<!--<div class="col-md-9">-->
-	<!--<textarea id="value-proposition-textarea-input" name="value-proposition-textarea-input" class="form-control" placeholder="One o'clock, Two o'clock, Three o'clock... Rock"></textarea>-->
-	<!--</div>-->
-
-	<!--</div>-->
-
-	<!--TODO <p>-->
-	<!--include option for people to vote on the idea or help facilitate it-->
-	<!--</p>-->
-
-	<div class="form-group form-actions">
-	  <div class="actions text-center">
-		<%= f.submit "Submit", class: "btn btn-primary" %>
-	  </div>
-	</div>
-<% end %>
+<br/>

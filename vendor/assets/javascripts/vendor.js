@@ -11,5 +11,6 @@
 //= require vendor/pnotify.custom.min
 //= require vendor/plugins
 //= require vendor/simple_flash.js
+//= require vendor/dropzone.min.js
 //= require turbolinks
 //= require jquery_ujs

@@ -36,7 +36,7 @@
 	  <a href="/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		<!-- TODO fill in -->
 		<span><%= current_user.email %></span>
-		<img src="<%= asset_path 'user.png' %>" alt="user">
+		<%= image_tag_with_at2x 'user.png' %>
 		<span class="caret"></span>
 	  </a>
 	  <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
