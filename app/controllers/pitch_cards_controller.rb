@@ -19,7 +19,7 @@ class PitchCardsController < ApplicationController
   def new
     # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
     @pitch_points = PitchPoint.points
-    @pitch_card = PitchCard.new
+    @pitch_card   = PitchCard.new
   end
 
   # GET /pitch_cards/1/edit

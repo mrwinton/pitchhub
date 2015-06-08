@@ -14,6 +14,16 @@ var PitchCards = function() {
 
     };
 
+    var maxLengthLogicInit = function() {
+
+        $('textarea[maxlength]').maxlength({
+            threshold: 20,
+            warningClass: "label label-success",
+            limitReachedClass: "label label-danger"
+        });
+
+    };
+
     var pitchPointSelectionLogicInit = function(){
 
         $(".pitch-point-selector").click(function() {
@@ -54,6 +64,7 @@ var PitchCards = function() {
     return {
         init: function() {
             uiInit(); // Initialize UI Code
+            maxLengthLogicInit();
             pitchPointSelectionLogicInit();
         }
     };

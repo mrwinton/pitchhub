@@ -23,6 +23,7 @@
 			<% image_deselected = 'points/deselected/'+image_point+'.png'%>
 			<% image_class = point[:optional] ? "pitch-point-image-selectable pitch-point-image" : "pitch-point-image" %>
 			<% selector_class = point[:optional] ? "pitch-point-selector" : "" %>
+			<% max_length = PitchPoint.point_max_length %>
 
 			   <div id="<%= css_point %>" class="form-group row">
 			  <div class="row-same-height">
@@ -41,9 +42,9 @@
 				</div>
 				<div class="col-xs-10 col-xs-height">
 				  <% if point[:selected] %>
-					  <textarea id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"></textarea>
+					  <textarea id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>" maxlength="<%=max_length%>"></textarea>
 				  <% elsif not point[:selected] and point[:optional] %>
-					  <textarea disabled="" id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"></textarea>
+					  <textarea disabled="" id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"  maxlength="<%=max_length%>"></textarea>
 				  <% end %>
 				</div>
 			  </div>

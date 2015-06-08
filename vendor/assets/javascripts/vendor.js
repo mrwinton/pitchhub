@@ -12,5 +12,6 @@
 //= require vendor/plugins
 //= require vendor/simple_flash.js
 //= require vendor/dropzone.min.js
+//= require vendor/bootstrap-maxlength.min.js
 //= require turbolinks
 //= require jquery_ujs

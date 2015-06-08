@@ -51,4 +51,8 @@ class PitchPoint
                       } ]
   end
 
+  def self.point_max_length
+    101
+  end
+
 end
