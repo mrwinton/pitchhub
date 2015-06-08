@@ -1,65 +1,85 @@
-<div class="block block-bordered pitch-card">
 
-  <%= form_for(@pitch_card, :html => {:class => 'form-horizontal form-bordered'}) do |f| %>
-	  <% if @pitch_card.errors.any? %>
-		  <div id="error_explanation">
-			<h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch_card from being saved:</h2>
+<%= form_for(@pitch_card) do |f| %>
+	<% if @pitch_card.errors.any? %>
+		<div id="error_explanation">
+		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch_card from being saved:</h2>
 
-			<ul>
-			  <% @pitch_card.errors.full_messages.each do |message| %>
-				  <li><%= message %></li>
-			  <% end %>
-			</ul>
-		  </div>
-	  <% end %>
+		  <ul>
+			<% @pitch_card.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+		  </ul>
+		</div>
+	<% end %>
 
-	  <% @pitch_points.each do |point| %>
-		  <% css_point = point[:name].downcase.tr(' ', '-')%>
-		  <% image_point = point[:name].downcase.tr(' ', '_')%>
-		  <% image_selected = 'points/selected/'+image_point+'.png'%>
-		  <% image_deselected = 'points/deselected/'+image_point+'.png'%>
+	<div class="block block-bordered pitch-card">
 
-		  <div id="<%= css_point %>" class="form-group">
+	  <div class="form-horizontal form-bordered">
 
-			<div class="col-md-2">
-			  <a id="<%= css_point %>-selector" class="pitch-point-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
-				<div class="text-center">
-				  <%= image_tag_with_at2x image_selected, :class => "pitch-point-image" %>
-				  <%= image_tag_with_at2x image_deselected, :class => "pitch-point-image hidden" %>
+		<% @pitch_points.each do |point| %>
+			<% css_point = point[:name].downcase.tr(' ', '-')%>
+			<% image_point = point[:name].downcase.tr(' ', '_')%>
+			<% image_selected = 'points/selected/'+image_point+'.png'%>
+			<% image_deselected = 'points/deselected/'+image_point+'.png'%>
+			<% image_class = point[:optional] ? "pitch-point-image-selectable pitch-point-image" : "pitch-point-image" %>
+			<% selector_class = point[:optional] ? "pitch-point-selector" : "" %>
+
+			   <div id="<%= css_point %>" class="form-group row">
+			  <div class="row-same-height">
+				<div class="col-xs-2 col-xs-height col-middle">
+				  <a id="<%= css_point %>-selector" class="<%= selector_class %>" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
+					<div class="text-center">
+					  <% if point[:selected] %>
+						  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
+						  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected hidden" %>
+					  <% elsif not point[:selected] and point[:optional] %>
+						  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected hidden" %>
+						  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected" %>
+					  <% end %>
+					</div>
+				  </a>
 				</div>
-			  </a>
-			</div>
-			<div class="col-md-10">
-			  <textarea id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"></textarea>
-			</div>
+				<div class="col-xs-10 col-xs-height">
+				  <% if point[:selected] %>
+					  <textarea id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"></textarea>
+				  <% elsif not point[:selected] and point[:optional] %>
+					  <textarea disabled="" id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"></textarea>
+				  <% end %>
+				</div>
+			  </div>
 
-			<input id="<%= css_point %>-selected" value="selected" hidden/>
+			  <% if point[:selected] %>
+				  <input id="<%= css_point %>-selected" value="selected" hidden/>
+			  <% elsif not point[:selected] and point[:optional] %>
+				  <input id="<%= css_point %>-selected" value="deselected" hidden/>
+			  <% end %>
+
+			</div>
+		<% end %>
+
+		<div class="form-group form-actions">
+		  <div class="actions">
+
+			<div class="col-xs-6">
+
+			  show my face to members
+
+			</div>
+			<div class="col-xs-6">
+
+			  show this card to public
+
+			</div>
 
 		  </div>
-	  <% end %>
-
-	  <div class="form-group">
-		<div class="col-xs-6">
-
-		  who can see me
-
-		</div>
-		<div class="col-xs-6">
-
-		  who can see content
-
 		</div>
 	  </div>
 
-	  <div class="form-group form-actions">
-		<div class="actions text-center">
-		  <%= f.submit "Submit", class: "btn btn-primary" %>
-		</div>
-	  </div>
-  <% end %>
+	</div>
 
-</div>
-
-<%= button_to 'Back', pitch_cards_path, class: "btn btn-alt btn-default" %>
+	<div class="pitch-card-actions text-center">
+	  <%= f.submit "Pitch", class: "btn btn-primary" %>
+	</div>
+<% end %>
 
 <br/>

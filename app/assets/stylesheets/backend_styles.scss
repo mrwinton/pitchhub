@@ -5,8 +5,10 @@
  *
  */
 
-/* Variables used in 'main/' and 'themes' */
-@import "variables";
+/* Variables used in 'main/' */
+@import "shared/variables";
+
+@import "shared/bs_height_support";
 
 /* Main */
 @import "backend/layout.scss";
@@ -17,6 +19,4 @@
 @import "backend/bs_overwrite.scss";
 @import "backend/extras.scss";
 @import "backend/pitch_overwrite.scss";
-
-/* Themes */
-//@import "themes";
+@import "backend/pitch_card";

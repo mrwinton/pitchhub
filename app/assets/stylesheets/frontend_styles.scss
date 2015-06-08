@@ -6,7 +6,7 @@
  */
 
 /* Variables used in 'main/' and 'themes' */
-@import "variables";
+@import "shared/variables";
 
 /* Main */
 @import "frontend/layout.scss";
@@ -16,6 +16,3 @@
 @import "frontend/bs_overwrite.scss";
 @import "frontend/extras.scss";
 @import "frontend/word_switcher.scss";
-
-/* Themes */
-@import "themes";

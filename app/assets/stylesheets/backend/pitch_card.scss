@@ -1,0 +1,49 @@
+@mixin form-pitch-point-placeholder-overwrite{
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bolder;
+  font-size: large;
+  color: $color_pitch_secondary_text;
+}
+
+textarea.form-pitch-point:-ms-input-placeholder { @include form-pitch-point-placeholder-overwrite }
+textarea.form-pitch-point::-moz-placeholder { /* Firefox 19+ */ @include form-pitch-point-placeholder-overwrite }
+textarea.form-pitch-point:-moz-placeholder { /* older Firefox*/ @include form-pitch-point-placeholder-overwrite }
+textarea.form-pitch-point::-webkit-input-placeholder { @include form-pitch-point-placeholder-overwrite  }
+
+.pitch-point-image{
+  width: 100%;
+  max-width: 50px;
+  height: auto;
+
+
+}
+
+textarea[disabled].form-pitch-point{
+  opacity: 0.6;
+}
+
+.pitch-point-image-selectable {
+  cursor: pointer;
+}
+
+.form-pitch-point{
+  padding: 5px;
+  resize: none;
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: scroll;
+  background-color: $color_light_ultra;
+  font-size: large;
+}
+
+.pitch-card{
+  border: 5px solid $color_light_secondary;
+  border-radius: 5px;
+  min-width: 410px;
+}
+
+.pitch-card-actions{
+  min-width: 410px;
+}
