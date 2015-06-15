@@ -29,6 +29,9 @@ module Pitchhub
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.autoload_paths << "#{Rails.root}/app/models/disclosure_scopes"
+    config.autoload_paths << "#{Rails.root}/app/models/groups"
+
     config.web_console.whitelisted_ips = '10.0.2.2'
   end
 end

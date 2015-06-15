@@ -5,7 +5,7 @@ class Comment
 
   field :comment,        type: String
 
-  embeds_one :author_scope, class_name: "DisclosureScope"
-  embeds_one :content_scope, class_name: "DisclosureScope"
+  embeds_one :author_scope, class_name: "DisclosureScope", inverse_of: "author_scope"
+  embeds_one :content_scope, class_name: "DisclosureScope", inverse_of: "content_scope"
 
 end

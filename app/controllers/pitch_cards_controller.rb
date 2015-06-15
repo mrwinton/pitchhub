@@ -35,6 +35,10 @@ class PitchCardsController < ApplicationController
   def create
     @pitch_card = PitchCard.new(pitch_card_params)
 
+    # Inject the scope objects
+    @scopes = ApplicationController.helpers.scopes(current_user)
+    @pitch_card.inject_scopes(@scopes)
+
     respond_to do |format|
       if @pitch_card.save
         format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
@@ -78,7 +82,7 @@ class PitchCardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitch_card_params
-      params.require(:pitch_card).permit(:status, pitch_points_attributes: [:id, :name, :selected, :value])
+      params.require(:pitch_card).permit(:status, :i_scope, :pc_scope, :initiator_scope, :pitch_card_scope, pitch_points_attributes: [:id, :name, :selected, :value])
     end
 
 end
