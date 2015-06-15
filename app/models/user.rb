@@ -49,12 +49,10 @@ class User
   has_mongoid_attached_file :avatar_image
   validates_attachment_content_type :avatar_image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
-  has_many :my_groups, class_name: "Group"
-  has_and_belongs_to_many :groups, class_name: "Group"
+  has_many :groups, class_name: "Group"
+  has_many :comments, class_name: "Comment"
 
-  has_many :init_pitch_cards, class_name: "PitchCard"
-  has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard"
-
-
+  has_many :init_pitch_cards, class_name: "PitchCard", inverse_of: "initiator"
+  has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard", inverse_of: "collaborators"
 
 end

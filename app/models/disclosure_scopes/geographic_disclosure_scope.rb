@@ -1,2 +1,0 @@
-class GeographicDisclosureScope < DisclosureScope
-end

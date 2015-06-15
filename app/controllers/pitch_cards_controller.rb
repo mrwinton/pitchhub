@@ -1,8 +1,8 @@
 class PitchCardsController < ApplicationController
   layout 'backend/base'
 
-  before_action :set_pitch_card, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :set_pitch_card, only: [:show, :edit, :update, :destroy]
 
   # GET /pitch_cards
   # GET /pitch_cards.json
@@ -17,9 +17,13 @@ class PitchCardsController < ApplicationController
 
   # GET /pitch_cards/new
   def new
+    @pitch_card   = PitchCard.new
+
     # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
     @pitch_points = PitchPoint.points
-    @pitch_card   = PitchCard.new
+    # build the pitch card's points
+    @pitch_points.length.times{@pitch_card.pitch_points.build}
+
   end
 
   # GET /pitch_cards/1/edit
@@ -33,7 +37,7 @@ class PitchCardsController < ApplicationController
 
     respond_to do |format|
       if @pitch_card.save
-        format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully created.' }
+        format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
         format.html { render :new }
@@ -74,6 +78,7 @@ class PitchCardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitch_card_params
-      params[:pitch_card]
+      params.require(:pitch_card).permit(:status, pitch_points_attributes: [:id, :name, :selected, :value])
     end
+
 end

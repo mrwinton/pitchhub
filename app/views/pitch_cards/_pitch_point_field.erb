@@ -1,0 +1,46 @@
+<% css_point = point[:name].downcase.tr(' ', '-')%>
+<% image_point = point[:name].downcase.tr(' ', '_')%>
+<% image_selected = 'points/selected/'+image_point+'.png'%>
+<% image_deselected = 'points/deselected/'+image_point+'.png'%>
+<% image_class = point[:optional] ? "pitch-point-image-selectable pitch-point-image" : "pitch-point-image" %>
+<% selector_class = point[:optional] ? "pitch-point-selector" : "" %>
+<% max_length = PitchPoint.point_max_length %>
+
+<%= f.fields_for :pitch_points, pitch_point_model do |builder| %>
+
+	<div id="<%= css_point %>" class="form-group row">
+
+	  <%= builder.hidden_field :name, :value => point[:name]%>
+
+	  <div class="row-same-height">
+		<div class="col-xs-2 col-xs-height col-middle">
+		  <a id="<%= css_point %>-selector" class="<%= selector_class %>" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
+			<div class="text-center">
+			  <% if point[:selected] %>
+				  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
+				  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected hidden" %>
+			  <% elsif not point[:selected] and point[:optional] %>
+				  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected hidden" %>
+				  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected" %>
+			  <% end %>
+			</div>
+		  </a>
+		</div>
+		<div class="col-xs-10 col-xs-height">
+		  <% if point[:selected] %>
+			  <%= builder.text_area :value, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], maxlength: max_length %>
+		  <% elsif not point[:selected] and point[:optional] %>
+			  <%= builder.text_area :value, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], maxlength: max_length, disabled: "" %>
+		  <% end %>
+		</div>
+	  </div>
+
+	  <% if point[:selected] %>
+		  <%= builder.hidden_field :selected, :value => true, id: css_point+"-selected"%>
+	  <% elsif not point[:selected] and point[:optional] %>
+		  <%= builder.hidden_field :selected, :value => false, id: css_point+"-selected"%>
+	  <% end %>
+
+	</div>
+
+<% end %>

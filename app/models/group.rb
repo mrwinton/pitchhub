@@ -1,9 +1,21 @@
 class Group
   include Mongoid::Document
+  include Mongoid::Enum
 
-  embedded_in :User, inverse_of: :my_groups
+  # The user that created this group
+  belongs_to :User, inverse_of: :groups
 
+  # Group name, that will be seen by the User
   field :name,    type: String
-  has_and_belongs_to_many :users, class_name: "User"
+
+  # The operation to be applied on this group
+  enum :operation, [:include, :exclude]
+
+#   TODO get base from which to include/exclude members
+
+  def in_group(user_to_check)
+    raise NotImplementedError
+  end
+
 
 end

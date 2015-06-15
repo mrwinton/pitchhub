@@ -16,46 +16,9 @@
 
 	  <div class="form-horizontal form-bordered">
 
-		<% @pitch_points.each do |point| %>
-			<% css_point = point[:name].downcase.tr(' ', '-')%>
-			<% image_point = point[:name].downcase.tr(' ', '_')%>
-			<% image_selected = 'points/selected/'+image_point+'.png'%>
-			<% image_deselected = 'points/deselected/'+image_point+'.png'%>
-			<% image_class = point[:optional] ? "pitch-point-image-selectable pitch-point-image" : "pitch-point-image" %>
-			<% selector_class = point[:optional] ? "pitch-point-selector" : "" %>
-			<% max_length = PitchPoint.point_max_length %>
-
-			   <div id="<%= css_point %>" class="form-group row">
-			  <div class="row-same-height">
-				<div class="col-xs-2 col-xs-height col-middle">
-				  <a id="<%= css_point %>-selector" class="<%= selector_class %>" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
-					<div class="text-center">
-					  <% if point[:selected] %>
-						  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
-						  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected hidden" %>
-					  <% elsif not point[:selected] and point[:optional] %>
-						  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected hidden" %>
-						  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected" %>
-					  <% end %>
-					</div>
-				  </a>
-				</div>
-				<div class="col-xs-10 col-xs-height">
-				  <% if point[:selected] %>
-					  <textarea id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>" maxlength="<%=max_length%>"></textarea>
-				  <% elsif not point[:selected] and point[:optional] %>
-					  <textarea disabled="" id="<%= css_point %>-textarea-input" name="<%= css_point %>-textarea-input" class="form-horizontal form-control-borderless form-pitch-point" placeholder="<%= point[:placeholder]  %>"  maxlength="<%=max_length%>"></textarea>
-				  <% end %>
-				</div>
-			  </div>
-
-			  <% if point[:selected] %>
-				  <input id="<%= css_point %>-selected" value="selected" hidden/>
-			  <% elsif not point[:selected] and point[:optional] %>
-				  <input id="<%= css_point %>-selected" value="deselected" hidden/>
-			  <% end %>
-
-			</div>
+		<% @pitch_points.each_with_index  do |point, index| %>
+			<% pitch_point_model = @pitch_card.pitch_points[index] %>
+			<%= render partial: 'pitch_cards/pitch_point_field', locals: { f: f, point: point, pitch_point_model: pitch_point_model } %>
 		<% end %>
 
 		<div class="form-group form-actions">
@@ -63,7 +26,13 @@
 
 			<div class="col-xs-6">
 
-			  show my face to members
+			  <%= f.select(:initiator_scope) do %>
+				  <% scopes.each do |c| -%>
+					  <%= content_tag(:option, c[:name], value: c[:scope]) %>
+				  <% end %>
+			  <% end %>
+
+			   <!--show my face to members-->
 
 			</div>
 			<div class="col-xs-6">

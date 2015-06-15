@@ -1,3 +1,5 @@
-class Suggestion
-  include Mongoid::Document
+class Suggestion < Comment
+
+  field :content,        type: String
+
 end

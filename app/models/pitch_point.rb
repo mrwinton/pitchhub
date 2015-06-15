@@ -1,13 +1,15 @@
 class PitchPoint
   include Mongoid::Document
-  include Mongoid::Enum
+  # include Mongoid::Enum
+  # include Mongoid::Attributes::Dynamic
 
   embedded_in :PitchCard, inverse_of: :pitch_points
 
-  enum :status, [:selected, :unselected]
+  field :name,        type: String
 
-  field :name,    type: String
-  field :value,   type: String
+  field :selected,    type: Boolean
+
+  field :value,        type: String
 
   #TODO thread or commenting
 
@@ -17,7 +19,7 @@ class PitchPoint
                         :optional => false,
                         :name => "Value Proposition",
                         :placeholder => " ",
-                        :tooltip => "What's the value?"
+                        :tooltip => "What's the value? *required*"
                       },
                       { :selected => true,
                         :optional => true,

@@ -35,7 +35,7 @@ var PitchCards = function() {
                 //get the value
                 isSelectedValue = isSelectedElem.val(),
                 //check if it's selected
-                isSelected = isSelectedValue === "selected",
+                isSelected = isSelectedValue == "true",
                 //get the elements to update with the new state
                 textArea = pitchPoint.find("textarea"),
                 imageSelected = pitchPoint.find("img.pitch-point-selected"),
@@ -46,13 +46,13 @@ var PitchCards = function() {
                 //changing to deselected
                 textArea.val("");
                 textArea.prop('disabled',true);
-                isSelectedElem.val( "deselected" );
+                isSelectedElem.val( false );
                 imageSelected.addClass("hidden");
                 imageDeselected.removeClass("hidden");
             } else {
                 //changing to selected
                 textArea.prop('disabled',false);
-                isSelectedElem.val( "selected" );
+                isSelectedElem.val( true );
                 imageSelected.removeClass("hidden");
                 imageDeselected.addClass("hidden");
             }
