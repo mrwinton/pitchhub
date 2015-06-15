@@ -14,6 +14,7 @@ textarea.form-pitch-point::-webkit-input-placeholder { @include form-pitch-point
 .pitch-point-image{
   width: 100%;
   max-width: 50px;
+  min-width: 40px;
   height: auto;
 
 
@@ -41,9 +42,14 @@ textarea[disabled].form-pitch-point{
 .pitch-card{
   border: 5px solid $color_light_secondary;
   border-radius: 5px;
-  min-width: 410px;
+  min-width: 300px;
 }
 
 .pitch-card-actions{
-  min-width: 410px;
+  min-width: 300px;
+}
+
+.select-scope{
+  min-width: 50px;
+  width: 100%;
 }

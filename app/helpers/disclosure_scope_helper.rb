@@ -9,8 +9,8 @@ module DisclosureScopeHelper
 
     # Add the default groups
     scopes << { :scope => "public",        :name => "anyone" }
-    scopes << { :scope => "members",       :name => "members of PitchHub" }
-    scopes << { :scope => "contributors",  :name => "contributors on this card" }
+    scopes << { :scope => "members",       :name => "members" }
+    scopes << { :scope => "contributors",  :name => "contributors" }
     scopes << { :scope => "initiator",     :name => "initiator and me" }
     scopes << { :scope => "private",       :name => "just me" }
 

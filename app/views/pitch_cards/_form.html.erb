@@ -25,20 +25,22 @@
 		  <div class="actions">
 
 			<div class="col-xs-6">
-
-			  <%= f.select(:initiator_scope) do %>
+				<label>show my face to</label>
+			  <%= f.select(:initiator_scope, { :class => 'select-scope'}) do %>
 				  <% scopes.each do |c| -%>
 					  <%= content_tag(:option, c[:name], value: c[:scope]) %>
 				  <% end %>
 			  <% end %>
 
-			   <!--show my face to members-->
-
 			</div>
 			<div class="col-xs-6">
 
-			  show this card to public
-
+			  <label>show this card to</label>
+			  <%= f.select(:pitch_card_scope, { :class => 'select-scope'}) do %>
+				  <% scopes.each do |c| -%>
+					  <%= content_tag(:option, c[:name], value: c[:scope]) %>
+				  <% end %>
+			  <% end %>
 			</div>
 
 		  </div>
