@@ -12,7 +12,7 @@ class PitchPoint
   field :value,        type: String
 
   #TODO thread or commenting
-  has_many :comments, cascade_callbacks: true
+  has_many :comments
 
   # @return [Object]
   def self.points

@@ -1,4 +1,4 @@
-<%= form_for(@pitch_card) do |f| %>
+<%= form_for(@pitch_card, html: { multipart: true, class: "dropzone"}) do |f| %>
 	<% if @pitch_card.errors.any? %>
 		<div id="error_explanation">
 		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch_card from being saved:</h2>
@@ -14,6 +14,19 @@
 	<div class="block block-bordered pitch-card">
 
 	  <div class="form-horizontal form-bordered">
+
+		<div class="form-group">
+		  <div class="row">
+
+
+			<div class="dropzone-previews"></div>
+
+			<div class="fallback"></div>
+
+			<%= f.file_field :pitch_card_image %>
+
+		  </div>
+		</div>
 
 		<% @pitch_points.each_with_index  do |point, index| %>
 			<% pitch_point_model = @pitch_card.pitch_points[index] %>

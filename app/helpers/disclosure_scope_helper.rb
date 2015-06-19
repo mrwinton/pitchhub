@@ -19,7 +19,7 @@ module DisclosureScopeHelper
     scopes << { :id => "initiator",   :scope => initiator,      :name => "initiator and me" }
     scopes << { :id => "private",     :scope => private,        :name => "just me" }
 
-    # Get the user's defined groups, Group or Geographic
+    # Get the user's defined groups, Members or Geographic
     curr_user.groups.each do |group|
       # TODO check that id returns the ID, it may be "_id"
       group_disclosure_scope = GroupDisclosureScope.new
