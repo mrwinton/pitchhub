@@ -1,7 +1,10 @@
 <div class="content-header">
   <div class="header-section">
 	<h1>
-	  <%= content_title %><br><small><%= content_subtitle %></small>
+	  <%= content_title %><br>
+	  <% if content_subtitle.present? %>
+	  	<small><%= content_subtitle %></small>
+	  <% end %>
 	</h1>
   </div>
 </div>

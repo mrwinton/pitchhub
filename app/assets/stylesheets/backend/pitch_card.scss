@@ -6,6 +6,40 @@
   color: $color_pitch_secondary_text;
 }
 
+.photo-preview{
+  height: 150px;
+  width: 100%;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: $color_light_secondary;
+  background-color: $color_light_ultra;
+}
+
+#photo-upload{
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+#upload-click{
+  line-height: 140px;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-weight: bolder;
+  font-size: large;
+  color: $color_pitch_secondary;
+  cursor: pointer;
+}
+
+#uploadPitchCardImage{
+  display: none;
+}
+
+.delete-photo{
+  display: none;
+}
+
 textarea.form-pitch-point:-ms-input-placeholder { @include form-pitch-point-placeholder-overwrite }
 textarea.form-pitch-point::-moz-placeholder { /* Firefox 19+ */ @include form-pitch-point-placeholder-overwrite }
 textarea.form-pitch-point:-moz-placeholder { /* older Firefox*/ @include form-pitch-point-placeholder-overwrite }

@@ -8,42 +8,50 @@
 
 $(function() {
 
-    Dropzone.autoDiscover = false;
-
-    $("#new_pitch_card").dropzone({
-
-        previewsContainer: ".dropzone-previews",
-
-        clickable: false,
-
-        uploadMultiple: false,
-
-        maxFiles: 1,
-
-        autoProcessQueue: false,
-
-        //only allow image to be 1 mb max
-        maxFilesize: 1,
-
-        //make param name match field name in Pitch Card model
-        paramName: "pitch_card[pitch_card_image]",
-
-        //show remove links
-        addRemoveLinks: true,
-
-        success: function(file, response){
-            //$(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
-            //
-            //$(file.previewTemplate).addClass("dz-success");
-        },
-
-        removedFile: function(file){
-
-            //var id = $(file.previewTemplate).find('.dz-remove').attr('id');
-
-        }
-
-
+    $('#upload-click').click(function (){
+        imageClick();
     });
+
+    $('.delete-photo').click(function (e){
+        e.preventDefault();
+        deletePhoto();
+    });
+
+    function imageClick(){
+        $('.delete-photo').hide();
+        $('.photo-preview').click(function(){
+            $(this).attr('disabled', 'true');
+            $('#uploadPitchCardImage').trigger('click');
+        });
+
+        $('#uploadPitchCardImage').change(function(){
+            $('.photo-preview').removeAttr('disabled');
+            readUrl(this);
+        })
+    }
+
+    function readUrl(input){
+        if (input.files && input.files[0]){
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#upload-click').hide();
+                $('.photo-preview').css('background', 'url(' + e.target.result + ')');
+            };
+
+            $('.delete-photo').show();
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function deletePhoto(){
+        $('.delete-photo').click(function(){
+            $('.delete-photo').hide();
+            $('#uploadPitchCardImage').val('');
+            $('.photo-preview').css('background', '');
+            $('#upload-click').show();
+        });
+    }
 
 });
