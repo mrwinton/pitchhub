@@ -21,7 +21,6 @@ var PitchCards = function() {
         });
 
         function updatePitchPointTextArea(el){
-            //var el = this;
             setTimeout(function(){
                 el.style.cssText = 'height:auto';
                 // for box-sizing other than "content-box" use:

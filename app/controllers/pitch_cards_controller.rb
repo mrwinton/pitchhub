@@ -83,7 +83,7 @@ class PitchCardsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitch_card_params
       # Screen the baddies
-      params.require(:pitch_card).permit(:status, :i_scope, :pc_scope, pitch_points_attributes: [:id, :name, :selected, :value])
+      params.require(:pitch_card).permit(:status, :i_scope, :pc_scope, :pitch_card_image, pitch_points_attributes: [:id, :name, :selected, :value])
     end
 
 end
