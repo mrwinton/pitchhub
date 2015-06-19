@@ -6,13 +6,44 @@
   color: $color_pitch_secondary_text;
 }
 
-.photo-preview{
-  height: 150px;
+.delete-photo{
+  display: none;
+  position: absolute;
+  left: 16px;
+  bottom: 0;
+}
+
+.wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 450px;
   width: 100%;
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.wrapper:after {
+  padding-top: 56.25%;
+  /* 16:9 ratio */
+  display: block;
+  content: '';
+}
+.photo-preview {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   border-style: dashed;
   border-width: 2px;
   border-color: $color_light_secondary;
   background-color: $color_light_ultra;
+}
+
+#preview{
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
 }
 
 #photo-upload{
@@ -36,10 +67,6 @@
   display: none;
 }
 
-.delete-photo{
-  display: none;
-}
-
 textarea.form-pitch-point:-ms-input-placeholder { @include form-pitch-point-placeholder-overwrite }
 textarea.form-pitch-point::-moz-placeholder { /* Firefox 19+ */ @include form-pitch-point-placeholder-overwrite }
 textarea.form-pitch-point:-moz-placeholder { /* older Firefox*/ @include form-pitch-point-placeholder-overwrite }
@@ -50,8 +77,6 @@ textarea.form-pitch-point::-webkit-input-placeholder { @include form-pitch-point
   max-width: 50px;
   min-width: 40px;
   height: auto;
-
-
 }
 
 textarea[disabled].form-pitch-point{

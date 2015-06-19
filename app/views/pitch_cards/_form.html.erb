@@ -18,14 +18,16 @@
 		<div class="form-group">
 		  <div class="col-md-12">
 
-			<div class="photo-preview">
-			  <div class="photo-upload"></div>
-			  <p id="upload-click">Click to Upload</p>
+			<div class="wrapper">
+			  <div id="preview" class="photo-preview">
+				<div class="photo-upload"></div>
+				<p id="upload-click">Click to Upload</p>
+			  </div>
 			</div>
 
 			<%= f.file_field :pitch_card_image, accept: 'image/jpg,image/jpeg,image/png', id: 'uploadPitchCardImage' %>
 
-			<button class="delete-photo">Delete</button>
+			<button class="delete-photo btn btn-primary btn-xs">Delete</button>
 
 		  </div>
 		</div>

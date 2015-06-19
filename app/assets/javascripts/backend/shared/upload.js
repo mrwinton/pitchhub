@@ -8,7 +8,7 @@
 
 $(function() {
 
-    $('#upload-click').click(function (){
+    $('.photo-preview').click(function (){
         imageClick();
     });
 
@@ -17,17 +17,15 @@ $(function() {
         deletePhoto();
     });
 
+    $('#uploadPitchCardImage').change(function(){
+        $('.photo-preview').removeAttr('disabled');
+        readUrl(this);
+    });
+
     function imageClick(){
         $('.delete-photo').hide();
-        $('.photo-preview').click(function(){
-            $(this).attr('disabled', 'true');
-            $('#uploadPitchCardImage').trigger('click');
-        });
-
-        $('#uploadPitchCardImage').change(function(){
-            $('.photo-preview').removeAttr('disabled');
-            readUrl(this);
-        })
+        $(this).attr('disabled', 'true');
+        $('#uploadPitchCardImage').trigger('click');
     }
 
     function readUrl(input){
@@ -46,12 +44,10 @@ $(function() {
     }
 
     function deletePhoto(){
-        $('.delete-photo').click(function(){
-            $('.delete-photo').hide();
-            $('#uploadPitchCardImage').val('');
-            $('.photo-preview').css('background', '');
-            $('#upload-click').show();
-        });
+        $('.delete-photo').hide();
+        $('#uploadPitchCardImage').val('');
+        $('.photo-preview').css('background', '');
+        $('#upload-click').show();
     }
 
 });
