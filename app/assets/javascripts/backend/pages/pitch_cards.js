@@ -10,7 +10,26 @@ var PitchCards = function() {
     /* Initialization UI Code */
     var uiInit = function() {
 
-        $(".select-chosen").chosen({disable_search_threshold: 10, width: "100%"})
+        var pitchPoint = $(".form-pitch-point");
+
+        pitchPoint.each(function() {
+            updatePitchPointTextArea(this);
+        });
+
+        pitchPoint.keydown(function() {
+            updatePitchPointTextArea(this);
+        });
+
+        function updatePitchPointTextArea(el){
+            //var el = this;
+            setTimeout(function(){
+                el.style.cssText = 'height:auto';
+                // for box-sizing other than "content-box" use:
+                // el.style.cssText = '-moz-box-sizing:content-box';
+                el.style.cssText = 'height:' + el.scrollHeight + 'px';
+                $(el).trigger('maxlength.reposition');
+            },0);
+        }
 
     };
 

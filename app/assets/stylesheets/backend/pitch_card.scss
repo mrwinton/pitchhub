@@ -93,7 +93,7 @@ textarea[disabled].form-pitch-point{
   width: 100%;
   height: auto;
   display: block;
-  overflow: scroll;
+  overflow: hidden;
   background-color: $color_light_ultra;
   font-size: large;
 }
