@@ -1,4 +1,4 @@
-class PublicDisclosureScope < DisclosureScope
+class PublicDisclosureScope < Scope
 
   # Disclosed to the public
 

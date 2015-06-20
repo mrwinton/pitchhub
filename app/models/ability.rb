@@ -8,11 +8,11 @@ class Ability
     # PitchCard auth abilities
 
     can :see_initiator, PitchCard do |pitch_card|
-      pitch_card.initiator_scope.is_in_pitch_card_scope(user, pitch_card)
+      pitch_card.identity_scope.is_in_pitch_card_scope(user, pitch_card)
     end
 
     can :read_pitch, PitchCard do |pitch_card|
-      pitch_card.pitch_card_scope.is_in_pitch_card_scope(user, pitch_card)
+      pitch_card.content_scope.is_in_pitch_card_scope(user, pitch_card)
     end
 
     can :manage, PitchCard do |pitch_card|
@@ -23,7 +23,7 @@ class Ability
     # PitchPoint comments auth abilities
 
     can :see_author, Comment do |comment|
-      comment.author_scope.is_in_comment_scope(user, comment)
+      comment.identity_scope.is_in_comment_scope(user, comment)
     end
 
     can :read_content, Comment do |comment|

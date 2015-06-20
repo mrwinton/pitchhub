@@ -1,4 +1,4 @@
-class ContributorsDisclosureScope < DisclosureScope
+class ContributorsDisclosureScope < Scope
 
   # Disclosed to myself and the collaborators + initiator
 

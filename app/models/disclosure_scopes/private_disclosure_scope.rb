@@ -1,4 +1,4 @@
-class PrivateDisclosureScope < DisclosureScope
+class PrivateDisclosureScope < Scope
 
   # Disclosed to myself
 

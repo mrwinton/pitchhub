@@ -1,4 +1,5 @@
-class InitiatorDisclosureScope < DisclosureScope
+class InitiatorDisclosureScope < Scope
+
 
   # Disclosed to myself and the initiator
 

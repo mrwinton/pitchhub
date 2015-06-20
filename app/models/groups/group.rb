@@ -13,9 +13,5 @@ class Group
 
 #   TODO get base from which to include/exclude members
 
-  def in_group(user_to_check)
-    raise NotImplementedError
-  end
-
 
 end

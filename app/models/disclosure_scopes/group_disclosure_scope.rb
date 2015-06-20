@@ -1,4 +1,4 @@
-class GroupDisclosureScope < DisclosureScope
+class GroupDisclosureScope < Scope
 
   # Scoped to users in the group
   has_one :group, class_name: "Group"

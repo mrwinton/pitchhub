@@ -1,4 +1,4 @@
-class MemberDisclosureScope < DisclosureScope
+class MemberDisclosureScope < Scope
 
   # Scoped to members
 
