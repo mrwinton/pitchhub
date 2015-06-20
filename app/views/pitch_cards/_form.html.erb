@@ -40,12 +40,13 @@
 		<div class="form-group form-actions">
 		  <div class="actions">
 
-			<% current_scopes = scopes(current_user) %>
+			<% identity_scopes = scopes(current_user, :except => ["initiator"]) %>
+			<% content_scopes = scopes(current_user, :except => ["contributors", "initiator"]) %>
 
 			<div class="col-xs-6">
 				<label>show my face to</label>
 			  <%= f.select(:i_scope, { :class => 'select-scope'}) do %>
-				  <% current_scopes.each do |c| -%>
+				  <% identity_scopes.each do |c| -%>
 					  <%= content_tag(:option, c[:name], value: c[:id]) %>
 				  <% end %>
 			  <% end %>
@@ -55,7 +56,7 @@
 
 			  <label>show this card to</label>
 			  <%= f.select(:pc_scope, { :class => 'select-scope'}) do %>
-				  <% current_scopes.each do |c| -%>
+				  <% content_scopes.each do |c| -%>
 					  <%= content_tag(:option, c[:name], value: c[:id]) %>
 				  <% end %>
 			  <% end %>
