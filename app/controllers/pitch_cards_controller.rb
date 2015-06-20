@@ -24,6 +24,7 @@ class PitchCardsController < ApplicationController
     # build the pitch card's points
     @pitch_points.length.times{@pitch_card.pitch_points.build}
 
+
   end
 
   # GET /pitch_cards/1/edit

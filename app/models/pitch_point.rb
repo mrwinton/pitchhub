@@ -1,7 +1,5 @@
 class PitchPoint
   include Mongoid::Document
-  # include Mongoid::Enum
-  # include Mongoid::Attributes::Dynamic
 
   embedded_in :PitchCard, inverse_of: :pitch_points
 
