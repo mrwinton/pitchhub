@@ -8,6 +8,13 @@ GIT
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
 
+GIT
+  remote: https://github.com/mrwinton/mongoid-embedded-errors.git
+  revision: bdc67d2e4f45e8ce208468ec50dce67a339d379a
+  specs:
+    mongoid-embedded-errors (2.0.1)
+      mongoid (>= 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -393,6 +400,7 @@ DEPENDENCIES
   jquery-rails
   metric_fu
   mongoid!
+  mongoid-embedded-errors!
   mongoid-enum
   mongoid-paperclip
   mongoid_search

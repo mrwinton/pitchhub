@@ -4,7 +4,11 @@
 		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch card from being saved:</h2>
 
 		  <ul>
+			<% errors = @pitch_card.errors %>
 			<% @pitch_card.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+			<% @pitch_card.errors.messages.each do |message| %>
 				<li><%= message %></li>
 			<% end %>
 		  </ul>
@@ -29,11 +33,17 @@
 
 			<button class="delete-photo btn btn-primary btn-xs">Delete</button>
 
+			<% if @pitch_card.errors[:pitch_card_image].any? %>
+				<br/>
+			  <span class="label label-danger">
+				<%= @pitch_card.errors.full_messages_for(:pitch_card_image).to_sentence %>
+			  </span>
+			<% end %>
+
 		  </div>
 		</div>
 
 		<% pitch_points_hash.each_with_index  do |point, index| %>
-			<% @pitch_card.pitch_points.build %>
 			<% pitch_point_model = @pitch_card.pitch_points[index] %>
 			<%= render partial: 'pitch_cards/pitch_point_field', locals: { f: f, point: point, pitch_point_model: pitch_point_model } %>
 		<% end %>
@@ -45,7 +55,7 @@
 			<% content_scopes = scopes(current_user, :except => ["contributors", "initiator"]) %>
 
 			<div class="col-xs-6">
-				<label>show my face to</label>
+			  <label>show my face to</label>
 			  <%= f.select(:i_scope, { :class => 'select-scope'}) do %>
 				  <% identity_scopes.each do |c| -%>
 					  <%= content_tag(:option, c[:name], value: c[:id]) %>

@@ -1,4 +1,5 @@
 class PitchCardsController < ApplicationController
+  include ActionView::Helpers::TextHelper
   layout 'backend/base'
 
   before_action :authenticate_user!
@@ -18,12 +19,11 @@ class PitchCardsController < ApplicationController
   # GET /pitch_cards/new
   def new
     @pitch_card   = PitchCard.new
-    #
-    # # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
-    # @pitch_points = ApplicationController.helpers.pitch_points_hash
-    # # build the pitch card's points
-    # @pitch_points.length.times{@pitch_card.pitch_points.build}
 
+    # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
+    @pitch_points = ApplicationController.helpers.pitch_points_hash
+    # build the pitch card's points
+    @pitch_points.length.times{@pitch_card.pitch_points.build}
 
   end
 
@@ -44,9 +44,10 @@ class PitchCardsController < ApplicationController
 
     respond_to do |format|
       if @pitch_card.save
-        format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
+        format.html { redirect_to @pitch_card, alert: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
+        flash.now[:alert] = pluralize(@pitch_card.errors.count, "error") + ' found, please fix before submitting'
         format.html { render :new }
         format.json { render json: @pitch_card.errors, status: :unprocessable_entity }
       end

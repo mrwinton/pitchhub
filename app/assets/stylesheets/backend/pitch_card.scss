@@ -6,6 +6,13 @@
   color: $color_pitch_secondary_text;
 }
 
+.requires-pitch-point{
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 10px;
+}
+
 .delete-photo{
   display: none;
   position: absolute;

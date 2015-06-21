@@ -28,6 +28,9 @@ gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem "mongoid-enum"
+gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
+
+
 # gem 'delayed_job_mongoid'
 gem 'active_link_to', '~> 1.0.3'
 gem 'cancancan', '~> 1.10'

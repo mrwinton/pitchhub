@@ -14,6 +14,9 @@
 
 	  <div class="row-same-height">
 		<div class="col-xs-2 col-xs-height col-middle">
+		  <% unless point[:optional] %>
+		  	<div class="requires-pitch-point"><i class="fa fa-asterisk"></i></div>
+		  <% end%>
 		  <a id="<%= css_point %>-selector" class="<%= selector_class %>" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
 			<div class="text-center">
 			  <% if point[:selected] %>
@@ -32,6 +35,14 @@
 		  <% elsif not point[:selected] and point[:optional] %>
 			  <%= builder.text_area :value, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], maxlength: max_length, disabled: "" %>
 		  <% end %>
+
+		  <% if pitch_point_model.errors.any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= pitch_point_model.errors.full_messages.to_sentence %>
+			  </span>
+		  <% end %>
+
 		</div>
 	  </div>
 

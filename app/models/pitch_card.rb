@@ -1,10 +1,12 @@
 class PitchCard
   include Mongoid::Document
+  include Mongoid::EmbeddedErrors
   include Mongoid::Paperclip
   include Mongoid::Timestamps
   include Mongoid::Enum
   # == Include Scope Of Disclosure abilities to PitchCard
   include Scopable
+
 
   # == Status
   # is the pitch card active (taking suggestions, comments, etc) or complete (closed and no longer viewable)
