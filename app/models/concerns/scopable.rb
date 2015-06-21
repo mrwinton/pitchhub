@@ -12,6 +12,13 @@ module Scopable
     embeds_one :identity_scope, class_name: "Scope"
     embeds_one :content_scope, class_name: "Scope"
 
+    # == Validation
+    validates :identity_scope, presence: true
+    validates :content_scope, presence: true
+
+    # == Accept nested attributes
+    # Important: all relations (embedded or referenced) must be permitted here
+    # This allows us to use the model using this concern to have a form that also caters for the scopes
     accepts_nested_attributes_for :identity_scope, :content_scope
 
   end

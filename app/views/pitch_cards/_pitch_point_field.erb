@@ -4,7 +4,7 @@
 <% image_deselected = 'points/deselected/'+image_point+'.png'%>
 <% image_class = point[:optional] ? "pitch-point-image-selectable pitch-point-image" : "pitch-point-image" %>
 <% selector_class = point[:optional] ? "pitch-point-selector" : "" %>
-<% max_length = PitchPoint.point_max_length %>
+<% max_length = pitch_point_max_length %>
 
 <%= f.fields_for :pitch_points, pitch_point_model do |builder| %>
 

@@ -18,11 +18,11 @@ class PitchCardsController < ApplicationController
   # GET /pitch_cards/new
   def new
     @pitch_card   = PitchCard.new
-
-    # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
-    @pitch_points = PitchPoint.points
-    # build the pitch card's points
-    @pitch_points.length.times{@pitch_card.pitch_points.build}
+    #
+    # # [ [ pitch point name, pitch point tool tip, pitch point place holder], ... ]
+    # @pitch_points = ApplicationController.helpers.pitch_points_hash
+    # # build the pitch card's points
+    # @pitch_points.length.times{@pitch_card.pitch_points.build}
 
 
   end
@@ -39,6 +39,8 @@ class PitchCardsController < ApplicationController
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
     @pitch_card.inject_scopes(@scopes)
+    # Set the current user as the PitchCard's initiator
+    @pitch_card.initiator = current_user
 
     respond_to do |format|
       if @pitch_card.save

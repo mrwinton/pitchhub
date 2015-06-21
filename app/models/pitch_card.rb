@@ -26,6 +26,10 @@ class PitchCard
   # == Pitch card image
   # the face of the pitch card and it's validation
   has_mongoid_attached_file :pitch_card_image
+
+  # == Validation
+  validates :initiator, presence: true
+  validates_associated :pitch_points
   validates_attachment_content_type :pitch_card_image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
   # == Accept nested attributes

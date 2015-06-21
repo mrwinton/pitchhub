@@ -1,7 +1,7 @@
 <%= form_for(@pitch_card, html: { multipart: true}) do |f| %>
 	<% if @pitch_card.errors.any? %>
 		<div id="error_explanation">
-		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch_card from being saved:</h2>
+		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch card from being saved:</h2>
 
 		  <ul>
 			<% @pitch_card.errors.full_messages.each do |message| %>
@@ -32,7 +32,8 @@
 		  </div>
 		</div>
 
-		<% @pitch_points.each_with_index  do |point, index| %>
+		<% pitch_points_hash.each_with_index  do |point, index| %>
+			<% @pitch_card.pitch_points.build %>
 			<% pitch_point_model = @pitch_card.pitch_points[index] %>
 			<%= render partial: 'pitch_cards/pitch_point_field', locals: { f: f, point: point, pitch_point_model: pitch_point_model } %>
 		<% end %>
