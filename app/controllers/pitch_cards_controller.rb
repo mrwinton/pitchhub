@@ -47,7 +47,9 @@ class PitchCardsController < ApplicationController
         format.html { redirect_to @pitch_card, alert: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
-        flash.now[:alert] = pluralize(@pitch_card.errors.count, "error") + ' found, please fix before submitting'
+        # PaperClip spits out redundant errors, so we compensate by subtracting by the redundant count
+        num_errors = @pitch_card.errors.count - @pitch_card.errors[:pitch_card_image].count
+        flash.now[:alert] = pluralize(num_errors, "error") + ' found, please fix before submitting'
         format.html { render :new }
         format.json { render json: @pitch_card.errors, status: :unprocessable_entity }
       end
@@ -87,7 +89,7 @@ class PitchCardsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitch_card_params
       # Screen the baddies
-      params.require(:pitch_card).permit(:status, :i_scope, :pc_scope, :pitch_card_image, pitch_points_attributes: [:id, :name, :selected, :value])
+      params.require(:pitch_card).permit(:status, :i_scope, :c_scope, :pitch_card_image, pitch_points_attributes: [:id, :name, :selected, :value])
     end
 
 end

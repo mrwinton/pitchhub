@@ -26,9 +26,9 @@ module Scopable
   # == Temporary scopes
   # When creating a pitch card the form's select statements only allow value's to be ids
   # therefore we give them ids witch go into these temp fields but before_save we inject the real scopes
-  # into the initiator_scope and pitch_card_scope fields
+  # into the identity_scope and content_scope fields
   attr_accessor :i_scope
-  attr_accessor :pc_scope
+  attr_accessor :c_scope
 
   module InstanceMethods
 
@@ -38,8 +38,8 @@ module Scopable
         self.identity_scope = scope(i_scope, scopes)
       end
 
-      if pc_scope != nil
-        self.content_scope = scope(pc_scope, scopes)
+      if c_scope != nil
+        self.content_scope = scope(c_scope, scopes)
       end
 
     end

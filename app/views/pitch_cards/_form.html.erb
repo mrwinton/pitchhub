@@ -1,19 +1,4 @@
 <%= form_for(@pitch_card, html: { multipart: true}) do |f| %>
-	<% if @pitch_card.errors.any? %>
-		<div id="error_explanation">
-		  <h2><%= pluralize(@pitch_card.errors.count, "error") %> prohibited this pitch card from being saved:</h2>
-
-		  <ul>
-			<% errors = @pitch_card.errors %>
-			<% @pitch_card.errors.full_messages.each do |message| %>
-				<li><%= message %></li>
-			<% end %>
-			<% @pitch_card.errors.messages.each do |message| %>
-				<li><%= message %></li>
-			<% end %>
-		  </ul>
-		</div>
-	<% end %>
 
 	<div class="block block-bordered pitch-card">
 
@@ -62,15 +47,30 @@
 				  <% end %>
 			  <% end %>
 
+			  <% if @pitch_card.errors[:identity_scope].any? %>
+				  <br/>
+			  <span class="label label-danger">
+				<%= @pitch_card.errors.full_messages_for(:identity_scope).to_sentence %>
+			  </span>
+			  <% end %>
+
 			</div>
 			<div class="col-xs-6">
 
 			  <label>show this card to</label>
-			  <%= f.select(:pc_scope, { :class => 'select-scope'}) do %>
+			  <%= f.select(:c_scope, { :class => 'select-scope'}) do %>
 				  <% content_scopes.each do |c| -%>
 					  <%= content_tag(:option, c[:name], value: c[:id]) %>
 				  <% end %>
 			  <% end %>
+
+			  <% if @pitch_card.errors[:content_scope].any? %>
+				  <br/>
+			  <span class="label label-danger">
+				<%= @pitch_card.errors.full_messages_for(:content_scope).to_sentence %>
+			  </span>
+			  <% end %>
+
 			</div>
 
 		  </div>
