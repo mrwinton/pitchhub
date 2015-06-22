@@ -8,6 +8,7 @@ class PitchCardsController < ApplicationController
   # GET /pitch_cards
   # GET /pitch_cards.json
   def index
+    # TODO will most likely implement "more" button functionality rather than pagination
     @pitch_cards = PitchCard.all
   end
 
@@ -44,7 +45,7 @@ class PitchCardsController < ApplicationController
 
     respond_to do |format|
       if @pitch_card.save
-        format.html { redirect_to @pitch_card, alert: 'Pitch Card was successfully created.' }
+        format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
         # PaperClip spits out redundant errors, so we compensate by subtracting by the redundant count
@@ -59,11 +60,18 @@ class PitchCardsController < ApplicationController
   # PATCH/PUT /pitch_cards/1
   # PATCH/PUT /pitch_cards/1.json
   def update
+    # Inject the scope objects
+    @scopes = ApplicationController.helpers.scopes(current_user)
+    @pitch_card.inject_scopes(@scopes)
+
     respond_to do |format|
       if @pitch_card.update(pitch_card_params)
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
+        # PaperClip spits out redundant errors, so we compensate by subtracting by the redundant count
+        num_errors = @pitch_card.errors.count - @pitch_card.errors[:pitch_card_image].count
+        flash.now[:alert] = pluralize(num_errors, "error") + ' found, please fix before submitting'
         format.html { render :edit }
         format.json { render json: @pitch_card.errors, status: :unprocessable_entity }
       end
@@ -78,6 +86,20 @@ class PitchCardsController < ApplicationController
       format.html { redirect_to pitch_cards_url, notice: 'Pitch card was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # GET /initiated
+  # GET /initiated.json
+  def initiated
+    @pitch_cards = current_user.init_pitch_cards.page params[:page]
+    render 'index'
+  end
+
+  # GET /collabs
+  # GET /collabs.json
+  def collabs
+    @pitch_cards = current_user.collab_pitch_cards.page params[:page]
+    render 'index'
   end
 
   private

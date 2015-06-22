@@ -1,0 +1,22 @@
+<% css_point = point[:name].downcase.tr(' ', '-')%>
+<% image_point = point[:name].downcase.tr(' ', '_')%>
+<% image_selected = 'points/selected/'+image_point+'.png'%>
+<% image_class = "pitch-point-image" %>
+
+	<div id="<%= css_point %>" class="form-group row">
+
+	  <div class="row-same-height">
+		<div class="col-xs-2 col-xs-height col-middle">
+		  <a id="<%= css_point %>-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
+			<div class="text-center">
+			  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
+			</div>
+		  </a>
+		</div>
+		<div class="col-xs-10 col-xs-height">
+
+		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, disabled: true, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder] %>
+
+		</div>
+	  </div>
+	</div>

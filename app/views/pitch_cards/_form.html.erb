@@ -10,7 +10,7 @@
 			<div class="wrapper">
 			  <div id="preview" class="photo-preview">
 				<div class="photo-upload"></div>
-				<p id="upload-click">Click to Upload</p>
+				<p id="upload-click">Click to Upload Image</p>
 			  </div>
 			</div>
 
@@ -38,12 +38,14 @@
 
 			<% identity_scopes = scopes(current_user, :except => ["initiator"]) %>
 			<% content_scopes = scopes(current_user, :except => ["contributors", "initiator"]) %>
+			<% identity_scope = @pitch_card.identity_scope.present? ? @pitch_card.identity_scope : nil %>
+			<% content_scope = @pitch_card.content_scope.present? ? @pitch_card.content_scope : nil %>
 
 			<div class="col-xs-6">
 			  <label>show my face to</label>
 			  <%= f.select(:i_scope, { :class => 'select-scope'}) do %>
-				  <% identity_scopes.each do |c| -%>
-					  <%= content_tag(:option, c[:name], value: c[:id]) %>
+				  <% options_for_select( identity_scopes, identity_scope ).each do |i| %>
+					  <%= i %>
 				  <% end %>
 			  <% end %>
 
@@ -59,8 +61,8 @@
 
 			  <label>show this card to</label>
 			  <%= f.select(:c_scope, { :class => 'select-scope'}) do %>
-				  <% content_scopes.each do |c| -%>
-					  <%= content_tag(:option, c[:name], value: c[:id]) %>
+				  <% options_for_select( content_scopes, content_scope ).each do |c| %>
+					  <%= c %>
 				  <% end %>
 			  <% end %>
 
@@ -80,7 +82,17 @@
 	</div>
 
 	<div class="pitch-card-actions text-center">
-	  <%= f.submit "Pitch", class: "btn btn-primary" %>
+	  <% if @pitch_card.new_record? %>
+		  <%= f.submit "Pitch", class: "btn btn-primary" %>
+	  <% else%>
+		  <%= f.submit "Update", class: "btn btn-primary" %>
+
+		  <%= link_to(@pitch_card)do %>
+			  <%= submit_tag 'Back', type: 'button', class: "btn btn-default" %>
+		  <% end %>
+
+	  <% end %>
+
 	</div>
 <% end %>
 

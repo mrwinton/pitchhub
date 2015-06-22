@@ -13,7 +13,7 @@
 	  <!-- Sidebar Navigation -->
 	  <ul class="sidebar-nav">
 		<li>
-		  <%= active_link_to("/") do %>
+		  <%= active_link_to("/", :active => :exclusive )do %>
 			  <i class="fa fa-th-list sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span>
 		  <% end %>
 		</li>
@@ -21,7 +21,10 @@
 		  <span class="sidebar-header-title">Pitch Cards</span>
 		</li>
 		<li>
-		  <a href="#"><i class="fa fa-star-o sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Initiated</span></a>
+		  <%= active_link_to(initiated_pitch_cards_path, :active => :exclusive) do %>
+			  <i class="fa fa-star-o sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Initiated</span>
+		  <% end %>
+		  <!--<a href="#"><i class="fa fa-star-o sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Initiated</span></a>-->
 		</li>
 		<li>
 		  <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-star sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Favourites</span></a>

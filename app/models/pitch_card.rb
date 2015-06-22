@@ -7,6 +7,8 @@ class PitchCard
   # == Include Scope Of Disclosure abilities to PitchCard
   include Scopable
 
+  # == Pagination, max per page
+  paginates_per 10
 
   # == Status
   # is the pitch card active (taking suggestions, comments, etc) or complete (closed and no longer viewable)
