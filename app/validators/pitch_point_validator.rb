@@ -23,6 +23,11 @@ class PitchPointValidator < ActiveModel::Validator
       pitch_point.errors[:base] << pitch_point.name + ' cannot be empty!'
     end
 
+    # check that selected, selected-nonemptyable PitchPoints have a value
+    if pitch_point_hash[:selected_and_emptyable] == false and pitch_point.selected and pitch_point.value.empty?
+      pitch_point.errors[:base] << pitch_point.name + ' cannot be empty when selected!'
+    end
+
     # check that the PitchPoint value is within the character limit (if it exists)
     if pitch_point.value?
       if pitch_point.value.length > PitchPointsHelper.pitch_point_max_length

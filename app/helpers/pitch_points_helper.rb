@@ -3,36 +3,42 @@ module PitchPointsHelper
   def self.pitch_points_hash
     @pitch_points = [ { :selected => true,
                         :optional => false,
+                        :selected_and_emptyable => false,
                         :name => "Value Proposition",
                         :placeholder => " ",
                         :tooltip => "What's the value? *required*"
                       },
                       { :selected => true,
                         :optional => true,
+                        :selected_and_emptyable => true,
                         :name => "Business Opportunity",
                         :placeholder => "challenge",
                         :tooltip => "What's the business opportunity?"
                       },
                       { :selected => true,
                         :optional => true,
+                        :selected_and_emptyable => true,
                         :name => "Resources",
                         :placeholder => "enable",
                         :tooltip => "What resources will be required?"
                       },
                       { :selected => true,
                         :optional => true,
+                        :selected_and_emptyable => true,
                         :name => "Solution",
                         :placeholder => "solve",
                         :tooltip => "What's the solution?"
                       },
                       { :selected => true,
                         :optional => true,
+                        :selected_and_emptyable => true,
                         :name => "Facilitation",
                         :placeholder => " ",
                         :tooltip => "Looking for partners?"
                       },
                       { :selected => false,
                         :optional => true,
+                        :selected_and_emptyable => false,
                         :name => "Voting",
                         :placeholder => "yes/no survey",
                         :tooltip => "Have a question to go with your pitch card?"
