@@ -13,19 +13,27 @@ var PitchCards = function() {
         var pitchPoint = $(".form-pitch-point");
 
         pitchPoint.each(function() {
-            updatePitchPointTextArea(this);
+            updatePitchPointTextArea(this, true);
         });
 
         pitchPoint.keydown(function() {
-            updatePitchPointTextArea(this);
+            updatePitchPointTextArea(this, false);
         });
 
-        function updatePitchPointTextArea(el){
+        function updatePitchPointTextArea(el, animate){
             setTimeout(function(){
                 el.style.cssText = 'height:auto';
-                // for box-sizing other than "content-box" use:
-                // el.style.cssText = '-moz-box-sizing:content-box';
-                el.style.cssText = 'height:' + el.scrollHeight + 'px';
+
+                if(animate){
+                    $(el).animate({
+                        height:  el.scrollHeight + 'px'
+                    }, 500, function() {
+                        // Animation complete.
+                    });
+                } else {
+                    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+                }
+
                 $(el).trigger('maxlength.reposition');
             },0);
         }

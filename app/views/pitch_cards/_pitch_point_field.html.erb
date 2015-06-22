@@ -19,10 +19,10 @@
 		  <% end%>
 		  <a id="<%= css_point %>-selector" class="<%= selector_class %>" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
 			<div class="text-center">
-			  <% if point[:selected] %>
+			  <% if is_selected(@pitch_card, pitch_point_model, point) %>
 				  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
 				  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected hidden" %>
-			  <% elsif not point[:selected] and point[:optional] %>
+			  <% elsif is_deselected(@pitch_card, pitch_point_model, point) %>
 				  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected hidden" %>
 				  <%= image_tag_with_at2x image_deselected, :class => image_class + " pitch-point-deselected" %>
 			  <% end %>
@@ -30,9 +30,9 @@
 		  </a>
 		</div>
 		<div class="col-xs-10 col-xs-height">
-		  <% if point[:selected] %>
+		  <% if is_selected(@pitch_card, pitch_point_model, point) %>
 			  <%= builder.text_area :value, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], maxlength: max_length %>
-		  <% elsif not point[:selected] and point[:optional] %>
+		  <% elsif is_deselected(@pitch_card, pitch_point_model, point) %>
 			  <%= builder.text_area :value, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], maxlength: max_length, disabled: "" %>
 		  <% end %>
 
@@ -46,9 +46,9 @@
 		</div>
 	  </div>
 
-	  <% if point[:selected] %>
+	  <% if is_selected(@pitch_card, pitch_point_model, point) %>
 		  <%= builder.hidden_field :selected, :value => true, id: css_point+"-selected"%>
-	  <% elsif not point[:selected] and point[:optional] %>
+	  <% elsif is_deselected(@pitch_card, pitch_point_model, point) %>
 		  <%= builder.hidden_field :selected, :value => false, id: css_point+"-selected"%>
 	  <% end %>
 
