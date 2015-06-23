@@ -15,6 +15,7 @@ class PitchCardsController < ApplicationController
   # GET /pitch_cards/1
   # GET /pitch_cards/1.json
   def show
+    authorize! :read, @pitch_card
   end
 
   # GET /pitch_cards/new
@@ -30,6 +31,7 @@ class PitchCardsController < ApplicationController
 
   # GET /pitch_cards/1/edit
   def edit
+    authorize! :manage, @pitch_card
   end
 
   # POST /pitch_cards
@@ -81,6 +83,7 @@ class PitchCardsController < ApplicationController
   # DELETE /pitch_cards/1
   # DELETE /pitch_cards/1.json
   def destroy
+    authorize! :manage, @pitch_card
     @pitch_card.destroy
     respond_to do |format|
       format.html { redirect_to pitch_cards_url, notice: 'Pitch card was successfully destroyed.' }
@@ -111,7 +114,7 @@ class PitchCardsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitch_card_params
       # Screen the baddies
-      params.require(:pitch_card).permit(:status, :i_scope, :c_scope, :pitch_card_image, pitch_points_attributes: [:id, :name, :selected, :value])
+      params.require(:pitch_card).permit(:status, :i_scope, :c_scope, :image, pitch_points_attributes: [:id, :name, :selected, :value])
     end
 
 end

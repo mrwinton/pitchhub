@@ -2,6 +2,8 @@ class User
   include Mongoid::Document
   include Mongoid::Paperclip
   include Geocoder::Model::Mongoid
+  # == Include Image
+  include AssociatedImage
 
   geocoded_by :address # can also be an IP address
   after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? } # auto-fetch coordinates if it's not present or updated
@@ -33,9 +35,6 @@ class User
 
   field :coordinates, :type => Array
   field :address
-
-  has_mongoid_attached_file :avatar_image
-  validates_attachment_content_type :avatar_image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
   has_many :groups, class_name: "Group"
   has_many :comments, class_name: "Comment"

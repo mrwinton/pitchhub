@@ -16,7 +16,6 @@ class Ability
     end
 
     can :manage, PitchCard do |pitch_card|
-      # TODO maybe use the private scope here instead
       pitch_card.initiator.id == user.id
     end
 
@@ -31,14 +30,12 @@ class Ability
     end
 
     can :manage, Comment do |comment|
-      # TODO maybe use the private scope here instead
       comment.author.id == user.id
     end
 
     # PitchPoint suggestion auth abilities
 
     can :accept_suggestion, Suggestion do |suggestion|
-      # TODO maybe use the initiator scope here instead
       suggestion.pitch_point.pitch_card.initiator.id == user.id
     end
 

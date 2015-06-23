@@ -2,14 +2,14 @@
 
   <div class="form-horizontal form-bordered">
 
-	<% if @pitch_card.pitch_card_image.present? %>
+	<% if @pitch_card.image.present? %>
 
 		<div class="form-group">
 		  <div class="col-md-12">
 
 			<div class="wrapper">
 			  <!-- TODO add photo-->
-			  <div class="photo-preview" style="background-image:url(<%= @pitch_card.pitch_card_image.url %>);">
+			  <div class="photo-preview" style="background-image:url(<%= @pitch_card.image.url %>);">
 			  </div>
 			</div>
 

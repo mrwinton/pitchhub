@@ -6,6 +6,8 @@ class PitchCard
   include Mongoid::Enum
   # == Include Scope Of Disclosure abilities to PitchCard
   include Scopable
+  # == Include Image
+  include AssociatedImage
 
   # == Pagination, max per page
   paginates_per 10
@@ -27,14 +29,9 @@ class PitchCard
   # cascade call_backs specified because the points are dependent
   embeds_many :pitch_points, cascade_callbacks: true
 
-  # == Pitch card image
-  # the face of the pitch card and it's validation
-  has_mongoid_attached_file :pitch_card_image
-
   # == Validation
   validates :initiator, presence: true
   validates_associated :pitch_points
-  validates_attachment_content_type :pitch_card_image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
   # == Accept nested attributes
   # Important: all relations (embedded or referenced) must be permitted here

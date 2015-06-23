@@ -44,10 +44,31 @@ $(function() {
     }
 
     function deletePhoto(){
+
+        //Update hidden field, to signal image delete
+        $('#remove-image').val( true );
+
+        //Update UI
         $('.delete-photo').hide();
         $('#uploadPitchCardImage').val('');
         $('.photo-preview').css('background', '');
         $('#upload-click').show();
     }
+
+    function readUploadedPhoto(){
+
+        var uploadedImage = $('#uploaded_image');
+
+        if(uploadedImage.length>0){
+
+            $('#upload-click').hide();
+            $('#uploadPitchCardImage').val('');
+            $('.delete-photo').show();
+            $('.photo-preview').css('background', 'url(' + uploadedImage.val() + ')');
+
+        }
+    }
+
+    readUploadedPhoto();
 
 });

@@ -14,14 +14,19 @@
 			  </div>
 			</div>
 
-			<%= f.file_field :pitch_card_image, accept: 'image/jpg,image/jpeg,image/png', id: 'uploadPitchCardImage' %>
+			<%= f.file_field :image, accept: 'image/jpg,image/jpeg,image/png', id: 'uploadPitchCardImage' %>
+			<%= f.hidden_field :remove_image, :value => false, id: "remove-image"%>
+
+			<% if @pitch_card.image.present? %>
+				<%= hidden_field_tag 'uploaded_image', @pitch_card.image.url%>
+			<% end %>
 
 			<button class="delete-photo btn btn-primary btn-xs">Delete</button>
 
-			<% if @pitch_card.errors[:pitch_card_image].any? %>
+			<% if @pitch_card.errors[:image].any? %>
 				<br/>
 			  <span class="label label-danger">
-				<%= @pitch_card.errors.full_messages_for(:pitch_card_image).to_sentence %>
+				<%= @pitch_card.errors.full_messages_for(:image).to_sentence %>
 			  </span>
 			<% end %>
 

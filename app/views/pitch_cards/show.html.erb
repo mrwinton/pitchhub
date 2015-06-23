@@ -14,9 +14,11 @@
 
 	<%= render 'card' %>
 
-	<div class="pitch-card-actions text-center">
-	  <%= button_to 'Edit', edit_pitch_card_path(@pitch_card), :method => :get, class: "btn btn-primary"  %>
-	</div>
+	<% if can? :manage, @pitch_card %>
+		<div class="pitch-card-actions text-center">
+		  <%= button_to 'Edit', edit_pitch_card_path(@pitch_card), :method => :get, class: "btn btn-primary"  %>
+		</div>
+	<% end %>
 
 	<br/>
 
