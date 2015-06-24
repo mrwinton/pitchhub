@@ -10,7 +10,6 @@ class PitchPoint
 
   field :value,        type: String
 
-  #TODO thread or commenting
-  has_many :comments
+  has_one :thread, autobuild: true, dependent: :delete
 
 end

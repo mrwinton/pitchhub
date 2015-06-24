@@ -35,7 +35,7 @@
 
 		<% pitch_points_hash.each_with_index  do |point, index| %>
 			<% pitch_point_model = @pitch_card.pitch_points[index] %>
-			<%= render partial: 'pitch_cards/pitch_point_field', locals: { f: f, point: point, pitch_point_model: pitch_point_model } %>
+			<%= render partial: 'pitch_cards/partials/form/pitch_point_field', locals: { f: f, point: point, pitch_point_model: pitch_point_model } %>
 		<% end %>
 
 		<div class="form-group form-actions">
