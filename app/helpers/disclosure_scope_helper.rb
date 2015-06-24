@@ -54,4 +54,23 @@ module DisclosureScopeHelper
 
   end
 
+
+  def self.scope(scope_id, scopes)
+    # find which scope matches
+    scopes.each do |s|
+      # return on match
+      if s[:id] == scope_id
+        return s[:scope]
+      end
+    end
+
+    # could not find scope
+    # TODO better exception
+    raise Exception
+  end
+
+  def scope(scope_id, scopes)
+    DisclosureScopeHelper.scope(scope_id, scopes)
+  end
+
 end

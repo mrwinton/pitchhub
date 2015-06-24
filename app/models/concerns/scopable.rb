@@ -35,30 +35,13 @@ module Scopable
     def inject_scopes(scopes)
 
       if i_scope != nil
-        self.identity_scope = scope(i_scope, scopes)
+        self.identity_scope = DisclosureScopeHelper.scope(i_scope, scopes)
       end
 
       if c_scope != nil
-        self.content_scope = scope(c_scope, scopes)
+        self.content_scope = DisclosureScopeHelper.scope(c_scope, scopes)
       end
 
-    end
-
-    # == Private Methods from here down
-    private
-
-    def scope(scope_id, scopes)
-      # find which scope matches
-      scopes.each do |s|
-        # return on match
-        if s[:id] == scope_id
-          return s[:scope]
-        end
-      end
-
-      # could not find scope
-      # TODO better exception
-      raise Exception
     end
 
   end
