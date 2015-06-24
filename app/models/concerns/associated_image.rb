@@ -3,7 +3,8 @@ module AssociatedImage
 
   included do
 
-    before_save :delete_image, if: ->{ remove_image == '1' && !image_updated_at_changed? }
+    before_save :delete_image, if: ->{ self.remove_image == "true"}
+    # before_save :delete_image, if: ->{ :remove_image == true && !image_updated_at_changed? }
 
     # == associated image
     # the face of the pitch card and it's validation

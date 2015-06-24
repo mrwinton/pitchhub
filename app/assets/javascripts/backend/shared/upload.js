@@ -23,7 +23,6 @@ $(function() {
     });
 
     function imageClick(){
-        $('.delete-photo').hide();
         $(this).attr('disabled', 'true');
         $('#uploadPitchCardImage').trigger('click');
     }
@@ -35,6 +34,7 @@ $(function() {
             reader.onload = function (e) {
                 $('#upload-click').hide();
                 $('.photo-preview').css('background', 'url(' + e.target.result + ')');
+                $('#remove-image').val( false );
             };
 
             $('.delete-photo').show();

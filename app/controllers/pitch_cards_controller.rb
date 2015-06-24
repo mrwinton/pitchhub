@@ -64,6 +64,9 @@ class PitchCardsController < ApplicationController
   def update
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
+    @pitch_card.i_scope = params[:pitch_card][:i_scope]
+    @pitch_card.c_scope = params[:pitch_card][:c_scope]
+    @pitch_card.remove_image = params[:pitch_card][:remove_image]
     @pitch_card.inject_scopes(@scopes)
 
     respond_to do |format|
@@ -86,7 +89,7 @@ class PitchCardsController < ApplicationController
     authorize! :manage, @pitch_card
     @pitch_card.destroy
     respond_to do |format|
-      format.html { redirect_to pitch_cards_url, notice: 'Pitch card was successfully destroyed.' }
+      format.html { redirect_to initiated_pitch_cards_url notice: 'Pitch card was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -114,7 +117,7 @@ class PitchCardsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitch_card_params
       # Screen the baddies
-      params.require(:pitch_card).permit(:status, :i_scope, :c_scope, :image, pitch_points_attributes: [:id, :name, :selected, :value])
+      params.require(:pitch_card).permit(:status, :i_scope, :c_scope, :image, :remove_image, pitch_points_attributes: [:id, :name, :selected, :value])
     end
 
 end
