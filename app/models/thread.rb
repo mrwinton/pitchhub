@@ -1,7 +1,10 @@
 class Thread
+  include Mongoid::Document
 
-  belongs_to :pitch_point
+  field :name,        type: String
 
-  has_many :comments
+  belongs_to :pitch_point, class_name: "PitchPoint", inverse_of: :thread
+
+  # has_many :comments, class_name: "Comment", inverse_of: :thread
 
 end

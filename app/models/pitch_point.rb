@@ -10,6 +10,8 @@ class PitchPoint
 
   field :value,        type: String
 
-  has_one :thread, autobuild: true, dependent: :delete
+  # has_one :thread, autobuild: true, inverse_of: "pitch_point"
+  # has_one :thread, class_name: "Thread", inverse_of: "pitch_point"
+  # , dependent: :delete, autobuild: true
 
 end

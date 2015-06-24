@@ -15,6 +15,13 @@ GIT
     mongoid-embedded-errors (2.0.1)
       mongoid (>= 3.0.0)
 
+GIT
+  remote: https://github.com/mrwinton/mongoid_denormalize.git
+  revision: 613104d7eb281726170d82ba321c6dd26acff87f
+  specs:
+    mongoid_denormalize (0.4.2)
+      mongoid (~> 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -407,6 +414,7 @@ DEPENDENCIES
   mongoid-embedded-errors!
   mongoid-enum
   mongoid-paperclip
+  mongoid_denormalize!
   mongoid_search
   public_activity
   rails (= 4.2.1)
