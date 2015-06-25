@@ -3,20 +3,46 @@
 <% image_selected = 'points/selected/'+image_point+'.png'%>
 <% image_class = "pitch-point-image" %>
 
-	<div id="<%= css_point %>" class="form-group row">
+<div id="<%= css_point %>" class="form-group row">
 
-	  <div class="row-same-height">
-		<div class="col-xs-2 col-xs-height col-middle">
-		  <a id="<%= css_point %>-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
-			<div class="text-center">
-			  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
-			</div>
-		  </a>
+  <div class="row-same-height">
+	<div class="col-xs-2 col-xs-height col-middle">
+	  <a id="<%= css_point %>-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
+		<div class="text-center">
+		  <%= image_tag_with_at2x image_selected, :class => image_class + " pitch-point-selected" %>
 		</div>
-		<div class="col-xs-10 col-xs-height">
-
-		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, disabled: true, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder] %>
-
-		</div>
-	  </div>
+	  </a>
 	</div>
+	<div class="col-xs-10 col-xs-height">
+
+	  <% if point[:suggestable] %>
+		  <div class="placard" data-initialize="placard">
+			<div class="placard-popup"></div>
+			<%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field", placeholder: point[:placeholder] %>
+			<div class="placard-footer">
+			  <a class="placard-cancel" href="#">Cancel</a>
+			  <button class="btn btn-primary btn-xs placard-accept" type="button">Suggest</button>
+			</div>
+		  </div>
+	  <% elsif point[:voteable] %>
+		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
+
+		  <div class="row">
+			<div class="col-xs-6 text-center">
+
+			  <%=  button_tag(type: 'button', class: 'btn btn-sm btn-success btn-vote') do %>
+				  <i class="fa fa-check"></i><span> Yes</span>
+			  <% end %>
+
+			</div>
+			<div class="col-xs-6 text-center">
+			  <%=  button_tag(type: 'button', class: 'btn btn-warning btn-sm btn-vote') do %>
+				  <i class="fa fa-times"></i><span> No</span>
+			  <% end %>
+			</div>
+		  </div>
+	  <% end %>
+
+	</div>
+  </div>
+</div>

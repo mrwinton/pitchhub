@@ -5,6 +5,7 @@ module PitchPointsHelper
                         :optional => false,
                         :selected_and_emptyable => false,
                         :top_level_comments => false,
+                        :suggestable => true,
                         :name => "Value Proposition",
                         :placeholder => " ",
                         :tooltip => "What's the value? *required*"
@@ -13,6 +14,7 @@ module PitchPointsHelper
                         :optional => true,
                         :selected_and_emptyable => true,
                         :top_level_comments => false,
+                        :suggestable => true,
                         :name => "Business Opportunity",
                         :placeholder => "challenge",
                         :tooltip => "What's the business opportunity?"
@@ -21,6 +23,7 @@ module PitchPointsHelper
                         :optional => true,
                         :selected_and_emptyable => true,
                         :top_level_comments => false,
+                        :suggestable => true,
                         :name => "Resources",
                         :placeholder => "enable",
                         :tooltip => "What resources will be required?"
@@ -29,6 +32,7 @@ module PitchPointsHelper
                         :optional => true,
                         :selected_and_emptyable => true,
                         :top_level_comments => false,
+                        :suggestable => true,
                         :name => "Solution",
                         :placeholder => "solve",
                         :tooltip => "What's the solution?"
@@ -37,6 +41,7 @@ module PitchPointsHelper
                         :optional => true,
                         :selected_and_emptyable => true,
                         :top_level_comments => true,
+                        :suggestable => true,
                         :name => "Facilitation",
                         :placeholder => " ",
                         :tooltip => "Looking for partners?"
@@ -45,6 +50,8 @@ module PitchPointsHelper
                         :optional => true,
                         :selected_and_emptyable => false,
                         :top_level_comments => false,
+                        :suggestable => false,
+                        :voteable => true,
                         :name => "Voting",
                         :placeholder => "yes/no survey",
                         :tooltip => "Have a question to go with your pitch card?"
