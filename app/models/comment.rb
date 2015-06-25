@@ -5,7 +5,7 @@ class Comment
   include Scopable
 
   belongs_to :author, class_name: "User", inverse_of: :comments
-  belongs_to :thread, inverse_of: :comments, class_name: "Thread"
+  belongs_to :discourse, inverse_of: :comments, class_name: "Discourse"
 
   field :comment,        type: String
 
@@ -20,7 +20,7 @@ class Comment
 
   # == Validation
   validates :author, presence: true
-  validates :thread, presence: true
+  validates :discourse, presence: true
   validates_length_of :comment, :maximum =>600, :allow_blank => false
 
   # == Denormalise

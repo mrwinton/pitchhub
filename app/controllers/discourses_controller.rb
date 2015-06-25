@@ -1,0 +1,2 @@
+class DiscoursesController < ApplicationController
+end

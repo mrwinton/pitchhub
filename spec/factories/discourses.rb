@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :thread do
+  factory :discourses do
     
   end
 
