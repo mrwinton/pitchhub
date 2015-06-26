@@ -37,10 +37,12 @@
 		  <% end %>
 
 		  <% if pitch_point_model.errors.any? %>
-			  <br/>
-			  <span class="label label-danger">
-				<%= pitch_point_model.errors.full_messages.to_sentence %>
-			  </span>
+				<% pitch_point_model.errors.full_messages.each do |error| %>
+				  <br/><span class="label label-danger">
+					   <%= error %>
+					 </span>
+				<% end%>
+
 		  <% end %>
 
 		</div>

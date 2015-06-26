@@ -6,6 +6,8 @@
  *= require_self
  */
 
+var app = {}
+
 $(function() {
 
     $('.photo-preview').click(function (){
@@ -32,8 +34,9 @@ $(function() {
             var reader = new FileReader();
 
             reader.onload = function (e) {
+                app.cardImage = e.target.result;
                 $('#upload-click').hide();
-                $('.photo-preview').css('background', 'url(' + e.target.result + ')');
+                $('.photo-preview').css('background', 'url(' + app.cardImage + ')');
                 $('#remove-image').val( false );
             };
 
@@ -61,14 +64,27 @@ $(function() {
 
         if(uploadedImage.length>0){
 
+            var uploaded = url (uploadedImage.val() );
+
             $('#upload-click').hide();
             $('#uploadPitchCardImage').val('');
             $('.delete-photo').show();
-            $('.photo-preview').css('background', 'url(' + uploadedImage.val() + ')');
+            $('.photo-preview').css('background', 'url(' + uploaded + ')');
 
+            return true
         }
+
+        return false
+
     }
 
-    readUploadedPhoto();
+    function readImage(){
+
+        //Try read from upload, if any
+        var uploadedSuccess = readUploadedPhoto();
+
+    }
+
+    readImage();
 
 });
