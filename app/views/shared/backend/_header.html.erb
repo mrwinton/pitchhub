@@ -2,9 +2,14 @@
   <!-- Left Header Navigation -->
   <ul class="nav navbar-nav-custom">
 
+	<li class="visible-xs visible-sm">
+	  <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');
+			  this.blur();">
+		<i class="fa fa-bars fa-fw"></i>
+	  </a>
+	</li>
+
 	<li>
-
-
 	  <%= link_to(new_pitch_card_path) do %>
 		  <i class="fa fa-plus"></i>
 	  <% end %>
