@@ -3,7 +3,7 @@ module AssociatedImage
 
   included do
 
-    before_save :delete_image, if: ->{ self.remove_image == "true"}
+    before_save :delete_image, if: ->{ self.remove_image == "true" }
     # before_save :delete_image, if: ->{ :remove_image == true && !image_updated_at_changed? }
 
     # == associated image
@@ -17,6 +17,7 @@ module AssociatedImage
     attr_accessor :remove_image
 
   end
+
 
   private
 

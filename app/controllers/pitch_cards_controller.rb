@@ -50,6 +50,7 @@ class PitchCardsController < ApplicationController
         format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
+        @pitch_card.image.clear
         # PaperClip spits out redundant errors, so we compensate by subtracting by the redundant count
         num_errors = @pitch_card.errors.count - @pitch_card.errors[:pitch_card_image].count
         flash.now[:alert] = pluralize(num_errors, "error") + ' found, please fix before submitting'

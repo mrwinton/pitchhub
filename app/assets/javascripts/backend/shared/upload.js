@@ -64,12 +64,12 @@ $(function() {
 
         if(uploadedImage.length>0){
 
-            var uploaded = url (uploadedImage.val() );
+            //var uploaded = url (uploadedImage.val() );
 
             $('#upload-click').hide();
             $('#uploadPitchCardImage').val('');
             $('.delete-photo').show();
-            $('.photo-preview').css('background', 'url(' + uploaded + ')');
+            $('.photo-preview').css('background', 'url(' + uploadedImage.val() + ')');
 
             return true
         }
