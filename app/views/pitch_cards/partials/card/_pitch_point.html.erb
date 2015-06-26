@@ -2,6 +2,7 @@
 <% image_point = point[:name].downcase.tr(' ', '_')%>
 <% image_selected = 'points/selected/'+image_point+'.png'%>
 <% image_class = "pitch-point-image" %>
+<% max_length = pitch_point_max_length %>
 
 <div id="<%= css_point %>" class="form-group row">
 
@@ -15,13 +16,25 @@
 	</div>
 	<div class="col-xs-10 col-xs-height">
 
-	  <% if point[:suggestable] %>
+	  <% if point[:suggestible] %>
 		  <div class="placard" data-initialize="placard">
 			<div class="placard-popup"></div>
-			<%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field", placeholder: point[:placeholder] %>
+			<%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: max_length %>
 			<div class="placard-footer">
 			  <a class="placard-cancel" href="#">Cancel</a>
 			  <button class="btn btn-primary btn-xs placard-accept" type="button">Suggest</button>
+			</div>
+		  </div>
+	  <% elsif point[:top_level_commentable] %>
+		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
+
+		  <div class="row">
+			<div class="col-xs-6 col-xs-offset-6 text-center">
+
+			  <%=  button_tag(type: 'button', class: 'btn btn-sm btn-default') do %>
+				  <i class="fa fa-comment"></i><span> Comment</span>
+			  <% end %>
+
 			</div>
 		  </div>
 	  <% elsif point[:voteable] %>

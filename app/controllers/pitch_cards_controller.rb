@@ -69,12 +69,14 @@ class PitchCardsController < ApplicationController
     @pitch_card.c_scope = params[:pitch_card][:c_scope]
     @pitch_card.remove_image = params[:pitch_card][:remove_image]
     @pitch_card.inject_scopes(@scopes)
+    previous_image = @pitch_card.image
 
     respond_to do |format|
       if @pitch_card.update(pitch_card_params)
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
+        @pitch_card.image = previous_image
         # PaperClip spits out redundant errors, so we compensate by subtracting by the redundant count
         num_errors = @pitch_card.errors.count - @pitch_card.errors[:pitch_card_image].count
         flash.now[:alert] = pluralize(num_errors, "error") + ' found, please fix before submitting'
