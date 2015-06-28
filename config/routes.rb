@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   get '/discourses/:id', to: 'discourses#show'
 
-  get '/suggestion', to: 'messages#suggestion'
+  resources :suggestions
+
+  # get '/suggestion', to: 'messages#suggestion'
 
   authenticated :user do
     root :to => "dashboard#index", as: :authenticated_root

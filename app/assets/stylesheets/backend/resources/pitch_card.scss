@@ -105,6 +105,16 @@ textarea[disabled].form-pitch-point{
   font-size: large;
 }
 
+.form-comment{
+  padding: 5px;
+  resize: none;
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: hidden;
+  background-color: $color_light_ultra;
+}
+
 .pitch-card{
   border: 5px solid $color_light_secondary;
   border-radius: 5px;

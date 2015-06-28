@@ -19,11 +19,10 @@ class Comment
   # == Validation
   validates :author, presence: true
   validates :discourse, presence: true
-  validates_length_of :comment, :maximum => 600, :allow_blank => false
+  validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
 
   # == Denormalise
   denormalize :first_name, :last_name, :from => :author
-
 
   def to_jq(can_see_author)
 

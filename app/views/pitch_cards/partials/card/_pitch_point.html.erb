@@ -23,7 +23,7 @@
 			<div class="placard-footer">
 			  <a class="placard-cancel" href="#">Cancel</a>
 			  <!-- TODO suggestion_path(@pitch_point)-->
-			  <%= link_to(suggestion_path, data: { toggle: "modal", target: "#ajax-modal" }) do %>
+			  <%= link_to(new_suggestion_path, data: { toggle: "modal", target: "#ajax-modal" }) do %>
 				  <button class="btn btn-primary btn-xs placard-accept" type="button">Suggest</button>
 			  <% end %>
 			</div>

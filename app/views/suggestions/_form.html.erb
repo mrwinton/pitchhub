@@ -1,0 +1,68 @@
+<%= form_for(@suggestion) do |f| %>
+
+	<div class="form-inputs">
+	  <label>Suggestion</label>
+	  <%= f.text_area :content, id: "textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: "suggestion", maxlength: pitch_point_max_length %>
+
+	  </br>
+
+	  <label>Comment</label>
+	  <%= f.text_area :comment, id: "textarea-input", class: "form-horizontal form-control-borderless form-comment", placeholder: "comment", maxlength: comment_max_length %>
+
+	  </br>
+
+	  <div class="form-group form-actions">
+
+		<% identity_scopes = scopes(current_user, :except => ["initiator"]) %>
+		<% content_scopes = scopes(current_user, :except => ["initiator"]) %>
+		<% identity_scope = @suggestion.identity_scope.present? ? @suggestion.identity_scope : nil %>
+		<% content_scope = @suggestion.content_scope.present? ? @suggestion.content_scope : nil %>
+
+		<div class="col-xs-6">
+		  <label>show my face to</label>
+		  <%= f.select(:i_scope, { :class => 'select-scope'}) do %>
+			  <% options_for_select( identity_scopes, identity_scope ).each do |i| %>
+				  <%= i %>
+			  <% end %>
+		  <% end %>
+
+		  <% if @suggestion.errors[:identity_scope].any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= @suggestion.errors.full_messages_for(:identity_scope).to_sentence %>
+			  </span>
+		  <% end %>
+
+		</div>
+		<div class="col-xs-6">
+
+		  <label>show this suggestion to</label>
+		  <%= f.select(:c_scope, { :class => 'select-scope'}) do %>
+			  <% options_for_select( content_scopes, content_scope ).each do |c| %>
+				  <%= c %>
+			  <% end %>
+		  <% end %>
+
+		  <% if @suggestion.errors[:content_scope].any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= @suggestion.errors.full_messages_for(:content_scope).to_sentence %>
+			  </span>
+		  <% end %>
+
+		</div>
+
+	  </div>
+
+	</div>
+
+	</br>
+	</br>
+	</br>
+
+	<div class='modal-footer'>
+	  <button type="button" data-dismiss="modal" class="btn">Close</button>
+	  <%= f.submit "Suggest", class: "btn btn-primary" %>
+	</div>
+
+<% end %>
