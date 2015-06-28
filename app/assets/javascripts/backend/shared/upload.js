@@ -1,12 +1,12 @@
 /*
  *  Document   : upload.js
  *  Author     : Michael Winton
- *  Description: Custom script that configures dropzone uploads
+ *  Description: Custom script that configures uploads
  *
  *= require_self
  */
 
-var app = {}
+var app = {};
 
 $(function() {
 

@@ -5,7 +5,6 @@
 // about supported directives.
 //
 // require jquery
-// require jquery_ujs
 //= require vendor/jquery-1.11.2.min
 //= require vendor/bootstrap.min
 //= require vendor/pnotify.custom.min
@@ -13,5 +12,7 @@
 //= require vendor/simple_flash.js
 //= require vendor/bootstrap-maxlength.min.js
 //= require vendor/fuelux.min.js
+//= require vendor/bootstrap-modal
+//= require vendor/bootstrap-modalmanager
 //= require turbolinks
 //= require jquery_ujs
