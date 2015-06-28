@@ -5,7 +5,7 @@
 <% max_length = pitch_point_max_length %>
 
 <div id="<%= css_point %>" class="form-group row">
-
+  <%= hidden_field_tag css_point+'-discourse-id', pitch_point_model.discourse._id, :class => "discourse", :name => point[:name] %>
   <div class="row-same-height">
 	<div class="col-xs-2 col-xs-height col-middle">
 	  <a id="<%= css_point %>-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">

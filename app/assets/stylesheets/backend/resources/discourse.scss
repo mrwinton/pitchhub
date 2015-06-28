@@ -154,3 +154,15 @@
     }
   }
 }
+
+.heading{
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bolder;
+  font-size: large;
+  color: $color_pitch_secondary_text;
+}
+
+#discourses-empty{
+  visibility: hidden;
+}

@@ -58,4 +58,51 @@ textarea.form-control{
   height: 63px;
 }
 
+.preloader{
+  display: block;
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+  z-index: 99999;
+}
 
+.preloader .inner {
+  position: relative;
+  top: 20%;
+  left: 50%;
+  margin: 0 0 0 -50px;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}
+
+.preloader-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid transparent;
+  border-left-color: #ffffff;
+  border-right-color: #ffffff;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  -webkit-animation: nprogress-spinner .4s linear infinite;
+  -moz-animation: nprogress-spinner .4s linear infinite;
+  -ms-animation: nprogress-spinner .4s linear infinite;
+  -o-animation: nprogress-spinner .4s linear infinite;
+  animation: nprogress-spinner .4s linear infinite;
+}
+
+.preloader-spinner {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border-width: 3px;
+}
+
+.push-bottom{
+  margin-bottom: 40px;
+}
