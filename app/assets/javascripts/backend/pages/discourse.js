@@ -20,8 +20,7 @@ var Discourse = function() {
                 complete = false;
             } else if(false == discourse.empty){
                 allEmpty = false;
-                var content = "#" + index.replace("id", "content");
-                $(content).removeClass("hidden");
+                $(discourse.content).removeClass("hidden");
             }
         });
 
@@ -45,6 +44,38 @@ var Discourse = function() {
 
     }
 
+    function renderDiscourse(target, data){
+        console.log(data);
+
+        var roots = {};
+        //make descendants an id -> [message]
+        var descendants = {};
+
+        var i;
+        for (i = 0; i < data.length; i++) {
+            var message = data[i];
+
+            if(message.message_type === "root"){
+                roots[message._id] = message;
+            } else {
+                //id message
+                descendants[message._id] = message;
+            }
+        }
+
+        for (i = 0; i < roots.length; i++) {
+
+            if(message.message_type === "root"){
+                roots[message._id] = message;
+            } else {
+                descendants[message._id] = message;
+            }
+        }
+
+        //construct element body
+        $( target ).append( "<p>Test</p>" );
+    }
+
     /* Initialization UI Code */
     var uiInit = function() {
 
@@ -58,8 +89,10 @@ var Discourse = function() {
 
             var discourse = this.id;
             var id = $(this).val();
+            var content = "#" + discourse.replace("id", "content");
+            var body = "#" + discourse.replace("id", "body");
 
-            discourses[discourse] = { complete: false, error: false, status: 'init', empty: true };
+            discourses[discourse] = { complete: false, error: false, status: 'init', content: content, body: body, empty: true };
 
             var request = void 0;
             request = $.ajax({
@@ -67,6 +100,7 @@ var Discourse = function() {
             });
             request.done(function(data, textStatus, jqXHR) {
                 if(data.length > 0){
+                    renderDiscourse(discourses[discourse].body, data);
                     console.log("complete with data");
                     discourses[discourse].empty = false;
                 } else { // no data
