@@ -20,6 +20,8 @@ var Discourse = function() {
                 complete = false;
             } else if(false == discourse.empty){
                 allEmpty = false;
+                var content = "#" + index.replace("id", "content");
+                $(content).removeClass("hidden");
             }
         });
 
@@ -28,7 +30,9 @@ var Discourse = function() {
             $("#discourses-loader").addClass("hidden");
 
             if(true == allEmpty){
-                $("#discourses-empty").addClass("animation-fadeInQuick");
+                var empty = "#discourses-empty";
+                $(empty).removeClass("hidden");
+                $(empty).addClass("animation-fadeInQuick");
             } else {
                 $("#discourses-content").removeClass("hidden");
             }

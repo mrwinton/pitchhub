@@ -86,6 +86,13 @@ textarea.form-pitch-point::-webkit-input-placeholder { @include form-pitch-point
   height: auto;
 }
 
+.pitch-point-image-restrained{
+  width: 100%;
+  max-width: 40px;
+  min-width: 40px;
+  height: auto;
+}
+
 textarea[disabled].form-pitch-point{
   opacity: 0.6;
 }

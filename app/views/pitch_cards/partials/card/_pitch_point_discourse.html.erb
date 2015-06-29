@@ -1,0 +1,24 @@
+<% css_point = point[:name].downcase.tr(' ', '-')%>
+<% image_point = point[:name].downcase.tr(' ', '_')%>
+<% image_selected = 'points/selected/'+image_point+'.png'%>
+
+<div class="col-md-10 col-md-offset-1">
+  <div id="<%= css_point %>-discourse-content" class="block block-bordered pitch-card row hidden">
+	<div class="row-same-height">
+	  <div class="col-xs-2 col-xs-height col-middle">
+		<a id="<%= css_point %>-selector">
+		  <div class="text-center">
+			<%= image_tag_with_at2x image_selected, :class =>  "pitch-point-image-restrained" %>
+		  </div>
+		</a>
+	  </div>
+	  <div class="col-xs-8 col-xs-height">
+		<h4><%= point[:name] %></h4>
+	  </div>
+	</div>
+
+	<div id="<%= css_point %>-discourse-body">
+
+	</div>
+  </div>
+</div>

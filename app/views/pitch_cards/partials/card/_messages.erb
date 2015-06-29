@@ -8,12 +8,31 @@
 	</div>
   </div>
 
-  <div id="discourses-empty" class="lead">
+  <div id="discourses-empty" class="lead hidden">
 	<h4 class="push-top-bottom text-center">Nothing here yet...</h4>
   </div>
 
   <div id="discourses-content" class="hidden">
-	we have comments!
+	<% @pitch_card.pitch_points.reject{|p| not p.selected}.each  do |pitch_point_model|
+
+	  point = PitchPointsHelper.pitch_points_hash.select { |point|
+		pitch_point_model.name == point[:name]
+	  }
+
+	  point = point.any? ? point.first : nil
+
+	  # the pitch point must be specified in our pitch_point_hash
+	  if point == nil
+		# TODO better error
+		raise Error
+	  end
+
+	%>
+
+		<%= render partial: 'pitch_cards/partials/card/pitch_point_discourse', locals: { point: point, pitch_point_model: pitch_point_model } %>
+
+	<% end %>
+
   </div>
 
 </div>
