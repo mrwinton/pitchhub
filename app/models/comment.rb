@@ -26,14 +26,14 @@ class Comment
   def to_jq(can_see_author)
 
     json = {
-        :_id => self._id,
+        :_id => _id.to_s,
         :type => "comment",
         :message_type => message_type,
         :comment => comment
     }
 
     if self.root?
-      json[:_parent_id] = self.parent._id
+      json[:_parent_id] = parent._id.to_s
     end
 
     if can_see_author
@@ -41,6 +41,8 @@ class Comment
     else
       json[:author] = "anonymous"
     end
+
+    json
 
   end
 
