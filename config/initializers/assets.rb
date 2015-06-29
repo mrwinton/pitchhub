@@ -28,6 +28,7 @@ Rails.application.config.assets.precompile += %w( backend/pages/dashboard.js )
 Rails.application.config.assets.precompile += %w( backend/pages/pitch_cards.js )
 Rails.application.config.assets.precompile += %w( backend/pages/discourse.js )
 Rails.application.config.assets.precompile += %w( backend/pages/users.js )
+Rails.application.config.assets.precompile += %w( backend/pages/suggestions.js )
 Rails.application.config.assets.precompile += %w( backend/shared/upload.js )
 Rails.application.config.assets.precompile += %w( backend/shared/modal.js )
 

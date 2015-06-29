@@ -1,15 +1,18 @@
-<%= form_for(@suggestion) do |f| %>
+<% name = @discourse.name %>
+<% css_point = name.downcase.tr(' ', '-')%>
+
+<%= form_for([@discourse, @suggestion]) do |f| %>
 
 	<div class="form-inputs">
-	  <label>Suggestion</label>
-	  <%= f.text_area :content, id: "textarea-input", class: "form-horizontal form-control-borderless form-pitch-point", placeholder: "suggestion", maxlength: pitch_point_max_length %>
+	  <label><%= name %></label>
+	  <%= f.text_area :content, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point form-input", placeholder: "suggestion", maxlength: pitch_point_max_length %>
 
-	  </br>
+	  <br/>
 
 	  <label>Comment</label>
-	  <%= f.text_area :comment, id: "textarea-input", class: "form-horizontal form-control-borderless form-comment", placeholder: "comment", maxlength: comment_max_length %>
+	  <%= f.text_area :comment, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-comment form-input", placeholder: "comment", maxlength: comment_max_length %>
 
-	  </br>
+	  <br/>
 
 	  <div class="form-group form-actions">
 
@@ -56,9 +59,7 @@
 
 	</div>
 
-	</br>
-	</br>
-	</br>
+	<br/><br/><br/>
 
 	<div class='modal-footer'>
 	  <button type="button" data-dismiss="modal" class="btn">Close</button>

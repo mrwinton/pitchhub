@@ -20,10 +20,12 @@
 		  <div class="placard" data-initialize="placard">
 			<div class="placard-popup"></div>
 			<%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: max_length %>
+			<%= hidden_field_tag css_point+'-textarea-original', pitch_point_model.value %>
+
 			<div class="placard-footer">
 			  <a class="placard-cancel" href="#">Cancel</a>
 			  <!-- TODO suggestion_path(@pitch_point)-->
-			  <%= link_to(new_suggestion_path, data: { toggle: "modal", target: "#ajax-modal" }) do %>
+			  <%= link_to(new_discourse_suggestion_path(pitch_point_model.discourse), id: css_point, class: "btn-suggest" ,data: { toggle: "modal", target: "#ajax-modal" }) do %>
 				  <button class="btn btn-primary btn-xs placard-accept" type="button">Suggest</button>
 			  <% end %>
 			</div>

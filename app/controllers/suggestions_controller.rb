@@ -1,5 +1,5 @@
 class SuggestionsController < ApplicationController
-
+  include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
   before_action :set_suggestion, only: [:show, :edit, :update, :destroy]
   layout :nil
@@ -17,10 +17,12 @@ class SuggestionsController < ApplicationController
     authorize! :read, @suggestion
   end
 
-  # GET /suggestions/new
+  # GET /discourse/:discourse_id/suggestions/new
   def new
 
+    @discourse = Discourse.find(params[:discourse_id])
     @suggestion = Suggestion.new
+    @suggestion.content = params[:content].gsub( "_", " " )
 
     respond_to do |format|
       # format.html { redirect_to root_path } #for my controller, i wanted it to be JS only
@@ -37,21 +39,27 @@ class SuggestionsController < ApplicationController
   # POST /suggestions
   # POST /suggestions.json
   def create
-    @suggestion = Suggestion.new(suggestion_params)
+
+    @discourse = Discourse.find(params[:discourse_id])
+
+    @suggestion = @discourse.comments.build(suggestion_params, Suggestion)
+    # @suggestion = Suggestion.new(suggestion_params)
 
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
     @suggestion.inject_scopes(@scopes)
     # Set the current user as the Suggestion's initiator
-    @suggestion.initiator = current_user
+    @suggestion.author = current_user
+    @suggestion.message_type = :root
+    @suggestion.author_name = current_user.first_name + " " + current_user.last_name
 
     respond_to do |format|
       if @suggestion.save
-        format.html { redirect_to @suggestion, notice: 'Suggestion was successfully created.' }
-        format.json { render :show, status: :created, location: @suggestion }
+        flash.now[:notice] = 'Suggestion was successfully created.'
+        format.html { redirect_to :back, notice: 'Suggestion was successfully created.' }
       else
-        flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please fix before submitting'
-        format.html { render :new }
+        flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please try again'
+        format.html { redirect_to :back }
         format.json { render json: @suggestion.errors, status: :unprocessable_entity }
       end
     end
@@ -64,7 +72,6 @@ class SuggestionsController < ApplicationController
     @scopes = ApplicationController.helpers.scopes(current_user)
     @suggestion.i_scope = params[:suggestion][:i_scope]
     @suggestion.c_scope = params[:suggestion][:c_scope]
-    @suggestion.remove_image = params[:suggestion][:remove_image]
     @suggestion.inject_scopes(@scopes)
 
     respond_to do |format|

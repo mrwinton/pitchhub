@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => { registrations: 'registrations' }
 
   resources :pitch_cards, except: :index  do
     collection do
@@ -10,7 +10,12 @@ Rails.application.routes.draw do
 
   get '/discourses/:id', to: 'discourses#show'
 
-  resources :suggestions
+  # resources :suggestions
+
+  resources :discourses, shallow: true do
+    resources :comments
+    resources :suggestions
+  end
 
   # get '/suggestion', to: 'messages#suggestion'
 

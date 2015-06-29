@@ -17,7 +17,7 @@ class PitchPoint
 
   # ensure that on creation a discourse is assigned
   set_callback(:create, :before) do |document|
-    document.create_discourse
+    document.create_discourse(name: document.name)
   end
 
 end

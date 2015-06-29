@@ -2,7 +2,6 @@ class User
   include Mongoid::Document
   include Mongoid::Paperclip
   include Geocoder::Model::Mongoid
-  include Mongoid::Denormalize
 
   # == Include Image
   include AssociatedImage
@@ -44,7 +43,8 @@ class User
   has_many :init_pitch_cards, class_name: "PitchCard", inverse_of: "initiator"
   has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard", inverse_of: "collaborators"
 
-  # Denormalize comments so we don't have to fetch user attrs every read
-  denormalize :first_name, :last_name, :to => :comments
+
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
 end

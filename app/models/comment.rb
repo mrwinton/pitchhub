@@ -1,6 +1,5 @@
 class Comment
   include Mongoid::Document
-  include Mongoid::Denormalize
   include Mongoid::Enum
   include Scopable
 
@@ -10,7 +9,7 @@ class Comment
   field :comment,        type: String
 
   # is it a root (top-level) or is it a descendant
-  enum :type, [:root, :descendant]
+  enum :message_type, [:root, :descendant]
 
   # == Cyclic relationship
   has_many :child, :class_name => 'Comment', :inverse_of => :parent
@@ -22,13 +21,14 @@ class Comment
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
 
   # == Denormalise
-  denormalize :first_name, :last_name, :from => :author
+  field :author_name,        type: String
 
   def to_jq(can_see_author)
 
     json = {
         :_id => self._id,
-        :type => type,
+        :type => "comment",
+        :message_type => message_type,
         :comment => comment
     }
 
@@ -37,7 +37,7 @@ class Comment
     end
 
     if can_see_author
-      json[:author] = first_name + " " + last_name
+      json[:author] = author_name
     else
       json[:author] = "anonymous"
     end

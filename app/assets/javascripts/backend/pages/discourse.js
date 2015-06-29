@@ -8,32 +8,34 @@
 
 var Discourse = function() {
 
-    var discourseArray = [];
+    var discourses = {};
 
     function discourseLoadingComplete(){
 
         var allEmpty = true;
         var complete = true;
-        var index;
-        for	(index = 0; index < discourseArray.length; index++) {
-            if(false == discourseArray[index].complete){
+
+        $.each(discourses, function( index, discourse ) {
+            if(false == discourse.complete){
                 complete = false;
-                break;
-            } else if(false == discourseArray[index].empty){
+            } else if(false == discourse.empty){
                 allEmpty = false;
             }
-        }
+        });
 
         if(true == complete){
             //  show discourses
             $("#discourses-loader").addClass("hidden");
 
-            if(allEmpty){
+            if(true == allEmpty){
                 $("#discourses-empty").addClass("animation-fadeInQuick");
+            } else {
+                $("#discourses-content").removeClass("hidden");
             }
 
             console.log("Done!");
         } else {
+            console.log("Calling again!");
             setTimeout(discourseLoadingComplete, 1000);
         }
 
@@ -53,7 +55,7 @@ var Discourse = function() {
             var discourse = this.id;
             var id = $(this).val();
 
-            discourseArray[discourse] = { complete: false, error: false, status: 'init', empty: true };
+            discourses[discourse] = { complete: false, error: false, status: 'init', empty: true };
 
             var request = void 0;
             request = $.ajax({
@@ -61,23 +63,26 @@ var Discourse = function() {
             });
             request.done(function(data, textStatus, jqXHR) {
                 if(data.length > 0){
-
-                    discourseArray[discourse].empty = false;
+                    console.log("complete with data");
+                    discourses[discourse].empty = false;
                 } else { // no data
-                    discourseArray[discourse].empty = true;
+                    console.log("complete without data");
+                    discourses[discourse].empty = true;
                 }
                 // render into DOM
-                discourseArray[discourse].status = textStatus;
-                discourseArray[discourse].complete = true;
+                discourses[discourse].status = textStatus;
+                discourses[discourse].complete = true;
             });
             request.error(function(jqXHR, textStatus, errorThrown) {
-                discourseArray[discourse].complete = true;
-                discourseArray[discourse].error = true;
-                discourseArray[discourse].status = textStatus;
+                console.log("finished with error");
+                discourses[discourse].complete = true;
+                discourses[discourse].error = true;
+                discourses[discourse].status = textStatus;
             });
         });
 
         setTimeout(discourseLoadingComplete, 1000);
+
     };
 
 

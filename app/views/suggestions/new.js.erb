@@ -20,6 +20,40 @@ $(loader).fadeToggle('fast', function() {
 	console.log("6");
 	$(modal).modal();
 	console.log("7");
+	$('textarea[maxlength]').maxlength({
+		threshold: 20,
+		warningClass: "label label-success",
+		limitReachedClass: "label label-danger"
+	});
+
+	var input = $(".form-input");
+
+	input.each(function() {
+		updatePitchPointTextArea(this, true);
+	});
+
+	input.keydown(function() {
+		updatePitchPointTextArea(this, false);
+	});
+
+	function updatePitchPointTextArea(el, animate){
+		setTimeout(function(){
+			el.style.cssText = 'height:auto';
+
+			if(animate){
+				$(el).animate({
+					height:  el.scrollHeight + 'px'
+				}, 500, function() {
+					// Animation complete.
+				});
+			} else {
+				el.style.cssText = 'height:' + el.scrollHeight + 'px';
+			}
+
+			$(el).trigger('maxlength.reposition');
+		},0);
+	}
+
 });
 //brings the loader back up + gets rid of the content when linking to another controller method etc
 $(content).on('click', dataRemote, function(){

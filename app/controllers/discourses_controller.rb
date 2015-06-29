@@ -6,7 +6,8 @@ class DiscoursesController < ApplicationController
   # GET /discourse/1
   # GET /discourse/1.json
   def show
-    render :json => @discourse.comments.select{|comment| can? :read_content, comment}.collect { |comment| comment.to_jq(can? :see_author, comment) }.to_json
+    comments = @discourse.comments
+    render :json => comments.select{|comment| can? :read_content, comment}.collect { |comment| comment.to_jq(can? :see_author, comment) }.to_json
   end
 
   private
