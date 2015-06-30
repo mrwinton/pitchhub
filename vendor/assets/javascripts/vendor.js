@@ -14,5 +14,6 @@
 //= require vendor/fuelux.min.js
 //= require vendor/bootstrap-modal
 //= require vendor/bootstrap-modalmanager
+//= require vendor/lodash.min
 //= require turbolinks
 //= require jquery_ujs

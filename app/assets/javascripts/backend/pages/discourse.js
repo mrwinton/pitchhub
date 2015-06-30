@@ -44,36 +44,89 @@ var Discourse = function() {
 
     }
 
+    function renderSuggestion(suggestion){
+        //construct element body
+
+        var sTextArea = "<textarea class=\"form-horizontal form-control-borderless form-pitch-point\" maxlength=\"101\" readonly=\"readonly\" disabled=\"yes\">"  + suggestion.content + "</textarea>";
+        var sComment = "<p>" + suggestion.comment + "</p>";
+        var sAuthor = "<p>" + suggestion.author + "</p>";
+        var suggestionHTML = sTextArea + sComment + sAuthor;
+
+        return suggestionHTML;
+
+    }
+
+    function renderComment(comment){
+        return "comment";
+    }
+
+    function renderPushedComments(comments){
+        return "pushed comment";
+    }
+
+    function renderDiscourseThread(target, root, descendants){
+        var discourseThread = "<li class=\"media\"><div class=\"media-body\">" + root + descendants + "</div></li>"
+        $( target ).append( discourseThread );
+    }
+
     function renderDiscourse(target, data){
         console.log(data);
 
         var roots = {};
-        //make descendants an id -> [message]
         var descendants = {};
 
         var i;
         for (i = 0; i < data.length; i++) {
             var message = data[i];
 
-            if(message.message_type === "root"){
+            if(message.message_type === "root"){ //root
                 roots[message._id] = message;
-            } else {
-                //id message
-                descendants[message._id] = message;
+            } else { //descendant
+
+                if(_.has(descendants, message._parent_id)){ //add to existing array
+                    //push on to array
+                    descendants[message._parent_id].push(message);
+
+                } else {
+                    //parent id not already in descendants
+
+                    //create new array
+                    var descendantsArray = [];
+                    //add this message to array
+                    descendantsArray.push(message);
+                    //on message's parent id add the array
+                    descendants[message._parent_id] = descendantsArray;
+                }
             }
         }
 
-        for (i = 0; i < roots.length; i++) {
+        // for each root, render the itself and then it's descendants (if any)
+        $.each(roots, function( index, root ) {
+            if(root.type === "suggestion"){
+                var suggestionHTML = renderSuggestion(root);
+                var pushedCommentsHTML = "";
 
-            if(message.message_type === "root"){
-                roots[message._id] = message;
+                if(_.has(descendants, root._id)){
+                    pushedCommentsHTML = renderPushedComments(descendants[root._id])
+                }
+
+                renderDiscourseThread(target, suggestionHTML, pushedCommentsHTML);
+
+            } else if(root.type === "comment"){
+
+                var commentHTML = renderComment(root);
+                var pushedCommentsHTML = "";
+
+                if(_.has(descendants, root._id)){
+                    pushedCommentsHTML = renderPushedComments(descendants[root._id])
+                }
+
+                renderDiscourseThread(target, commentHTML, pushedCommentsHTML);
+
             } else {
-                descendants[message._id] = message;
+                console.log("error, unidentified root: " + root);
             }
-        }
-
-        //construct element body
-        $( target ).append( "<p>Test</p>" );
+        });
     }
 
     /* Initialization UI Code */
