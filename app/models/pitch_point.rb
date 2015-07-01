@@ -11,13 +11,4 @@ class PitchPoint
 
   field :value,        type: String
 
-  has_one :discourse, class_name: "Discourse", inverse_of: "pitch_point"
-
-  accepts_nested_attributes_for :discourse
-
-  # ensure that on creation a discourse is assigned
-  set_callback(:create, :before) do |document|
-    document.create_discourse(name: document.name)
-  end
-
 end

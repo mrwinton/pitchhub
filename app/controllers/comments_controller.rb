@@ -1,14 +1,23 @@
 class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
+  before_action :set_pitch_card, only: [:index, :show, :edit, :update, :destroy]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   layout :nil
 
-  # GET /comments
-  # GET /comments.json
+  # GET /pitch_cards/1/comments
+  # GET /pitch_cards/1/comments.json
   def index
-    # TODO will most likely implement "more" button functionality rather than pagination
-    @comments = Comment.all
+
+    permitted_comments = @pitch_card.comments.select{|comment| can? :read_content, comment}
+    @discourses = Kaminari.paginate_array(permitted_comments).page(params[:page]).per(10)
+
+    # TODO for each discourse get it's children comments (if any)
+
+    respond_to do |format|
+      format.js
+    end
+
   end
 
   # GET /comments/1
@@ -91,6 +100,11 @@ class CommentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_pitch_card
+      @pitch_card = PitchCard.find(params[:pitch_card_id])
+    end
+
+
     def set_comment
       @comment = Comment.find(params[:id])
     end

@@ -1,7 +1,7 @@
-<% name = @discourse.name %>
+<% name = @pitch_point_name %>
 <% css_point = name.downcase.tr(' ', '-')%>
 
-<%= form_for([@discourse, @suggestion]) do |f| %>
+<%= form_for([@pitch_card, @suggestion]) do |f| %>
 
 	<div class="form-inputs">
 	  <label><%= name %></label>

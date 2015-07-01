@@ -3,8 +3,11 @@ class Comment
   include Mongoid::Enum
   include Scopable
 
+  # == Pagination, max per page
+  paginates_per 10
+
   belongs_to :author, class_name: "User", inverse_of: :comments
-  belongs_to :discourse, inverse_of: :comments, class_name: "Discourse"
+  belongs_to :pitch_card, inverse_of: :comments, class_name: "PitchCard"
 
   field :comment,        type: String
 
@@ -17,33 +20,10 @@ class Comment
 
   # == Validation
   validates :author, presence: true
-  validates :discourse, presence: true
+  validates :pitch_card, presence: true
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
 
   # == Denormalise
   field :author_name,        type: String
-
-  def to_jq(can_see_author)
-
-    json = {
-        :_id => _id.to_s,
-        :type => "comment",
-        :message_type => message_type,
-        :comment => comment
-    }
-
-    if self.root?
-      json[:_parent_id] = parent._id.to_s
-    end
-
-    if can_see_author
-      json[:author] = author_name
-    else
-      json[:author] = "anonymous"
-    end
-
-    json
-
-  end
 
 end

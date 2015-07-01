@@ -6,16 +6,22 @@ Rails.application.routes.draw do
     collection do
       get :initiated, :collabs
     end
-  end
-
-  get '/discourses/:id', to: 'discourses#show'
-
-  # resources :suggestions
-
-  resources :discourses, shallow: true do
+    # member do
+    #   get :discourses
+    # end
     resources :comments
     resources :suggestions
   end
+
+  # , only: [:index, :new, :create, :edit, :update, :destroy]
+
+  # get '/discourses/:id', to: 'discourses#show'
+  # resources :suggestions
+
+  # resources :discourses, shallow: true do
+  #   resources :comments
+  #   resources :suggestions
+  # end
 
   # get '/suggestion', to: 'messages#suggestion'
 

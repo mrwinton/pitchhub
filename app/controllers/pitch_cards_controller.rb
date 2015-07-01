@@ -16,6 +16,8 @@ class PitchCardsController < ApplicationController
   # GET /pitch_cards/1.json
   def show
     authorize! :read_pitch, @pitch_card
+    @suggestion = Suggestion.new
+    @comment = Comment.new
   end
 
   # GET /pitch_cards/new

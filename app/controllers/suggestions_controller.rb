@@ -4,46 +4,47 @@ class SuggestionsController < ApplicationController
   before_action :set_suggestion, only: [:show, :edit, :update, :destroy]
   layout :nil
 
-  # GET /suggestions
-  # GET /suggestions.json
+  # GET /pitch_cards/1/suggestions
+  # GET /pitch_cards/1/suggestions.json
   def index
-    # TODO will most likely implement "more" button functionality rather than pagination
-    @suggestions = Suggestion.all
-  end
 
-  # GET /suggestions/1
-  # GET /suggestions/1.json
-  def show
-    authorize! :read, @suggestion
-  end
-
-  # GET /discourse/:discourse_id/suggestions/new
-  def new
-
-    @discourse = Discourse.find(params[:discourse_id])
-    @suggestion = Suggestion.new
-    @suggestion.content = params[:content].gsub( "_", " " )
+    permitted_comments = @pitch_card.comments.select{|comment| can? :read_content, comment}
+    @discourses = permitted_comments.page params[:page]
+    # TODO for each discourse get it's children comments (if any)
 
     respond_to do |format|
-      # format.html { redirect_to root_path } #for my controller, i wanted it to be JS only
       format.js
     end
 
   end
 
-  # GET /suggestions/1/edit
+  # GET /pitch_cards/1/suggestions/new
+  def new
+
+    @pitch_card = PitchCard.find(params[:pitch_card_id])
+    @suggestion = Suggestion.new
+    @suggestion.content = params[:content]
+    @pitch_point_id = params[:pitch_point_id]
+    @pitch_point_name = params[:pitch_point_name]
+
+    respond_to do |format|
+      format.js
+    end
+
+  end
+
+  # GET /pitch_cards/1/suggestions/1/edit
   def edit
     authorize! :manage, @suggestion
   end
 
-  # POST /suggestions
-  # POST /suggestions.json
+  # POST /pitch_cards/1/suggestions
+  # POST /pitch_cards/1/suggestions.json
   def create
 
-    @discourse = Discourse.find(params[:discourse_id])
+    @pitch_card = PitchCard.find(params[:pitch_card_id])
 
-    @suggestion = @discourse.comments.build(suggestion_params, Suggestion)
-    # @suggestion = Suggestion.new(suggestion_params)
+    @suggestion = @pitch_card.comments.build(suggestion_params, Suggestion)
 
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
@@ -65,8 +66,8 @@ class SuggestionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /suggestions/1
-  # PATCH/PUT /suggestions/1.json
+  # PATCH/PUT /pitch_cards/1/suggestions/1
+  # PATCH/PUT /pitch_cards/1/suggestions/1.json
   def update
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
@@ -86,8 +87,8 @@ class SuggestionsController < ApplicationController
     end
   end
 
-  # DELETE /suggestions/1
-  # DELETE /suggestions/1.json
+  # DELETE /pitch_cards/1/suggestions/1
+  # DELETE /pitch_cards/1/suggestions/1.json
   def destroy
     authorize! :manage, @suggestion
     @suggestion.destroy

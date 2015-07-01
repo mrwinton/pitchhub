@@ -7,11 +7,11 @@
  */
 
 $(function() {
-    $('a[data-toggle=modal]').on('click', function() {
+    $('form[data-toggle=modal]').on('click', function() {
         return $('.dropdown').removeClass('open');
     });
 
-    $('a[data-target=#ajax-modal]').on('click', function(e) {
+    $('form[data-target=#ajax-modal]').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         $('body').modalmanager('loading');

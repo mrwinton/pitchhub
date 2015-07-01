@@ -5,7 +5,6 @@
 <% max_length = pitch_point_max_length %>
 
 <div id="<%= css_point %>" class="form-group row">
-  <%= hidden_field_tag css_point+'-discourse-id', pitch_point_model.discourse._id, :class => "discourse", :name => point[:name] %>
   <div class="row-same-height">
 	<div class="col-xs-2 col-xs-height col-middle">
 	  <a id="<%= css_point %>-selector" data-toggle="tooltip" data-placement="top" title="<%= point[:tooltip] %>">
@@ -17,19 +16,21 @@
 	<div class="col-xs-10 col-xs-height">
 
 	  <% if point[:suggestible] %>
-		  <div class="placard" data-initialize="placard">
-			<div class="placard-popup"></div>
-			<%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: max_length %>
-			<%= hidden_field_tag css_point+'-textarea-original', pitch_point_model.value %>
+		  <%= form_for(@suggestion, :url=>new_pitch_card_suggestion_path(@pitch_card), method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
+			  <!-- ,data: { toggle: "modal", target: "#ajax-modal" } -->
+			  <div class="placard" data-initialize="placard">
+				<div class="placard-popup"></div>
+				<%= text_area_tag "content", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: max_length %>
+				<%= hidden_field_tag "original-content", pitch_point_model.value %>
+				<%= hidden_field_tag "pitch_point_id", pitch_point_model._id %>
+				<%= hidden_field_tag "pitch_point_name", pitch_point_model.name %>
 
-			<div class="placard-footer">
-			  <a class="placard-cancel" href="#">Cancel</a>
-			  <!-- TODO suggestion_path(@pitch_point)-->
-			  <%= link_to(new_discourse_suggestion_path(pitch_point_model.discourse), id: css_point, class: "btn-suggest" ,data: { toggle: "modal", target: "#ajax-modal" }) do %>
-				  <button class="btn btn-primary btn-xs placard-accept" type="button">Suggest</button>
-			  <% end %>
-			</div>
-		  </div>
+				<div class="placard-footer">
+				  <a class="placard-cancel" href="#">Cancel</a>
+				  <%= f.submit "Suggest", class: "btn btn-primary btn-xs placard-accept" %>
+				</div>
+			  </div>
+		  <% end %>
 	  <% elsif point[:top_level_commentable] %>
 		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
 

@@ -24,6 +24,10 @@ class PitchCard
   # the Users who have viewed the pitch card, NB: inverse of nil, so that this is a one sided one to many relation
   has_and_belongs_to_many :viewers, class_name: "User", inverse_of: nil
 
+  # == Message relations
+  # the comments and suggestions associated with this card
+  has_many :comments, class_name: "Comment", inverse_of: "pitch_card"
+
   # == Pitch points
   # all the pitch points this card contains
   # cascade call_backs specified because the points are dependent
