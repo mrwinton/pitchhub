@@ -94,7 +94,7 @@ class PitchCardsController < ApplicationController
     authorize! :manage, @pitch_card
     @pitch_card.destroy
     respond_to do |format|
-      format.html { redirect_to initiated_pitch_cards_url notice: 'Pitch card was successfully destroyed.' }
+      format.html { redirect_to initiated_pitch_cards_url, notice: 'Pitch card was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
