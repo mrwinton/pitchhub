@@ -18,12 +18,14 @@ class Comment
   has_many :child, :class_name => 'Comment', :inverse_of => :parent
   belongs_to :parent, :class_name => 'Comment', :inverse_of => :child
 
+  # == Denormalise
+  field :author_name,        type: String
+  field :pitch_point_id,     type: String
+  field :pitch_point_name,   type: String
+
   # == Validation
   validates :author, presence: true
   validates :pitch_card, presence: true
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
-
-  # == Denormalise
-  field :author_name,        type: String
 
 end

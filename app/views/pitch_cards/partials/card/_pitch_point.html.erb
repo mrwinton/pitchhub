@@ -16,9 +16,9 @@
 	<div class="col-xs-10 col-xs-height">
 
 	  <% if point[:suggestible] %>
-		  <%= form_for(@suggestion, :url=>new_pitch_card_suggestion_path(@pitch_card), method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
-			  <!-- ,data: { toggle: "modal", target: "#ajax-modal" } -->
-			  <div class="placard" data-initialize="placard">
+		  <div class="placard" data-initialize="placard">
+			<%= form_for(@suggestion, :url=>new_pitch_card_suggestion_path(@pitch_card), method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
+
 				<div class="placard-popup"></div>
 				<%= text_area_tag "content", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: max_length %>
 				<%= hidden_field_tag "original-content", pitch_point_model.value %>
@@ -27,21 +27,25 @@
 
 				<div class="placard-footer">
 				  <a class="placard-cancel" href="#">Cancel</a>
-				  <%= f.submit "Suggest", class: "btn btn-primary btn-xs placard-accept" %>
+				  <% suggest_button_name = "Suggest "+ point[:name] %>
+				  <%= f.submit suggest_button_name, class: "btn btn-primary btn-xs placard-accept" %>
 				</div>
-			  </div>
-		  <% end %>
+			<% end %>
+		  </div>
 	  <% elsif point[:top_level_commentable] %>
-		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
-
-		  <div class="row">
-			<div class="col-xs-6 col-xs-offset-6 text-center">
-
-			  <%=  button_tag(type: 'button', class: 'btn btn-sm btn-default') do %>
-				  <i class="fa fa-comment"></i><span> Comment</span>
-			  <% end %>
-
-			</div>
+		  <div class="placard" data-initialize="placard">
+			<%= form_for(@comment, :url=>new_pitch_card_comment_path(@pitch_card), method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
+				<div class="placard-popup"></div>
+				<%= text_area_tag "content", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: comment_max_length %>
+				<%= hidden_field_tag "original-content", pitch_point_model.value %>
+				<%= hidden_field_tag "pitch_point_id", pitch_point_model._id %>
+				<%= hidden_field_tag "pitch_point_name", pitch_point_model.name %>
+				<div class="placard-footer">
+				  <a class="placard-cancel" href="#">Cancel</a>
+				  <% comment_button_name = "Discuss "+ point[:name] %>
+				  <%= f.submit comment_button_name, class: "btn btn-success btn-xs placard-accept" %>
+				</div>
+			<% end %>
 		  </div>
 	  <% elsif point[:voteable] %>
 		  <%= text_area_tag css_point+"-textarea-input", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>

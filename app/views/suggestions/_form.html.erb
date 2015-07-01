@@ -3,6 +3,11 @@
 
 <%= form_for([@pitch_card, @suggestion]) do |f| %>
 
+	<!-- TODO hidden fields for pitch point id and pitch point name-->
+
+	<%= f.hidden_field :pitch_point_id, :value => @pitch_point_id %>
+	<%= f.hidden_field :pitch_point_name, :value => @pitch_point_name %>
+
 	<div class="form-inputs">
 	  <label><%= name %></label>
 	  <%= f.text_area :content, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-pitch-point form-input", placeholder: "suggestion", maxlength: pitch_point_max_length, required: "required" %>

@@ -1,0 +1,22 @@
+
+<% @discourses.each  do |discourse|
+
+  point = PitchPointsHelper.pitch_points_hash.select { |point|
+	discourse.pitch_point_name == point[:name]
+  }
+
+  point = point.any? ? point.first : nil
+
+  # the pitch point must be specified in our pitch_point_hash
+  if point == nil
+	# TODO better error
+	raise Error
+  end
+
+%>
+
+	<%= render partial: 'pitch_cards/partials/discourses/pitch_point_discourse', locals: { point: point, discourse: discourse, pitch_card: @pitch_card } %>
+
+<% end %>
+
+<%= paginate @discourses, :remote => true %>

@@ -3,7 +3,7 @@
 <% image_selected = 'points/selected/'+image_point+'.png'%>
 
 <div class="col-md-10 col-md-offset-1">
-  <div id="<%= css_point %>-discourse-content" class="block block-bordered pitch-card row hidden">
+  <div id="<%= css_point %>-discourse-content" class="block block-bordered pitch-card row">
 	<div class="row-same-height">
 	  <div class="col-xs-2 col-xs-height col-middle">
 		<a id="<%= css_point %>-selector">
@@ -13,14 +13,15 @@
 		</a>
 	  </div>
 	  <div class="col-xs-8 col-xs-height">
-		<h4><%= point[:name] %></h4>
+		<div id="<%= css_point %>-discourse-body">
+		  <br/>
+		  <p><%= @discourses.content %></p>
+		</div>
 	  </div>
 	</div>
-
-	<div class="col-xs-12">
-	  <div id="<%= css_point %>-discourse-body">
-		<br/>
-		<!-- content here -->
+	<div class="row">
+	  <div class="col-xs-8 col-xs-offset-2">
+		<p><%= @discourses.comment %></p>
 	  </div>
 	</div>
   </div>
