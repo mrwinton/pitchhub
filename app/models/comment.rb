@@ -1,6 +1,7 @@
 class Comment
   include Mongoid::Document
   include Mongoid::Enum
+  include Mongoid::Timestamps
   include Scopable
 
   # == Pagination, max per page
