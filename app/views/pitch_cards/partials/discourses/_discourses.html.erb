@@ -1,8 +1,8 @@
 
-<% @discourses.each  do |discourse|
+<% @discourses.each  do |d|
 
   point = PitchPointsHelper.pitch_points_hash.select { |point|
-	discourse.pitch_point_name == point[:name]
+	d.pitch_point_name == point[:name]
   }
 
   point = point.any? ? point.first : nil
@@ -15,8 +15,8 @@
 
 %>
 
-	<%= render partial: 'pitch_cards/partials/discourses/pitch_point_discourse', locals: { point: point, discourse: discourse, pitch_card: @pitch_card } %>
+	<%= render partial: 'pitch_cards/partials/discourses/pitch_point_discourse', locals: { point: point, discourse: d, pitch_card: @pitch_card } %>
 
 <% end %>
 
-<%= paginate @discourses, :remote => true %>
+<!--paginate @discourses, :remote => true-->
