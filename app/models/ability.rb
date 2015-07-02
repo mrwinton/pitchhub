@@ -33,6 +33,18 @@ class Ability
       comment.author.id == user.id
     end
 
+    can :see_author, Suggestion do |suggestion|
+      suggestion.identity_scope.is_in_comment_scope(user, suggestion)
+    end
+
+    can :read_content, Suggestion do |suggestion|
+      suggestion.content_scope.is_in_comment_scope(user, suggestion)
+    end
+
+    can :manage, Suggestion do |suggestion|
+      suggestion.author.id == user.id
+    end
+
     # PitchPoint suggestion auth abilities
 
     can :accept_suggestion, Suggestion do |suggestion|
