@@ -15,8 +15,10 @@ var PitchCards = function() {
         pitchPoint.each(function() {
             updatePitchPointTextArea(this, true);
         });
-
         pitchPoint.keydown(function() {
+            updatePitchPointTextArea(this, false);
+        });
+        pitchPoint.focusout(function() {
             updatePitchPointTextArea(this, false);
         });
 
@@ -56,13 +58,13 @@ var PitchCards = function() {
 
             var pitchPointId = $(this).attr('id').split("-selector")[0],
                 pitchPoint = $("#"+pitchPointId),
-                //get the pitch point's hidden selector
+            //get the pitch point's hidden selector
                 isSelectedElem = pitchPoint.find("#"+pitchPointId+"-selected"),
-                //get the value
+            //get the value
                 isSelectedValue = isSelectedElem.val(),
-                //check if it's selected
+            //check if it's selected
                 isSelected = isSelectedValue == "true",
-                //get the elements to update with the new state
+            //get the elements to update with the new state
                 textArea = pitchPoint.find("textarea"),
                 imageSelected = pitchPoint.find("img.pitch-point-selected"),
                 imageDeselected = pitchPoint.find("img.pitch-point-deselected");
