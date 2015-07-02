@@ -4,7 +4,10 @@ class MemberDisclosureScope < Scope
 
   def is_in_scope(user)
     # Not going to work, user_signed_in only works when accessed from view or controller
-    user_signed_in?
+    # user_signed_in?
+
+    # check that the user is not a new record, if it is they are just a guest.
+    not user.new_record?
   end
 
   def is_in_pitch_card_scope(user, pitch_card)
