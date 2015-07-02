@@ -20,11 +20,50 @@
 
   <tbody>
     <% @pitch_cards.each do |pitch_card| %>
-      <tr>
-        <td><%= link_to 'Show', pitch_card %></td>
-        <td><%= link_to 'Edit', edit_pitch_card_path(pitch_card) %></td>
-        <td><%= link_to 'Destroy', pitch_card, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+	<div class="block block-bordered pitch-card col-md-4">
+
+	  <div class="row" style="text-align: right;align:top;">
+             <%= link_to (image_tag "remove.png",  size:"12x12"), pitch_card, method: :delete, data: { confirm: 'This will destroy the pitch card for good. Are you sure?' } %>
+	  </div>
+	  <div class="row">
+
+            <div class="col-md-8">
+
+              <% if pitch_card.image.present? %>
+                <div class="wrapper" style="margin-bottom:10%">
+                  <%= link_to pitch_card do %>
+                    <div class="photo-preview" style="background-image:url(<%= pitch_card.image.url %>);border-color:#FFFFFF;background-color:#FFFFFF"></div>
+                  <% end %>
+                </div>
+              <% end %>
+
+	      </div>
+
+              <div class="col-md-4">
+                <div class="row">
+  		  <% if can? :see_initator, pitch_card %> 
+	  	    <h4><%= pitch_card.initiator.first_name %> <%= pitch_card.initiator.last_name %></h4>
+		  <% end %>
+		</div>
+
+                <div class="row">
+		  created <%= time_ago_in_words(pitch_card.created_at)%> ago 
+		</div>
+                <div class="row">
+		  viewed <%= time_ago_in_words(pitch_card.updated_at)%> ago 
+		</div>
+
+              </div>
+
+            </div>
+
+<!--
+          <div class="form-horizontal form-bordered">
+	  </div>
+-->
+
+
+        </div>
     <% end %>
   </tbody>
 </table>

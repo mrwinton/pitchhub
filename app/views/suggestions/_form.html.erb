@@ -3,8 +3,6 @@
 
 <%= form_for([@pitch_card, @suggestion]) do |f| %>
 
-	<!-- TODO hidden fields for pitch point id and pitch point name-->
-
 	<%= f.hidden_field :pitch_point_id, :value => @pitch_point_id %>
 	<%= f.hidden_field :pitch_point_name, :value => @pitch_point_name %>
 

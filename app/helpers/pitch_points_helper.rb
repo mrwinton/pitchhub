@@ -8,7 +8,7 @@ module PitchPointsHelper
                         :suggestible => true,
                         :name => "Value Proposition",
                         :placeholder => " ",
-                        :tooltip => "What's the value? *required*"
+                        :tooltip => "Why is it important, worthwile or useful?"
                       },
                       { :selected => true,
                         :optional => true,
@@ -17,7 +17,7 @@ module PitchPointsHelper
                         :suggestible => true,
                         :name => "Business Opportunity",
                         :placeholder => "challenge",
-                        :tooltip => "What's the business opportunity?"
+                        :tooltip => "the challenge to tackle"
                       },
                       { :selected => true,
                         :optional => true,
@@ -26,7 +26,7 @@ module PitchPointsHelper
                         :suggestible => true,
                         :name => "Resources",
                         :placeholder => "enable",
-                        :tooltip => "What resources will be required?"
+                        :tooltip => "the available resources"
                       },
                       { :selected => true,
                         :optional => true,
@@ -35,7 +35,7 @@ module PitchPointsHelper
                         :suggestible => true,
                         :name => "Solution",
                         :placeholder => "solve",
-                        :tooltip => "What's the solution?"
+                        :tooltip => "the solution"
                       },
                       { :selected => false,
                         :optional => true,
@@ -44,7 +44,7 @@ module PitchPointsHelper
                         :suggestible => false,
                         :name => "Facilitation",
                         :placeholder => " ",
-                        :tooltip => "Looking for partners?"
+                        :tooltip => "Need a hand with this?"
                       },
                       { :selected => false,
                         :optional => true,
@@ -54,7 +54,7 @@ module PitchPointsHelper
                         :voteable => true,
                         :name => "Voting",
                         :placeholder => "yes/no survey",
-                        :tooltip => "Have a question to go with your pitch card?"
+                        :tooltip => "Yes/No survey"
                       } ]
   end
 
