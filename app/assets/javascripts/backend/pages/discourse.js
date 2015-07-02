@@ -33,6 +33,8 @@ var Discourse = function() {
             }
             if ($.trim($(content).html())!='') {
                 $(content).removeClass("hidden");
+                jQuery("abbr.timeago").timeago();
+                $(content).addClass("animation-fadeInQuick");
             }
         }
 

@@ -4,8 +4,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-// require jquery
-//= require vendor/jquery-1.11.2.min
+//= require jquery
+// require vendor/jquery-1.11.2.min
 //= require vendor/bootstrap.min
 //= require vendor/pnotify.custom.min
 //= require vendor/plugins
@@ -15,5 +15,6 @@
 //= require vendor/bootstrap-modal
 //= require vendor/bootstrap-modalmanager
 //= require vendor/lodash.min
+//= require vendor/timeago
 //= require turbolinks
 //= require jquery_ujs
