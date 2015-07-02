@@ -6,7 +6,7 @@ module InitiatorAcceptableAndScopable
     # Load InitiatorAcceptableAndScopable Instance Methods
     include InitiatorAcceptableAndScopable::InstanceMethods
 
-    enum :status, [:accepted, :rejected]
+    enum :status, [:pending, :accepted, :rejected]
 
     # == Disclosure scopes
     # when the initiator accepts or rejects we override the content scope, who can see the pitch card?

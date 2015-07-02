@@ -19,4 +19,6 @@
 
 <% end %>
 
-<!--paginate @discourses, :remote => true-->
+<% if @discourses.any? %>
+	<!--paginate @discourses, :remote => true-->
+<% end %>
