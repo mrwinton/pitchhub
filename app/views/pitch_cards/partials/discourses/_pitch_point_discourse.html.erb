@@ -3,6 +3,7 @@
 <% image_selected = 'points/selected/'+image_point+'.png'%>
 <% can_see_author = can? :see_author, discourse %>
 <% author = can_see_author ? discourse.author_name : "Anonymous" %>
+<% verb = discourse.class.name == "Comment" ? "commented" : "suggested"%>
 
 <div class="col-md-10 col-md-offset-1">
   <div id="<%= css_point %>-discourse-content" class="block block-bordered pitch-card row">
@@ -19,9 +20,9 @@
 			  <i class="fa fa-globe"></i>
 			</span>
 		</span>
-		  <strong><%= author %> suggested</strong>
+		  <strong><%= author + " " + verb%></strong>
 		</p>
-		<% if discourse.content.present? %>
+		<% if discourse.has_attribute?(:content) %>
 			<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
 		<% end %>
 		<hr/>
