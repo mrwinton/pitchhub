@@ -1,25 +1,17 @@
-console.log("1");
-
 var title       	=   '.modal-title',
 		loader      =   '.ajax-loader',
 		content     =   '.modal-body-content',
 		dataRemote  =   'a[data-remote=true]',
 		modal       =   '#ajax-modal';
 
-console.log("2");
 //set the title through a helper function
 $(title).html('Suggestion');
-console.log("3");
 
 //hides the modal and shows the ajax content
 $(loader).fadeToggle('fast', function() {
-	console.log("4");
 	$(loader).fadeOut('slow');
-	console.log("5");
 	$(content).html('<%= j render("suggestions/form") %>');
-	console.log("6");
 	$(modal).modal();
-	console.log("7");
 	$('textarea[maxlength]').maxlength({
 		threshold: 20,
 		warningClass: "label label-success",
@@ -57,9 +49,7 @@ $(loader).fadeToggle('fast', function() {
 });
 //brings the loader back up + gets rid of the content when linking to another controller method etc
 $(content).on('click', dataRemote, function(){
-	console.log("8");
 	$(content).fadeOut('slow', function() {
-		console.log("9");
 		$(content).empty();
 		$(loader).fadeIn('slow');
 	});
