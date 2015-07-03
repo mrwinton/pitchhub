@@ -1,73 +1,64 @@
 class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
-  before_action :set_pitch_card, only: [:index, :show, :edit, :update, :destroy]
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  layout :nil
+  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy]
+  before_action :set_comment, only: [:update, :destroy]
 
   # GET /pitch_cards/1/comments
   # GET /pitch_cards/1/comments.json
   def index
-
+    # Retrieve the comments (suggestions included) that the current user is permitted to see
     permitted_comments = @pitch_card.comments.select{|comment| can? :read_content, comment}
-    @discourses = Kaminari.paginate_array(permitted_comments).page(params[:page]).per(10)
-
+    # Sort most recent first
+    sorted_permitted_comments = permitted_comments.sort_by {|obj| -obj.created_at.to_f}
+    # Paginate the permitted_comments according to the params[:page] paramated (if set)
+    @discourses = Kaminari.paginate_array(sorted_permitted_comments).page(params[:page]).per(10)
     # TODO for each discourse get it's children comments (if any)
 
     respond_to do |format|
       format.js
     end
-
   end
 
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-    authorize! :read, @comment
-  end
-
-  # GET /comments/new
+  # GET /pitch_cards/1/comments/new
   def new
-
     @comment = Comment.new
-
+    @comment.comment = params[:comment]
+    @pitch_point_id = params[:pitch_point_id]
+    @pitch_point_name = params[:pitch_point_name]
     respond_to do |format|
-      # format.html { redirect_to root_path } #for my controller, i wanted it to be JS only
       format.js
     end
-
   end
 
-  # GET /comments/1/edit
-  def edit
-    authorize! :manage, @comment
-  end
-
-  # POST /comments
-  # POST /comments.json
+  # POST /pitch_cards/1/comments
+  # POST /pitch_cards/1/comments.json
   def create
-    @comment = Comment.new(comment_params)
-
+    # Create the suggestion in the pitch card's comments relation
+    @comment = @pitch_card.comments.build(comment_params, Comment)
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
     @comment.inject_scopes(@scopes)
     # Set the current user as the Comment's initiator
     @comment.author = current_user
+    @comment.message_type = :root
+    @comment.author_name = current_user.first_name + " " + current_user.last_name
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
+        current_user.collab_pitch_cards << @pitch_card
+        flash.now[:notice] = 'Comment was successfully created.'
+        format.html { redirect_to :back, notice: 'Comment was successfully created.' }
       else
         flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
-        format.html { render :new }
+        format.html { redirect_to :back }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /comments/1
-  # PATCH/PUT /comments/1.json
+  # PATCH/PUT /pitch_cards/1/comments/1
+  # PATCH/PUT /pitch_cards/1/comments/1.json
   def update
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
@@ -77,42 +68,40 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
+        format.html { redirect_to :back, notice: 'Comment was successfully updated.' }
       else
         flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
-        format.html { render :edit }
+        format.html { redirect_to :back }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
+  # DELETE /pitch_cards/1/comments/1
+  # DELETE /pitch_cards/1/comments/1.json
   def destroy
     authorize! :manage, @comment
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pitch_card
-      @pitch_card = PitchCard.find(params[:pitch_card_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
+  def set_pitch_card
+    @pitch_card = PitchCard.find(params[:pitch_card_id])
+  end
 
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def comment_params
-      # Screen the baddies
-      params.require(:comment).permit(:content, :comment, :i_scope, :c_scope, :type, :first_name, :last_name)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def comment_params
+    # Screen the baddies
+    params.require(:comment).permit(:pitch_point_id, :pitch_point_name, :comment, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name)
+  end
 
 end
