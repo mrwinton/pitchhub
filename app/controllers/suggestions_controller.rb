@@ -1,8 +1,8 @@
 class SuggestionsController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
-  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy]
-  before_action :set_suggestion, only: [:update, :destroy]
+  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :accept]
+  before_action :set_suggestion, only: [:update, :destroy, :accept]
 
   # GET /pitch_cards/1/suggestions
   # GET /pitch_cards/1/suggestions.json
@@ -87,6 +87,66 @@ class SuggestionsController < ApplicationController
       format.html { redirect_to :back, notice: 'Suggestion was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # POST /pitch_cards/1/suggestions/1/accept
+  # POST /pitch_cards/1/suggestions/1/accept.json
+  def accept
+    authorize! :manage, @pitch_card
+
+    if params[:commit] == "accept"
+      # the user pressed accept
+
+      updated_content = @suggestion.content
+      pitch_point_id = @suggestion.pitch_point_id
+      @suggestion.status = :accepted
+
+      @pitch_card.pitch_points_attributes = [
+          { id: pitch_point_id, value: updated_content }
+      ]
+
+      if @pitch_card.save
+        if @suggestion.save
+          # the card and suggestion updates were successful
+          respond_to do |format|
+            format.html { redirect_to :back, notice: 'Suggestion was successfully accepted.' }
+            format.json { head :no_content }
+          end
+        else
+          # the card update was successful but the suggestion was not
+          respond_to do |format|
+            format.html { redirect_to :back, notice: 'Suggestion was accepted, but an error occurred...' }
+            format.json { head :no_content }
+          end
+        end
+      else
+        # the card update was not successful
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Failed to accept suggestion, please try again' }
+          format.json { head :no_content }
+        end
+      end
+
+    else # user pressed reject
+
+      @suggestion.status = :rejected
+
+      if @suggestion.save
+        # the suggestion update was successful
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Suggestion was successfully rejected.' }
+          format.json { head :no_content }
+        end
+      else
+        # the suggestion update failed
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Failed to reject suggestion, please try again' }
+          format.json { head :no_content }
+        end
+      end
+
+    end
+
   end
 
   private

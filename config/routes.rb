@@ -10,7 +10,9 @@ Rails.application.routes.draw do
       get :initiated, :collabs
     end
     resources :comments, only: [:index, :new, :create, :update, :destroy]
-    resources :suggestions, only: [:index, :new, :create, :update, :destroy]
+    resources :suggestions, only: [:index, :new, :create, :update, :destroy, :accept] do
+      post 'accept', on: :member
+    end
   end
 
   authenticated :user do
