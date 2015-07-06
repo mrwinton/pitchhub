@@ -12,17 +12,29 @@ max_comments = 10
 
 if Rails.env.test?
 
+  puts "Environment is TEST"
+  puts "Will seed " + pitch_cards_number + " Pitch Cards..."
+  puts "----------------------------------------------------------------"
+  puts "Seeding users"
   user_a = User.create!(:email => 'wintonmr@gmail.com',
                        :encrypted_password => 'password',
                        :first_name => 'Michael',
                        :last_name => 'Winton')
+
+  puts "user_a created"
 
   user_b = User.create!(:email => 'pitchub@gmail.com',
                          :encrypted_password => 'password',
                          :first_name => 'Pitch',
                          :last_name => 'Hub')
 
+  puts "user_b created"
+
+  puts "----------------------------------------------------------------"
+  puts "Seeding Pitch Cards"
   pitch_cards_number.times do |n|
+
+    puts "Commencing Pitch Card " + n + "seed"
 
     initiator = (1 == rand(2) ? user_a : user_b)
     status = (1 == rand(2) ? :active : :complete)
@@ -112,6 +124,14 @@ if Rails.env.test?
 
     pitch_card.save
 
+    puts "Successful Pitch Card " + n + "seed"
+
   end
+
+  puts pitch_cards_number + " Pitch Cards seeded"
+
+else
+
+  puts "Please seed in the TEST environment"
 
 end
