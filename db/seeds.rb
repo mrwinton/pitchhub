@@ -9,22 +9,29 @@
 pitch_cards_number = 100
 max_suggestion = 10
 max_comments = 10
+scopes = DisclosureScopeHelper.scopes(nil)
 
 if Rails.env.test?
 
   puts "Environment is TEST"
-  puts "Will seed " + pitch_cards_number + " Pitch Cards..."
+
+  puts "Cleaning the database"
+  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.clean
+  puts "Database cleaning successful"
+
+  puts "Will seed " + pitch_cards_number.to_s + " Pitch Cards..."
   puts "----------------------------------------------------------------"
   puts "Seeding users"
-  user_a = User.create!(:email => 'wintonmr@gmail.com',
-                       :encrypted_password => 'password',
+  user_a = User.create!(:email => 'michael@test.com',
+                       :password => 'password123',
                        :first_name => 'Michael',
                        :last_name => 'Winton')
 
   puts "user_a created"
 
   user_b = User.create!(:email => 'pitchub@gmail.com',
-                         :encrypted_password => 'password',
+                         :password => 'password',
                          :first_name => 'Pitch',
                          :last_name => 'Hub')
 
@@ -34,24 +41,30 @@ if Rails.env.test?
   puts "Seeding Pitch Cards"
   pitch_cards_number.times do |n|
 
-    puts "Commencing Pitch Card " + n + "seed"
+    puts "Commencing Pitch Card " + n.to_s + " seed"
 
     initiator = (1 == rand(2) ? user_a : user_b)
     status = (1 == rand(2) ? :active : :complete)
 
     pitch_point_hash_array = PitchPointsHelper.pitch_points_hash
 
-    pitch_point_value_proposition = pitch_point_hash.delete_at(0)
+    pitch_point_value_proposition = pitch_point_hash_array.delete_at(0)
 
     pitch_card = PitchCard.new
 
     pitch_card.initiator = initiator
     pitch_card.status = status
 
+    pitch_card.i_scope = "public"
+    pitch_card.c_scope = "public"
+
+    pitch_card.inject_scopes(scopes)
+
     value_proposition = PitchPoint.new
     value_proposition.name = pitch_point_value_proposition[:name]
     value_proposition.selected = true
-    value_proposition.value = Faker::Lorem.characters(rand(PitchPointsHelper.pitch_point_max_length))
+    value_proposition_length = PitchPointsHelper.pitch_point_max_length - 1
+    value_proposition.value = Faker::Lorem.characters(rand(value_proposition_length) + 1)
 
     pitch_card.pitch_points << value_proposition
 
@@ -65,9 +78,10 @@ if Rails.env.test?
 
       pitch_point.name = pitch_point_hash[:name]
       pitch_point.selected = true
-      pitch_point.value = Faker::Lorem.characters(rand(PitchPointsHelper.pitch_point_max_length))
+      value_length = PitchPointsHelper.pitch_point_max_length - 1
+      pitch_point.value = Faker::Lorem.characters(rand(value_length) + 1)
 
-      pitch_card.pitch_points << pitch_point_hash
+      pitch_card.pitch_points << pitch_point
 
     end
 
@@ -88,12 +102,24 @@ if Rails.env.test?
         comment.pitch_card = pitch_card
         comment_length = DiscoursesHelper.comment_max_length - 1
         comment.comment = Faker::Lorem.characters(rand(comment_length) + 1)
-        content_length = PitchPointsHelper.pitch_point_max_length - 1
-        comment.content = Faker::Lorem.characters(rand(content_length) + 1)
         comment.author_name = Faker::Name.name
         comment.pitch_point_id = pitch_point._id
         comment.pitch_point_name = pitch_point.name
         comment.message_type = :root
+
+        comment.i_scope = "public"
+        comment.c_scope = "public"
+
+        comment.inject_scopes(scopes)
+
+        if comment.save
+          puts " +--> Successfully added comment to Pitch Card " + n.to_s
+          pitch_card.comments << comment
+        else
+          puts " +--> Unsuccessfully added comment to Pitch Card " + n.to_s
+        end
+
+        pitch_card.comments << comment
 
       end
 
@@ -113,22 +139,38 @@ if Rails.env.test?
         suggestion.pitch_card = pitch_card
         suggestion_length = DiscoursesHelper.comment_max_length - 1
         suggestion.comment = Faker::Lorem.characters(rand(suggestion_length) + 1)
+        content_length = PitchPointsHelper.pitch_point_max_length - 1
+        suggestion.content = Faker::Lorem.characters(rand(content_length) + 1)
         suggestion.author_name = Faker::Name.name
         suggestion.pitch_point_id = pitch_point._id
         suggestion.pitch_point_name = pitch_point.name
         suggestion.message_type = :root
 
+        suggestion.i_scope = "public"
+        suggestion.c_scope = "public"
+
+        suggestion.inject_scopes(scopes)
+
+        if suggestion.save
+          puts " +--> Successfully added suggestion to Pitch Card " + n.to_s
+          pitch_card.comments << suggestion
+        else
+          puts " +--> Unsuccessfully added suggestion to Pitch Card " + n.to_s
+        end
+
       end
 
     end
 
-    pitch_card.save
-
-    puts "Successful Pitch Card " + n + "seed"
+    if pitch_card.save
+      puts "Successful Pitch Card " + n.to_s + " seed"
+    else
+      puts "Unsuccessful Pitch Card " + n.to_s + " seed"
+    end
 
   end
 
-  puts pitch_cards_number + " Pitch Cards seeded"
+  puts pitch_cards_number.to_s + " Pitch Cards seeded"
 
 else
 
