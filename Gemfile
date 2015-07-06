@@ -59,9 +59,6 @@ end
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  # gem 'byebug'
-
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
@@ -76,11 +73,16 @@ group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'selenium-webdriver'
 
+  # Performance tests
+  gem 'rails-perftest'
+  gem 'ruby-prof'
+  gem 'request-log-analyzer'
+
   # General helpers
   gem 'webmock', :require => false
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
-
+  gem 'faker'
   # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing.
   # (only supports truncation with MongoDB as of 4/5/15)
   gem 'database_cleaner'

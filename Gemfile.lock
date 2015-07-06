@@ -155,6 +155,8 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    faker (1.4.3)
+      i18n (~> 0.5)
     fast-stemmer (1.0.2)
     fattr (2.2.2)
     ffi (1.9.8)
@@ -274,6 +276,7 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    rails-perftest (0.0.6)
     rails_best_practices (1.15.7)
       activesupport
       code_analyzer (>= 0.4.3)
@@ -297,6 +300,7 @@ GEM
       rainbow (>= 1.99, < 3.0)
       unparser (~> 0.2.2)
     ref (1.0.5)
+    request-log-analyzer (1.13.4)
     require_all (1.3.2)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
@@ -323,6 +327,7 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
+    ruby-prof (0.15.8)
     ruby-progressbar (1.7.5)
     ruby_parser (3.6.6)
       sexp_processor (~> 4.1)
@@ -405,6 +410,7 @@ DEPENDENCIES
   devise
   devise-bootstrap-views
   factory_girl_rails
+  faker
   geocoder
   jbuilder (~> 2.0)
   jquery-rails
@@ -418,7 +424,10 @@ DEPENDENCIES
   mongoid_search
   public_activity
   rails (= 4.2.1)
+  rails-perftest
+  request-log-analyzer
   rspec-rails
+  ruby-prof
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver
