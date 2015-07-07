@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     root :to => "dashboard#index", as: :authenticated_root
   end
 
+  post '/search' => 'pitch_cards#search', as: :authenticated_search
+
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

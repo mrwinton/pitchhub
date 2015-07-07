@@ -113,6 +113,12 @@ class PitchCardsController < ApplicationController
     render 'index'
   end
 
+  def search
+      sort = {'_id': -1}
+      @pitch_cards = PitchCard.where(:'pitch_points.value' => /#{params["top-search"]}/).desc(:_id).page params[:page]
+      render 'index'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pitch_card

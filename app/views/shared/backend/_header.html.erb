@@ -19,10 +19,11 @@
   <!-- END Left Header Navigation -->
 
   <!-- Search Form -->
-  <form action="#" method="post" class="navbar-form-custom" role="search">
+  <form action="/search" method="post" class="navbar-form-custom" role="search">
 	<div class="form-group">
 	  <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search...">
 	</div>
+	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   </form>
   <!-- END Search Form -->
 
