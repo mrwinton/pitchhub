@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
   # GET /pitch_cards/1/comments/new
   def new
     @comment = Comment.new
-    @comment.comment = params[:comment]
+    @comment.comment = params[:content]
     @pitch_point_id = params[:pitch_point_id]
     @pitch_point_name = params[:pitch_point_name]
     respond_to do |format|
