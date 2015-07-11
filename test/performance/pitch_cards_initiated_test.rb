@@ -3,8 +3,17 @@ require 'rails/performance_test_help'
 
 class PitchCardsInitiatedTest < ActionDispatch::PerformanceTest
   # Refer to the documentation for all available options
-  # self.profile_options = { runs: 5, metrics: [:wall_time, :memory],
-  #                          output: 'tmp/performance', formats: [:flat] }
+  self.profile_options = { runs: 10, metrics: [:wall_time, :memory],
+                           output: 'tmp/performance/10', formats: [:flat] }
+
+  # self.profile_options = { runs: 100, metrics: [:wall_time, :memory],
+  #                          output: 'tmp/performance/100', formats: [:flat] }
+  #
+  # self.profile_options = { runs: 1000, metrics: [:wall_time, :memory],
+  #                          output: 'tmp/performance/1000', formats: [:flat] }
+  #
+  # self.profile_options = { runs: 10000, metrics: [:wall_time, :memory],
+  #                          output: 'tmp/performance/10000', formats: [:flat] }
 
   # called before every single test
   def setup
@@ -18,7 +27,6 @@ class PitchCardsInitiatedTest < ActionDispatch::PerformanceTest
   end
 
   test "InitiatedPitchCardsPage" do
-
     get initiated_pitch_cards_path
   end
 end
