@@ -48,6 +48,7 @@ var PitchCards = function() {
 
         $('textarea[maxlength]').maxlength({
             threshold: 20,
+            placement: 'top',
             warningClass: "label label-success",
             limitReachedClass: "label label-danger"
         });
