@@ -3,7 +3,7 @@ class PitchCardsController < ApplicationController
   layout 'backend/base'
 
   before_action :authenticate_user!
-  before_action :set_pitch_card, only: [:show, :edit, :update, :destroy]
+  before_action :set_pitch_card, only: [:show, :edit, :update, :destroy, :complete, :activate]
 
   # GET /pitch_cards
   # GET /pitch_cards.json
@@ -96,6 +96,38 @@ class PitchCardsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to initiated_pitch_cards_url, notice: 'Pitch card was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # POST /pitch_cards/1/complete
+  # POST /pitch_cards/1/complete.json
+  def complete
+    authorize! :manage, @pitch_card
+    @pitch_card.status = :complete
+    respond_to do |format|
+      if @pitch_card.save
+        format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
+        format.json { render :show, status: :ok, location: @pitch_card }
+      else
+        format.html { redirect_to @pitch_card, notice: 'Pitch card failed to update, please try again.' }
+        format.json { render :show, status: :ok, location: @pitch_card }
+      end
+    end
+  end
+
+  # POST /pitch_cards/1/activate
+  # POST /pitch_cards/1/activate.json
+  def activate
+    authorize! :manage, @pitch_card
+    @pitch_card.status = :active
+    respond_to do |format|
+      if @pitch_card.save
+        format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
+        format.json { render :show, status: :ok, location: @pitch_card }
+      else
+        format.html { redirect_to @pitch_card, notice: 'Pitch card failed to update, please try again.' }
+        format.json { render :show, status: :ok, location: @pitch_card }
+      end
     end
   end
 

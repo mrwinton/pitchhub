@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     collection do
       get :initiated, :collabs
     end
+    member do
+      post :complete, :activate
+    end
     resources :comments, only: [:index, :new, :create, :update, :destroy]
     resources :suggestions, only: [:index, :new, :create, :update, :destroy, :accept] do
       post 'accept', on: :member

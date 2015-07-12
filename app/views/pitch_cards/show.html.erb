@@ -18,7 +18,12 @@
 
 	<% if can? :manage, @pitch_card %>
 		<div class="pitch-card-actions text-center">
-		  <%= button_to 'Edit', edit_pitch_card_path(@pitch_card), :method => :get, class: "btn btn-primary"  %>
+		  <% if @pitch_card.active? %>
+			  <%= link_to 'Mark Completed', complete_pitch_card_path(@pitch_card), :method => :post, class: "btn btn-primary"  %>
+		  <% else %>
+			  <%= link_to 'Mark Active', activate_pitch_card_path(@pitch_card), :method => :post, class: "btn btn-primary"  %>
+		  <% end %>
+		  <%= link_to 'Edit', edit_pitch_card_path(@pitch_card), :method => :get, class: "btn btn-primary"  %>
 		</div>
 	<% end %>
 
