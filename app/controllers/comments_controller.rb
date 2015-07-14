@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
-  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy]
-  before_action :set_comment, only: [:update, :destroy]
+  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :initiator_scope]
+  before_action :set_comment, only: [:update, :destroy, :initiator_scope]
 
   # GET /pitch_cards/1/comments
   # GET /pitch_cards/1/comments.json
@@ -88,6 +88,26 @@ class CommentsController < ApplicationController
     end
   end
 
+  # POST /pitch_cards/1/comments/initiator_scope
+  # POST /pitch_cards/1/comments/initiator_scope.json
+  def initiator_scope
+    # Inject the initiator scope object
+    @scopes = ApplicationController.helpers.scopes(current_user)
+    @comment.ic_scope = params[:ic_scope]
+    @comment.inject_scopes(@scopes)
+
+    respond_to do |format|
+      if @comment.save
+
+        msg = { :status => "ok", :message => "Success!", :content => params[:ic_scope] }
+        format.json { render json: msg }
+      else
+        flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
@@ -101,7 +121,7 @@ class CommentsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def comment_params
     # Screen the baddies
-    params.require(:comment).permit(:pitch_point_id, :pitch_point_name, :comment, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name)
+    params.require(:comment).permit(:pitch_point_id, :pitch_point_name, :comment, :initiator_content_scope, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name)
   end
 
 end

@@ -48,10 +48,10 @@
 <li class="media">
   <div class="media-body">
 	<p class="push-bit">
-		<span class="text-muted pull-right">
+		<span class="text-muted pull-right" style="margin-top: 4.5px;">
 			<small><abbr class="timeago" title="<%= suggestion.created_at.to_time.iso8601 %>"></abbr></small>
 		  	<% if can? :manage, @pitch_card %>
-				<%= render "pitch_cards/partials/discourses/initiator_scope/initiator_scope" %>
+				<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: suggestion, ic_scopes: ic_scopes, } %>
 			<% end %>
 		</span>
 	  <strong><%= author + " suggested"%></strong>

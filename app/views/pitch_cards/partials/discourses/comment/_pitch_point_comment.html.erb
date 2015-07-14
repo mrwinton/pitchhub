@@ -16,11 +16,11 @@
 	  </div>
 	  <div class="col-xs-10 col-xs-height col-middle no-right-padding">
 		<div class="inside">
-			<span class="text-muted pull-right"  style="margin-top: -5px">
+			<span class="text-muted pull-right"  style="margin-top: -4.5px">
 			<small><abbr class="timeago" title="<%= comment.created_at.to_time.iso8601 %>"></abbr></small>
 			  <% if can? :manage, @pitch_card %>
-				<%= render "pitch_cards/partials/discourses/initiator_scope/initiator_scope" %>
-			<% end %>
+				<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: comment, ic_scopes: ic_scopes} %>
+			  <% end %>
 		</span>
 		  <strong><%= author + " commented"%></strong>
 		</div>

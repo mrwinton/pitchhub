@@ -1,0 +1,19 @@
+<% discourse = local_assigns[:locals][:disc] %>
+<% available_ic_scopes = local_assigns[:locals][:ic_scopes] %>
+<% content_scope = discourse.content_scope.present? ? discourse.content_scope : nil %>
+<% initiator_content_scope = discourse.initiator_content_scope.present? ? discourse.initiator_content_scope : nil %>
+<% display_content_scope = initiator_content_scope.present? ? initiator_content_scope : content_scope %>
+
+<% options = options_for_select( available_ic_scopes, display_content_scope ) %>
+
+<%= form_for(discourse, :url=>initiator_scope_pitch_card_comment_path(@pitch_card, discourse), id: "initiator-scope-form", method: "post") do |f| %>
+	<div class="form-group">
+	  <%= select_tag(:ic_scope, options.join(" ").html_safe, :class => 'select-scope') %>
+	</div>
+	<div class="form-group">
+	  <%= f.submit "Update", class: "btn btn-primary btn-xs scope-submit" %>
+	</div>
+<% end %>
+<div class="scope-loading hidden">
+  <i class="fa fa-circle-o-notch fa-spin"></i>
+</div>

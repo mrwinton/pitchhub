@@ -7,6 +7,9 @@
 
   point = point.any? ? point.first : nil
 
+  # Get the initiator content scopes
+  ic_scopes = scopes(current_user, :except => ["initiator"])
+
   # the pitch point must be specified in our pitch_point_hash
   if point == nil
 	# TODO better error
@@ -16,9 +19,9 @@
 %>
 
 	<% if discourse.class.name == "Suggestion" %>
-		<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion_form', locals: { point: point, suggestion: discourse } %>
+		<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion_form', locals: { point: point, suggestion: discourse, ic_scopes: ic_scopes } %>
 	<% else %>
-		<%= render partial: 'pitch_cards/partials/discourses/comment/pitch_point_comment', locals: { point: point, comment: discourse } %>
+		<%= render partial: 'pitch_cards/partials/discourses/comment/pitch_point_comment', locals: { point: point, comment: discourse, ic_scopes: ic_scopes  } %>
 	<% end %>
 
 
