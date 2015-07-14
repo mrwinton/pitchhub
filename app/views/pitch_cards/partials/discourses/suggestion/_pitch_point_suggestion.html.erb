@@ -23,6 +23,7 @@
 	  <% if pending and can? :manage, @pitch_card %>
 
 		  <div class="pull-right">
+
 			<div class="btn-group btn-group-sm">
 			  <%= f.submit "accept", class: "btn btn-alt btn-success" do %>
 				  <i class="fa fa-check"></i> accept
@@ -31,7 +32,9 @@
 				  <i class="fa fa-times"></i> reject
 			  <% end %>
 			</div>
+
 		  </div>
+
 	  <% end %>
 
 	</div>
@@ -59,11 +62,12 @@
 <!--<li class="media">-->
 <!--  <div class="media-body">-->
 	<p class="push-bit">
-		<span class="text-muted pull-right">
+		<span class="text-muted pull-right" style="margin-top: 4.5px;">
 			<small><abbr class="timeago" title="<%= suggestion.created_at.to_time.iso8601 %>"></abbr></small>
-			<span class="text-danger" data-toggle="tooltip" title="From Web">
-			  <i class="fa fa-globe"></i>
-			</span>
+
+		  	<% if can? :manage, @pitch_card %>
+				<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: suggestion, ic_scopes: ic_scopes, } %>
+			<% end %>
 
 		</span>
 	  <strong><%= "suggested by " + author %></strong>

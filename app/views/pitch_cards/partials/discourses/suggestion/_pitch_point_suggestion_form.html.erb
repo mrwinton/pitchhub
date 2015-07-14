@@ -5,12 +5,12 @@
 
 		<%= form_for(suggestion, :url=>accept_pitch_card_suggestion_path(@pitch_card, suggestion), method: "post") do |f| %>
 
-			<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion', locals: { point: point, suggestion: suggestion, f: f } %>
+			<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion', locals: { point: point, ic_scopes: ic_scopes, suggestion: suggestion, f: f } %>
 
 		<% end %>
 	<% else %>
 
-		<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion', locals: { point: point, suggestion: suggestion } %>
+		<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion', locals: { point: point, ic_scopes: ic_scopes, suggestion: suggestion } %>
 
 	<% end%>
 

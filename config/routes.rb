@@ -9,9 +9,18 @@ Rails.application.routes.draw do
     collection do
       get :initiated, :collabs, :search
     end
-    resources :comments, only: [:index, :new, :create, :update, :destroy]
+    member do
+      post :complete, :activate
+    end
+    resources :comments, only: [:index, :new, :create, :update, :destroy, :initiator_scope] do
+      member do
+        post 'initiator_scope'
+      end
+    end
     resources :suggestions, only: [:index, :new, :create, :update, :destroy, :accept] do
-      post 'accept', on: :member
+      member do
+        post 'accept'
+      end
     end
   end
 

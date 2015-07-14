@@ -3,6 +3,7 @@ class Comment
   include Mongoid::Enum
   include Mongoid::Timestamps
   include Scopable
+  include InitiatorAcceptableAndScopable
 
   # == Pagination, max per page
   paginates_per 10

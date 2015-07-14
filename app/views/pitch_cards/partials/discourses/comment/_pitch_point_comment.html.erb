@@ -14,14 +14,16 @@
 		  <%= image_tag_with_at2x image_selected, :class =>  "pitch-point-image-restrained" %>
 		</div>
 	  </div>
-	  <div class="col-xs-10 col-xs-height col-middle">
-		<span class="text-muted pull-right">
+	  <div class="col-xs-10 col-xs-height col-middle no-right-padding">
+		<div class="inside">
+			<span class="text-muted pull-right"  style="margin-top: -4.5px">
 			<small><abbr class="timeago" title="<%= comment.created_at.to_time.iso8601 %>"></abbr></small>
-			<span class="text-danger" data-toggle="tooltip" title="From Web">
-			  <i class="fa fa-globe"></i>
-			</span>
+			  <% if can? :manage, @pitch_card %>
+				<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: comment, ic_scopes: ic_scopes} %>
+			  <% end %>
 		</span>
-		<strong><%= author + " commented"%></strong>
+		  <strong><%= author + " commented"%></strong>
+		</div>
 	  </div>
 	</div>
 	<li class="media media-comment">

@@ -3,6 +3,27 @@
  * from: http://www.minimit.com/articles/solutions-tutorials/bootstrap-3-responsive-columns-of-same-height
  */
 
+/* content styles */
+
+.inside {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.inside-full-height {
+  /*
+  // if you want to give content full height give him height: 100%;
+  // with content full height you can't apply margins to the content
+  // content full height does not work in ie http://stackoverflow.com/questions/27384433/ie-display-table-cell-child-ignores-height-100
+  */
+  height: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.content {
+  padding: 12px 3px;
+}
+
+
 .row-full-height {
   height: 100%;
 }

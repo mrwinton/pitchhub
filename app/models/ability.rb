@@ -26,7 +26,11 @@ class Ability
     end
 
     can :read_content, Comment do |comment|
-      comment.content_scope.is_in_comment_scope(user, comment)
+      if comment.has_attribute? (:intiator_content_scope)
+        comment.intiator_content_scope.is_in_comment_scope(user, comment)
+      else
+        comment.content_scope.is_in_comment_scope(user, comment)
+      end
     end
 
     can :manage, Comment do |comment|
@@ -38,17 +42,21 @@ class Ability
     end
 
     can :read_content, Suggestion do |suggestion|
-      suggestion.content_scope.is_in_comment_scope(user, suggestion)
+      if suggestion.has_attribute? (:intiator_content_scope)
+        suggestion.intiator_content_scope.is_in_comment_scope(user, suggestion)
+      else
+        suggestion.content_scope.is_in_comment_scope(user, suggestion)
+      end
     end
 
     can :manage, Suggestion do |suggestion|
       suggestion.author.id == user.id
     end
 
-    # PitchPoint suggestion auth abilities
+    # override pitch point
 
-    can :accept_suggestion, Suggestion do |suggestion|
-      suggestion.pitch_point.pitch_card.initiator.id == user.id
+    can :initiator_override, Comment do |comment|
+      comment.pitch_point.pitch_card.initiator.id == user.id
     end
 
   end
