@@ -1,6 +1,6 @@
 module DisclosureScopeHelper
 
-  def scopes(user, options={})
+  def self.scopes(user, options={})
     # Options pattern
     scope_ids = ["public", "members", "contributors", "initiator", "private"]
     default_options = {
@@ -27,7 +27,11 @@ module DisclosureScopeHelper
 
   end
 
-  def scope_hashes(scopes_to_include = nil)
+  def scopes(user, options={})
+    DisclosureScopeHelper.scopes(user, options)
+  end
+
+  def self.scope_hashes(scopes_to_include = nil)
     scopes = []
 
     public = PublicDisclosureScope.new
@@ -54,6 +58,9 @@ module DisclosureScopeHelper
 
   end
 
+  def scope_hashes(scopes_to_include = nil)
+    DisclosureScopeHelper.scope_hashes(scopes_to_include)
+  end
 
   def self.scope(scope_id, scopes)
     # find which scope matches

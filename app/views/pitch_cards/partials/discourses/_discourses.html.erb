@@ -1,8 +1,8 @@
 
-<% @discourses.each  do |d|
+<% @discourses.each  do |discourse|
 
   point = PitchPointsHelper.pitch_points_hash.select { |point|
-	d.pitch_point_name == point[:name]
+	discourse.pitch_point_name == point[:name]
   }
 
   point = point.any? ? point.first : nil
@@ -15,7 +15,12 @@
 
 %>
 
-	<%= render partial: 'pitch_cards/partials/discourses/pitch_point_discourse', locals: { point: point, discourse: d, pitch_card: @pitch_card } %>
+	<% if discourse.class.name == "Suggestion" %>
+		<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion_form', locals: { point: point, suggestion: discourse } %>
+	<% else %>
+		<%= render partial: 'pitch_cards/partials/discourses/comment/pitch_point_comment', locals: { point: point, comment: discourse } %>
+	<% end %>
+
 
 <% end %>
 

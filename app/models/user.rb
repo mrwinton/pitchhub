@@ -43,7 +43,6 @@ class User
   has_many :init_pitch_cards, class_name: "PitchCard", inverse_of: "initiator"
   has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard", inverse_of: "collaborators"
 
-
   validates :first_name, presence: true
   validates :last_name, presence: true
 

@@ -16,6 +16,8 @@
 	<div class="col-xs-10 col-xs-height">
 
 	  <% if point[:suggestible] %>
+
+
 		  <div class="placard" data-initialize="placard">
 			<%= form_for(@suggestion, :url=>new_pitch_card_suggestion_path(@pitch_card), method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
 
@@ -26,17 +28,20 @@
 				<%= hidden_field_tag "pitch_point_name", pitch_point_model.name %>
 
 				<div class="placard-footer">
-				  <a class="placard-cancel" href="#">Cancel</a>
+				  <a class="placard-cancel" href="#">Cancel</a> 
 				  <% suggest_button_name = "Suggest "+ point[:name] %>
-				  <%= f.submit suggest_button_name, class: "btn btn-primary btn-xs placard-accept" %>
+				  <%= f.submit suggest_button_name, class: "btn btn-primary btn-xs placard-accept" %> 
 				</div>
 			<% end %>
 		  </div>
+
+
+
 	  <% elsif point[:top_level_commentable] %>
 		  <div class="placard" data-initialize="placard">
 			<%= form_for(@comment, :url=>new_pitch_card_comment_path(@pitch_card), method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
 				<div class="placard-popup"></div>
-				<%= text_area_tag "content", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: comment_max_length %>
+				<%= text_area_tag "comment", pitch_point_model.value, class: "form-horizontal form-control-borderless form-pitch-point placard-field glass", placeholder: point[:placeholder], maxlength: comment_max_length %>
 				<%= hidden_field_tag "original-content", pitch_point_model.value %>
 				<%= hidden_field_tag "pitch_point_id", pitch_point_model._id %>
 				<%= hidden_field_tag "pitch_point_name", pitch_point_model.name %>

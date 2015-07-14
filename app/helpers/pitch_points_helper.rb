@@ -8,7 +8,7 @@ module PitchPointsHelper
                         :suggestible => true,
                         :name => "Value Proposition",
                         :placeholder => " ",
-                        :tooltip => "Why is it important, worthwile or useful?"
+                        :tooltip => "Why is it important, worthwhile or useful?"
                       },
                       { :selected => true,
                         :optional => true,

@@ -11,9 +11,6 @@
 
 <%= render partial: "shared/backend/content_header", locals: {content_title: "Listing Pitch Cards", content_subtitle: "lorem ipsum"} %>
 
-
-
-
   <div class="row"> 
   <% @pitch_cards.each do |pitch_card| %>
 
@@ -44,11 +41,11 @@
 
           </td>
           <td nowrap style="padding-top:5px">
-            <% if can? :see_initator, pitch_card %>
-              <% name=pitch_card.initiator.first_name + " " + pitch_card.initiator.last_name %>
-            <% end %>
+	    <% initiator = pitch_card.initiator %>
+            <% can_see_initiator = can? :see_initiator, pitch_card %>
+            <% initiator_name = can_see_initiator ? initiator.first_name + " " + initiator.last_name : "Anonymous" %>
 
-            <h4 style="font-size:small;font-weight:900; margin:0; padding:0;"><%= name %></h4>
+            <h4 style="font-size:small;font-weight:900; margin:0; padding:0;"><%= initiator_name %></h4>
 
             <div class="col-md-4">
               <div class="row" style="font-size:10px;">

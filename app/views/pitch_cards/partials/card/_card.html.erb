@@ -38,6 +38,19 @@
 
 	<% end %>
 
+	<% initiator = @pitch_card.initiator %>
+	<% can_see_initiator = can? :see_initiator, @pitch_card %>
+	<% initiator_name = can_see_initiator ? initiator.first_name + " " + initiator.last_name : "Anonymous" %>
+	<div class="form-group">
+	  <div class="col-md-12">
+
+		<div class="text-center">
+		  Initiated by <%= initiator_name %> <abbr class="timeago" title="<%= @pitch_card.created_at.to_time.iso8601 %>"></abbr>
+		</div>
+
+	  </div>
+	</div>
+
   </div>
 
 </div>

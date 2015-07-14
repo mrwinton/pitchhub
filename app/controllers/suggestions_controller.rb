@@ -1,27 +1,27 @@
 class SuggestionsController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
-  before_action :set_suggestion, only: [:show, :edit, :update, :destroy]
-  layout :nil
+  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :accept]
+  before_action :set_suggestion, only: [:update, :destroy, :accept]
 
   # GET /pitch_cards/1/suggestions
   # GET /pitch_cards/1/suggestions.json
   def index
-
+    # Retrieve the comments (suggestions included) that the current user is permitted to see
     permitted_comments = @pitch_card.comments.select{|comment| can? :read_content, comment}
-    @discourses = permitted_comments.page params[:page]
+    # Sort most recent first
+    sorted_permitted_comments = permitted_comments.sort_by {|obj| -obj.created_at.to_f}
+    # Paginate the permitted_comments according to the params[:page] paramated (if set)
+    @discourses = Kaminari.paginate_array(sorted_permitted_comments).page(params[:page]).per(10)
     # TODO for each discourse get it's children comments (if any)
 
     respond_to do |format|
       format.js
     end
-
   end
 
   # GET /pitch_cards/1/suggestions/new
   def new
-
-    @pitch_card = PitchCard.find(params[:pitch_card_id])
     @suggestion = Suggestion.new
     @suggestion.content = params[:content]
     @pitch_point_id = params[:pitch_point_id]
@@ -30,22 +30,13 @@ class SuggestionsController < ApplicationController
     respond_to do |format|
       format.js
     end
-
-  end
-
-  # GET /pitch_cards/1/suggestions/1/edit
-  def edit
-    authorize! :manage, @suggestion
   end
 
   # POST /pitch_cards/1/suggestions
   # POST /pitch_cards/1/suggestions.json
   def create
-
-    @pitch_card = PitchCard.find(params[:pitch_card_id])
-
+    # Create the suggestion in the pitch card's comments relation
     @suggestion = @pitch_card.comments.build(suggestion_params, Suggestion)
-
     # Inject the scope objects
     @scopes = ApplicationController.helpers.scopes(current_user)
     @suggestion.inject_scopes(@scopes)
@@ -56,6 +47,7 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       if @suggestion.save
+        current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Suggestion was successfully created.'
         format.html { redirect_to :back, notice: 'Suggestion was successfully created.' }
       else
@@ -77,11 +69,10 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       if @suggestion.update(suggestion_params)
-        format.html { redirect_to @suggestion, notice: 'Suggestion was successfully updated.' }
-        format.json { render :show, status: :ok, location: @suggestion }
+        format.html { redirect_to :back, notice: 'Suggestion was successfully updated.' }
       else
         flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please fix before submitting'
-        format.html { render :edit }
+        format.html { redirect_to :back }
         format.json { render json: @suggestion.errors, status: :unprocessable_entity }
       end
     end
@@ -93,21 +84,85 @@ class SuggestionsController < ApplicationController
     authorize! :manage, @suggestion
     @suggestion.destroy
     respond_to do |format|
-      format.html { redirect_to suggestions_url notice: 'Suggestion was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Suggestion was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_suggestion
-      @suggestion = Suggestion.find(params[:id])
+  # POST /pitch_cards/1/suggestions/1/accept
+  # POST /pitch_cards/1/suggestions/1/accept.json
+  def accept
+    authorize! :manage, @pitch_card
+
+    if params[:commit] == "accept"
+      # the user pressed accept
+
+      updated_content = @suggestion.content
+      pitch_point_id = @suggestion.pitch_point_id
+      @suggestion.status = :accepted
+
+      @pitch_card.pitch_points_attributes = [
+          { id: pitch_point_id, value: updated_content }
+      ]
+
+      if @pitch_card.save
+        if @suggestion.save
+          # the card and suggestion updates were successful
+          respond_to do |format|
+            format.html { redirect_to :back, notice: 'Suggestion was successfully accepted.' }
+            format.json { head :no_content }
+          end
+        else
+          # the card update was successful but the suggestion was not
+          respond_to do |format|
+            format.html { redirect_to :back, notice: 'Suggestion was accepted, but an error occurred...' }
+            format.json { head :no_content }
+          end
+        end
+      else
+        # the card update was not successful
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Failed to accept suggestion, please try again' }
+          format.json { head :no_content }
+        end
+      end
+
+    else # user pressed reject
+
+      @suggestion.status = :rejected
+
+      if @suggestion.save
+        # the suggestion update was successful
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Suggestion was successfully rejected.' }
+          format.json { head :no_content }
+        end
+      else
+        # the suggestion update failed
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Failed to reject suggestion, please try again' }
+          format.json { head :no_content }
+        end
+      end
+
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def suggestion_params
-      # Screen the baddies
-      params.require(:suggestion).permit(:pitch_point_id, :pitch_point_name, :content, :comment, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name)
-    end
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_suggestion
+    @suggestion = Suggestion.find(params[:id])
+  end
+
+  def set_pitch_card
+    @pitch_card = PitchCard.find(params[:pitch_card_id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def suggestion_params
+    # Screen the baddies
+    params.require(:suggestion).permit(:pitch_point_id, :pitch_point_name, :content, :comment, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name)
+  end
 
 end

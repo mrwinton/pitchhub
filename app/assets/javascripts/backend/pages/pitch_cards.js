@@ -10,6 +10,8 @@ var PitchCards = function() {
     /* Initialization UI Code */
     var uiInit = function() {
 
+        jQuery("abbr.timeago").timeago();
+        
         var pitchPoint = $(".form-pitch-point");
 
         pitchPoint.each(function() {

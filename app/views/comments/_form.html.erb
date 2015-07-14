@@ -1,0 +1,68 @@
+<% name = @pitch_point_name %>
+<% css_point = name.downcase.tr(' ', '-')%>
+
+<%= form_for([@pitch_card, @comment]) do |f| %>
+
+	<%= f.hidden_field :pitch_point_id, :value => @pitch_point_id %>
+	<%= f.hidden_field :pitch_point_name, :value => @pitch_point_name %>
+
+	<div class="form-inputs">
+	  <label><%= name %></label>
+	  <label>Comment</label>
+	  <%= f.text_area :comment, id: css_point+"-textarea-input", class: "form-horizontal form-control-borderless form-comment form-input", placeholder: "comment", maxlength: comment_max_length, required: "required" %>
+
+	  <br/>
+
+	  <div class="form-group form-actions">
+
+		<% identity_scopes = scopes(current_user, :except => ["initiator"]) %>
+		<% content_scopes = scopes(current_user, :except => ["initiator"]) %>
+		<% identity_scope = @comment.identity_scope.present? ? @comment.identity_scope : nil %>
+		<% content_scope = @comment.content_scope.present? ? @comment.content_scope : nil %>
+
+		<div class="col-xs-6">
+		  <label>show my face to</label>
+		  <%= f.select(:i_scope, { :class => 'select-scope'}) do %>
+			  <% options_for_select( identity_scopes, identity_scope ).each do |i| %>
+				  <%= i %>
+			  <% end %>
+		  <% end %>
+
+		  <% if @comment.errors[:identity_scope].any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= @comment.errors.full_messages_for(:identity_scope).to_sentence %>
+			  </span>
+		  <% end %>
+
+		</div>
+		<div class="col-xs-6">
+
+		  <label>show this suggestion to</label>
+		  <%= f.select(:c_scope, { :class => 'select-scope'}) do %>
+			  <% options_for_select( content_scopes, content_scope ).each do |c| %>
+				  <%= c %>
+			  <% end %>
+		  <% end %>
+
+		  <% if @comment.errors[:content_scope].any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= @comment.errors.full_messages_for(:content_scope).to_sentence %>
+			  </span>
+		  <% end %>
+
+		</div>
+
+	  </div>
+
+	</div>
+
+	<br/><br/><br/>
+
+	<div class='modal-footer'>
+	  <button type="button" data-dismiss="modal" class="btn">Close</button>
+	  <%= f.submit "Comment", class: "btn btn-primary" %>
+	</div>
+
+<% end %>

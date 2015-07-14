@@ -117,6 +117,10 @@ to shutdown the virtual machine, and
 
 to boot it again.
 
+While the VM is up you can ssh into it via
+    
+    host $ vagrant ssh
+
 You can find out the state of a virtual machine anytime by invoking
 
     host $ vagrant status
@@ -127,18 +131,29 @@ Finally, to completely wipe the virtual machine from the disk **destroying all i
 
 Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more information on Vagrant.
 
+## Secrets.yml
+
+To run Pitchhub the `config/secrets.yml` needs to be created and populated for each environment (Development, Testing and Production).
+
+You can generate secret tokens with the following command:
+
+    $ rake secret
 
 ## Running
-
-Nearly there! Install the gems with `bundle install && rbenv rehash` and you're ready to start tinkering now.
 
 Our pitchbox VM has a few handy commands that make things a little easier:
 
     $ pcd # will cd into the pitchhub directory where our code lives
 
     $ pup # starts the rails server at localhost:3000/ - to exit hit `ctrl-c`
+    
+Nearly there! Navigate to the pitchhub directory (`pcd`) and install the gems with the following command:
+ 
+    $ bundle install && rbenv rehash 
 
-When you're running the server take your favourite web browser and navigate to [localhost:3000](http://localhost:3000/) and you should see the index page!
+Now you're ready to start tinkering! 
+
+When you're running the server (`pup`) take your favourite web browser and navigate to [localhost:3000](http://localhost:3000/) and you should see the index page!
 
 Contributing
 ====================
@@ -176,7 +191,7 @@ License
 ====================
 ***
 
-MIT
+GPL 3+
 
 
 **Open Source Software, Hell Yeah!**

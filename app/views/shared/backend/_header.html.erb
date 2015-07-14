@@ -19,9 +19,9 @@
   <!-- END Left Header Navigation -->
 
   <!-- Search Form -->
-  <form action="/search" method="post" class="navbar-form-custom" role="search">
+  <form action="/pitch_cards/search" method="get" class="navbar-form-custom" role="search">
 	<div class="form-group">
-	  <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search...">
+	  <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..." size="100">
 	</div>
 	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   </form>
