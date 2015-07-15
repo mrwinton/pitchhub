@@ -5,6 +5,7 @@ alias h='cd ~'
 alias c='clear'
 
 alias pup="rails s -b 0.0.0.0"
+alias pup_test="rails s -b 0.0.0.0 -e test"
 alias pcd="cd /pitchhub/"
 
 export PATH=$PATH:/home/vagrant/.rbenv/versions/2.2.1/lib/ruby/gems/2.2.0/bin

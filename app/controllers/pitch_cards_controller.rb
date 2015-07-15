@@ -146,7 +146,6 @@ class PitchCardsController < ApplicationController
   end
 
   def search
-      sort = {'_id': -1}
       @pitch_cards = PitchCard.where(:'pitch_points.value' => /#{params["top-search"]}/).desc(:_id).page params[:page]
       render 'index'
   end

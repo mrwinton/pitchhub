@@ -23,11 +23,11 @@
               <% if pitch_card.image.present? %>
                 <%= link_to pitch_card do %>
                   <div class="col-md-12">
-		    <%= image_tag pitch_card.image.url, width:"100%" %>
+		    <%= image_tag_with_at2x pitch_card.image.url, width:"100%" %>
                   </div>
                 <% end %>
               <% end %>
-            </div> 
+            <!--</div> -->
 
           </td>
           <td rowspan=2 width="10%">
@@ -35,7 +35,7 @@
                <% if point.value.blank? && point.selected? %>
                  <% image_point = point[:name].downcase.tr(' ', '_') %>
                  <% image_selected = 'points/selected/'+image_point+'.png'%>
-                 <%= image_tag image_selected , size:"20x20" %>
+                 <%= image_tag_with_at2x image_selected , size:"20x20" %>
                <% end %>
             <% end %>
 
