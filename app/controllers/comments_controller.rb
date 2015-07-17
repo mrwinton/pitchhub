@@ -99,7 +99,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
 
-        msg = { :status => "ok", :message => "Success!", :content => params[:ic_scope] }
+        msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
         format.json { render json: msg }
       else
         flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'

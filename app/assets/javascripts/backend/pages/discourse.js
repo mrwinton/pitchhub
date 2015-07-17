@@ -8,6 +8,8 @@
 
 var Discourse = function() {
 
+    var lastFocusedPointScope = "";
+
     function injectPopovers(){
 
         $('.scope-popover').on('click', function(e){
@@ -18,6 +20,8 @@ var Discourse = function() {
 
         $("[data-toggle='popover']").on('shown.bs.popover', function(){
 
+            Discourse.lastFocusedPointScope = $(this).attr("id");
+
             $('.scope-submit').on('click',function(e) {
 
                 e.preventDefault();
@@ -26,6 +30,8 @@ var Discourse = function() {
                 var form = $(this).closest("form");
                 var popover = $(this).parents("div.popover-content")[0];
                 var loading = $(popover).find(".scope-loading");
+                var success_loading = $(loading).find(".scope-success");
+                var spin_loading = $(loading).find(".scope-spin");
 
                 var url = $(form).attr( "action" );
                 var type = $(form).attr( "method" );
@@ -36,15 +42,40 @@ var Discourse = function() {
                     type: type,
                     data: data,
                     success: function(data) {
-                        console.log(data);
+
+                        //update the link so the current selection shows on the form when clicked on again
+                        var popoverLinkElement = $('#'+Discourse.lastFocusedPointScope);
+                        var scope = data.content;
+
+                        var selected = "selected=\"selected\"";
+                        var value = "value=\"" + scope + "\"";
+                        var selected_value = value + " " + selected;
+                        var content = $(popoverLinkElement).attr("data-content");
+
+                        content = content.replace(selected, "");
+                        content = content.replace(value, selected_value);
+
+                        $(popoverLinkElement).attr( "data-content", content );
+
+                        setTimeout(function(){
+                            $(spin_loading).addClass("hidden");
+                            $(success_loading).removeClass("hidden");
+                        }, 1000);
+
+                        setTimeout(function(){
+                            $(spin_loading).removeClass("hidden");
+                            $(success_loading).addClass("hidden");
+                        }, 4000);
                     },
                     beforeSend: function(){
                         $( loading ).removeClass("hidden");
                         $( form ).addClass("scope-hidden");
                     },
                     complete: function(){
-                        $( loading ).addClass("hidden");
-                        $( form ).removeClass("scope-hidden");
+                        setTimeout(function(){
+                            $( loading ).addClass("hidden");
+                            $( form ).removeClass("scope-hidden");
+                        }, 4000);
                     }
                 });
 
