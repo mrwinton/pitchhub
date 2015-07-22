@@ -11,6 +11,8 @@ max_suggestion = 10
 max_comments = 10
 scopes = DisclosureScopeHelper.scopes(nil)
 
+puts Rails.env
+
 if Rails.env.test?
 
   puts "Environment is TEST"
