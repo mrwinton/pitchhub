@@ -1,10 +1,10 @@
 <% discourse = local_assigns[:locals][:disc] %>
-<% available_ic_scopes = local_assigns[:locals][:ic_scopes] %>
+<% all_available_ic_scopes = scope_hashes %>
 <% content_scope = discourse.content_scope.present? ? discourse.content_scope : nil %>
 <% initiator_content_scope = discourse.initiator_content_scope.present? ? discourse.initiator_content_scope : nil %>
 <% display_content_scope = initiator_content_scope.present? ? initiator_content_scope : content_scope %>
 
-<% options = options_for_select( available_ic_scopes, display_content_scope ) %>
+<% options = narrowed_options_for_select( all_available_ic_scopes, display_content_scope ) %>
 
 <%= form_for(discourse, :url=>initiator_scope_pitch_card_comment_path(@pitch_card, discourse), id: "initiator-scope-form", method: "post") do |f| %>
 	<div class="form-group">
