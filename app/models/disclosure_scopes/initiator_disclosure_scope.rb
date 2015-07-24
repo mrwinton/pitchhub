@@ -12,7 +12,7 @@ class InitiatorDisclosureScope < Scope
   end
 
   def is_in_comment_scope(user, comment)
-    if is_in_scope(user, comment.author) or is_in_scope(user, comment.pitch_point.pitch_card.initiator)
+    if is_in_scope(user, comment.author) or user.id == comment.initiator_id
       return true
     end
 
