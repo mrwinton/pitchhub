@@ -10,7 +10,7 @@ class PitchCard
   include AssociatedImage
 
   # == Pagination, max per page
-  paginates_per 10
+  paginates_per 20
 
   # == Status
   # is the pitch card active (taking suggestions, comments, etc) or complete (closed and no longer viewable)
@@ -41,5 +41,9 @@ class PitchCard
   # Important: all relations (embedded or referenced) must be permitted here
   # This allows us to use the Pitch Card form to also cater for the related models
   accepts_nested_attributes_for :initiator, :collaborators, :pitch_points
+
+  # == Scopes
+  # scopes to make the query syntax more readable and concise
+  # scope :active, where(status: "active")
 
 end
