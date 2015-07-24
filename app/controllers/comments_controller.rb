@@ -8,11 +8,8 @@ class CommentsController < ApplicationController
   # GET /pitch_cards/1/comments.json
   def index
     # Retrieve the comments (suggestions included) that the current user is permitted to see
-    permitted_comments = @pitch_card.comments.select{|comment| can? :read_content, comment}
-    # Sort most recent first
-    sorted_permitted_comments = permitted_comments.sort_by {|obj| -obj.created_at.to_f}
-    # Paginate the permitted_comments according to the params[:page] paramated (if set)
-    @discourses = Kaminari.paginate_array(sorted_permitted_comments).page(params[:page]).per(10)
+    @discourses = @pitch_card.comments.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
+
     # TODO for each discourse get it's children comments (if any)
 
     respond_to do |format|
@@ -41,8 +38,10 @@ class CommentsController < ApplicationController
     @comment.inject_scopes(@scopes)
     # Set the current user as the Comment's initiator
     @comment.author = current_user
-    @comment.message_type = :root
     @comment.author_name = current_user.first_name + " " + current_user.last_name
+    # Set the PitchCard initiator's id
+    @comment.initiator_id = @pitch_card.initiator.id
+    @comment.message_type = :root
 
     respond_to do |format|
       if @comment.save

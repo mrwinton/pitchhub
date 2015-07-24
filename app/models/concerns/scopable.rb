@@ -21,6 +21,18 @@ module Scopable
     # This allows us to use the model using this concern to have a form that also caters for the scopes
     accepts_nested_attributes_for :identity_scope, :content_scope
 
+    # == Scopes
+    # scopes to make the query syntax more readable and concise
+    scope :content_scoped_for, ->(user){
+      where('$or' => [
+                {'content_scope._type' => "PublicDisclosureScope"},
+                {'content_scope._type' => "PrivateDisclosureScope", "initiator_id" => user.id },
+                {'content_scope._type' => "MemberDisclosureScope"},
+                {'content_scope._type' => "InitiatorDisclosureScope", "initiator_id" => user.id },
+                {'content_scope._type' => "ContributorsDisclosureScope", "collaborator_ids" => { "$in" => [ user.id ]}}
+            ])
+    }
+
   end
 
   # == Temporary scopes

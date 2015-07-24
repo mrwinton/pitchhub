@@ -18,6 +18,21 @@ module InitiatorAcceptableAndScopable
     # This allows us to use the model using this concern to have a form that also caters for the scopes
     accepts_nested_attributes_for :initiator_content_scope
 
+    # == Scopes
+    # scopes to make the query syntax s readable and concise
+    scope :initiator_content_scoped_for, ->(user){
+      where('$or' => [
+                { 'initiator_content_scope' => { "$exists" => false }, "initiator_id" => user.id },
+                { 'initiator_content_scope' => { "$exists" => false }, "author_id" => user.id },
+                { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "PublicDisclosureScope"},
+                { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "PrivateDisclosureScope", "initiator_id" => user.id },
+                { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "MemberDisclosureScope"},
+                { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "InitiatorDisclosureScope", "initiator_id" => user.id },
+                { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "InitiatorDisclosureScope", "author_id" => user.id },
+                { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "ContributorsDisclosureScope", "collaborator_ids" => { "$in" => [ user.id ]}}
+            ])
+    }
+
   end
 
   # == Temporary scopes

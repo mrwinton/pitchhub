@@ -24,6 +24,7 @@ class Comment
   field :author_name,        type: String
   field :pitch_point_id,     type: String
   field :pitch_point_name,   type: String
+  field :initiator_id,       type: BSON::ObjectId
 
   # == Validation
   validates :author, presence: true
