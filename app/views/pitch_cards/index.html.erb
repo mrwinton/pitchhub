@@ -9,7 +9,7 @@
 	<%= javascript_include_tag 'backend/pages/dashboard', 'data-turbolinks-track' => true %>
 <% end %>
 
-<%= render partial: "shared/backend/content_header", locals: {content_title: "Listing Pitch Cards", content_subtitle: "lorem ipsum"} %>
+<%= render partial: "shared/backend/content_header", locals: {content_title: title, content_subtitle: ""} %>
 
   <div class="row"> 
   <% @pitch_cards.each do |pitch_card| %>
@@ -76,6 +76,16 @@
 
   <% end %>
   </div>
+
+<% if @pitch_cards.empty? %>
+
+	<div class="row">
+	  <div class="col-md-2 col-md-offset-5">
+		<h4 class="push-top-bottom text-center">Nothing here yet...</h4>
+	  </div>
+	</div>
+
+<% end %>
 
 <br>
 
