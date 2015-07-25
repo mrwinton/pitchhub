@@ -6,7 +6,7 @@ class Comment
   include InitiatorAcceptableAndScopable
 
   # == Pagination, max per page
-  paginates_per 10
+  paginates_per 20
 
   belongs_to :author, class_name: "User", inverse_of: :comments
   belongs_to :pitch_card, inverse_of: :comments, class_name: "PitchCard"
