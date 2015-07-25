@@ -16,5 +16,6 @@
 //= require vendor/bootstrap-modalmanager
 //= require vendor/lodash.min
 //= require vendor/timeago
+//= require vendor/masonry.min
 //= require turbolinks
 //= require jquery_ujs
