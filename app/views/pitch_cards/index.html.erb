@@ -13,19 +13,28 @@
 
 <% if @pitch_cards.any? %>
 
-	<div id="masonry-container" class="transitions-enabled infinite-scroll clearfix">
-	  <% @pitch_cards.each do |card| %>
-
-	  	<%= render partial: 'pitch_cards/partials/card/mini_card', locals: { pitch_card: card, should_center: false } %>
-
-	  <% end %>
+	<div id="pitch-cards-loader" class="preloader themed-background">
+	  <div class="inner">
+		<h3 class="visible-lt-ie9 visible-lt-ie10"><strong>Loading..</strong></h3>
+		<div class="preloader-spinner hidden-lt-ie9 hidden-lt-ie10"></div>
+	  </div>
 	</div>
 
-	<br/>
+	<div id="pitch-cards-content" class="pitch-cards-hidden">
+	  <div id="masonry-container" class="transitions-enabled infinite-scroll clearfix">
+		<% @pitch_cards.each do |card| %>
 
-	<div class="row">
-	  <div class="col-md-2 col-md-offset-5 text-center">
-		<%= paginate @pitch_cards %>
+			<%= render partial: 'pitch_cards/partials/card/mini_card', locals: { pitch_card: card, should_center: false } %>
+
+		<% end %>
+	  </div>
+
+	  <br/>
+
+	  <div class="row">
+		<div class="col-md-2 col-md-offset-5 text-center">
+		  <%= paginate @pitch_cards %>
+		</div>
 	  </div>
 	</div>
 

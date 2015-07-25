@@ -31,7 +31,7 @@ $(function() {
         var pitchPoint = $(".form-pitch-point");
 
         pitchPoint.each(function() {
-            updatePitchPointTextArea(this, true);
+            updatePitchPointTextArea(this, false);
         });
 
     }
@@ -46,6 +46,11 @@ $(function() {
             gutter: 20,
             columnWidth : 380
         });
+
+        // Reveal content
+        $("#pitch-cards-loader").css({ display: "none" });
+        $("#pitch-cards-content").removeClass("pitch-cards-hidden").addClass("animation-fadeInQuick");
+
     });
 
 
