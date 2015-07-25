@@ -49,6 +49,11 @@
   background-size: contain !important;
 }
 
+.photo-view {
+  width: 100%;
+  height: auto;
+}
+
 #preview{
   border-style: dashed !important;
   cursor: pointer;
@@ -146,4 +151,13 @@ textarea[disabled].form-pitch-point{
 
 .placard-accept{
   z-index: 2;
+}
+
+.mini-card-clickable{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
 }

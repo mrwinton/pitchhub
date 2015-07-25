@@ -6,79 +6,32 @@
 <% content_for :custom_body do %>
 	<!-- page specific body attributes -->
 	<%= javascript_include_tag 'backend/backend_application', 'data-turbolinks-track' => true %>
-	<%= javascript_include_tag 'backend/pages/dashboard', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'backend/shared/grid', 'data-turbolinks-track' => true %>
 <% end %>
 
 <%= render partial: "shared/backend/content_header", locals: {content_title: title, content_subtitle: ""} %>
 
-  <div class="row"> 
-  <% @pitch_cards.each do |pitch_card| %>
+<% if @pitch_cards.any? %>
 
-      <div class="col-md-4">
-      <table class="pitch-card" width="100%" border=0 style="table-layout:fixed">
-	
-        <tr>
-          <td rowspan=2 width=40%>
-	      
-              <% if pitch_card.image.present? %>
-                <%= link_to pitch_card do %>
-                  <div class="col-md-12">
-		    <%= image_tag_with_at2x pitch_card.image.url, width:"100%" %>
-                  </div>
-                <% end %>
-              <% end %>
-            <!--</div> -->
+	<div id="masonry-container" class="transitions-enabled infinite-scroll clearfix">
+	  <% @pitch_cards.each do |card| %>
 
-          </td>
-          <td rowspan=2 width="10%">
-            <% pitch_card.pitch_points.each do |point| %>
-               <% if point.value.blank? && point.selected? %>
-                 <% image_point = point[:name].downcase.tr(' ', '_') %>
-                 <% image_selected = 'points/selected/'+image_point+'.png'%>
-                 <%= image_tag_with_at2x image_selected , size:"20x20" %>
-               <% end %>
-            <% end %>
+	  	<%= render partial: 'pitch_cards/partials/card/mini_card', locals: { pitch_card: card, should_center: false } %>
 
-          </td>
-          <td nowrap style="padding-top:5px">
-	    <% initiator = pitch_card.initiator %>
-            <% can_see_initiator = can? :see_initiator, pitch_card %>
-            <% initiator_name = can_see_initiator ? initiator.first_name + " " + initiator.last_name : "Anonymous" %>
+	  <% end %>
+	</div>
 
-            <h4 style="font-size:small;font-weight:900; margin:0; padding:0;"><%= initiator_name %></h4>
+	<br/>
 
-            <div class="col-md-4">
-              <div class="row" style="font-size:10px;">
-                <%= time_ago_in_words(pitch_card.created_at)%> ago
-              </div>
+	<div class="row">
+	  <div class="col-md-2 col-md-offset-5 text-center">
+		<%= paginate @pitch_cards %>
+	  </div>
+	</div>
 
-            </div>
-          </td>
-          <td width="8%" style="text-align:right; align:top; padding-right:5px;">
-            <% if can? :manage, pitch_card %>
-              <%= link_to pitch_card, method: :delete, data: { confirm: 'This will destroy the pitch card for good. Are you sure?' } do %>
-                <i style="color:red;" class="fa fa-times"></i>
-              <% end %>
-            <% end %>
-          </td>
-        </tr>
+<% else %>
 
-
-        <tr>
-          <td colspan=2 style="word-wrap:break-word;padding-top:5px; padding-bottom:5px;padding-right:5px">
-            <%= pitch_card.pitch_points.where(name:"Value Proposition").each.first.value %>
-          </td>
-        </tr>
-
-      </table>
-      </div>
-
-
-  <% end %>
-  </div>
-
-<% if @pitch_cards.empty? %>
-
+	<!-- empty -->
 	<div class="row">
 	  <div class="col-md-2 col-md-offset-5">
 		<h4 class="push-top-bottom text-center">Nothing here yet...</h4>
@@ -87,11 +40,5 @@
 
 <% end %>
 
-<br>
-
-<div class="row">
-  <div class="col-md-2 col-md-offset-5 text-center">
-	<%= paginate @pitch_cards %>
-  </div>
-</div>
+<br/>
 

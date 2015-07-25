@@ -42,8 +42,19 @@ class PitchCard
   # This allows us to use the Pitch Card form to also cater for the related models
   accepts_nested_attributes_for :initiator, :collaborators, :pitch_points
 
-  # == Scopes
-  # scopes to make the query syntax more readable and concise
-  # scope :active, where(status: "active")
+  # == Instance methods
+
+  # Return the pitch card's value proposition point
+  def value_proposition
+
+    pitch_points.each do |point|
+      if point.name == "Value Proposition"
+        return point.value
+      end
+    end
+
+    # return blank string if we could not find the value proposition point
+    ""
+  end
 
 end

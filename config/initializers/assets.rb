@@ -30,4 +30,5 @@ Rails.application.config.assets.precompile += %w( backend/pages/discourse.js )
 Rails.application.config.assets.precompile += %w( backend/pages/users.js )
 Rails.application.config.assets.precompile += %w( backend/shared/upload.js )
 Rails.application.config.assets.precompile += %w( backend/shared/modal.js )
+Rails.application.config.assets.precompile += %w( backend/shared/grid.js )
 

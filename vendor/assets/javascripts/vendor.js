@@ -17,5 +17,6 @@
 //= require vendor/lodash.min
 //= require vendor/timeago
 //= require vendor/masonry.min
+//= require vendor/imagesLoaded.min
 //= require turbolinks
 //= require jquery_ujs
