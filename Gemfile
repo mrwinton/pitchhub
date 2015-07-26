@@ -31,6 +31,8 @@ gem "mongoid-enum"
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
 gem 'mongoid_denormalize', :git => 'https://github.com/mrwinton/mongoid_denormalize.git'
 gem 'kaminari'
+gem 'secretsharing'
+
 
 # gem 'delayed_job_mongoid'
 gem 'active_link_to', '~> 1.0.3'
