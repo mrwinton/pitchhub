@@ -44,6 +44,7 @@ $(function() {
         $container.masonry({
             itemSelector : '.box',
             gutter: 20,
+            isFitWidth: true,
             columnWidth : 380
         });
 
