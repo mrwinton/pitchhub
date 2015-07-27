@@ -1,8 +1,26 @@
 # encoding: utf-8
-# This file originally created at http://rove.io/b1d8d1c8809fa324118e5fa9ce21b275
-
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+
+# Allow host platform checks
+# http://stackoverflow.com/questions/26811089/vagrant-how-to-have-host-platform-specific-provisioning-steps
+module OS
+  def OS.windows?
+    (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.mac?
+    (/darwin/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.unix?
+    !OS.windows?
+  end
+
+  def OS.linux?
+    OS.unix? and not OS.mac?
+  end
+end
 
 Vagrant.configure("2") do |config|
 
@@ -10,7 +28,12 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = 'pitchbox'
   config.vm.box_url = 'http://files.vagrantup.com/trusty64.box'
   config.ssh.forward_agent = true
-  config.vm.synced_folder '../', '/pitchhub' #, type: "nfs"
+
+  if OS.mac?
+    config.vm.synced_folder '../', '/pitchhub', type: "nfs"
+  else
+    config.vm.synced_folder '../', '/pitchhub'
+  end
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2048"]

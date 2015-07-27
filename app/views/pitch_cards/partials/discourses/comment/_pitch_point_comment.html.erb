@@ -1,38 +1,74 @@
 <% css_point = point[:name].downcase.tr(' ', '-')%>
 <% image_point = point[:name].downcase.tr(' ', '_')%>
-<% image_selected = 'points/selected/'+image_point+'.png'%>
+<% image_pending = 'points/pending/'+image_point+'.png'%>
+<% image_rejected = 'points/rejected/'+image_point+'.png'%>
+<% image_accepted = 'points/accepted/'+image_point+'.png'%>
 <% can_see_author = can? :see_author, comment %>
 <% author = can_see_author ? comment.author_name : "Anonymous" %>
+<% pending = comment.pending? %>
+<% rejected = comment.rejected? %>
 
-<div class="col-md-10 col-md-offset-1">
-  <div id="<%= css_point %>-comment-content" class="block block-bordered pitch-card-discourse row">
-	<!-- Discourse -->
 
-	<div class="row-same-height">
-	  <div class="col-xs-2 col-xs-height col-middle">
-		<div class="text-center">
-		  <%= image_tag_with_at2x image_selected, :class =>  "pitch-point-image-restrained" %>
-		</div>
-	  </div>
-	  <div class="col-xs-10 col-xs-height col-middle">
-		<div class="inside">
+<!-- Discourse -->
+<% if pending and can? :manage, @pitch_card %>
+	<div class="push-bit">
+	  <div class="row-same-height">
+
+		<div class="col-xs-12 col-xs-height col-middle">
+
+		  <div class="inside">
 			<span class="text-muted pull-right"  style="margin-top: -4.5px">
-			<small><abbr class="timeago" title="<%= comment.created_at.to_time.iso8601 %>"></abbr></small>
-			  <% if can? :manage, @pitch_card %>
-				<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: comment, ic_scopes: ic_scopes} %>
-			  <% end %>
-		</span>
-		  <strong><%= author + " commented"%></strong>
+				<div class="btn-group btn-group-sm">
+
+				  <%= f.button(value: "accept", type: 'submit', class: "btn btn-alt btn-success") do %>
+					  <i class="fa fa-check"></i>
+				  <% end %>
+				  <%= f.button(value: "reject", type: 'submit', class: "btn btn-alt btn-danger") do %>
+					  <i class="fa fa-times"></i>
+				  <% end %>
+
+				</div>
+			</span>
+			<p class="text-muted">Was this comment helpful?</p>
+		  </div>
 		</div>
 	  </div>
 	</div>
-	<li class="media media-comment">
-	  <div class="media-body">
-		<hr/>
-		<p><%= comment.comment %></p>
-	  </div>
-	</li>
+<% end %>
 
-	<!-- END Discourse -->
+<div class="row-same-height">
+  <div class="col-xs-2 col-xs-height col-middle">
+	<div class="text-center">
+	  <% if pending %>
+		  <%= image_tag_with_at2x image_pending, :class =>  "pitch-point-image-restrained" %>
+	  <% else %>
+		  <% if rejected %>
+			  <%= image_tag_with_at2x image_rejected, :class =>  "pitch-point-image-restrained" %>
+		  <% else %>
+			  <%= image_tag_with_at2x image_accepted, :class =>  "pitch-point-image-restrained" %>
+		  <% end %>
+	  <% end %>
+	</div>
+  </div>
+  <div class="col-xs-10 col-xs-height col-middle">
+	<div class="inside">
+	  <span class="text-muted pull-right"  style="margin-top: -4.5px">
+		<small>
+		  <abbr class="timeago" title="<%= comment.created_at.to_time.iso8601 %>"></abbr>
+		</small>
+		<% if can? :manage, @pitch_card %>
+			<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: comment, ic_scopes: ic_scopes} %>
+		<% end %>
+	  </span>
+	  <strong><%= author + " commented"%></strong>
+	</div>
   </div>
 </div>
+<li class="media media-comment">
+  <div class="media-body">
+	<hr/>
+	<p><%= comment.comment %></p>
+  </div>
+</li>
+
+<!-- END Discourse -->

@@ -1,0 +1,18 @@
+<div class="col-md-10 col-md-offset-1">
+  <div id="discourse-content" class="block block-bordered pitch-card-discourse row">
+
+	<% if comment.pending? and can? :manage, @pitch_card %>
+
+		<%= form_for(comment, :url=>accept_pitch_card_comment_path(@pitch_card, comment), method: "post") do |f| %>
+
+			<%= render partial: 'pitch_cards/partials/discourses/comment/pitch_point_comment', locals: { point: point, ic_scopes: ic_scopes, comment: comment, f: f } %>
+
+		<% end %>
+	<% else %>
+
+		<%= render partial: 'pitch_cards/partials/discourses/comment/pitch_point_comment', locals: { point: point, ic_scopes: ic_scopes, comment: comment } %>
+
+	<% end%>
+
+  </div>
+</div>
