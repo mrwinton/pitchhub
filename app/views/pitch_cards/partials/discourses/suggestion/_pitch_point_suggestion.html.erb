@@ -9,31 +9,29 @@
 <% rejected = suggestion.rejected? %>
 
 <!-- Discourse -->
-<div class="push-bit">
-  <div class="row-same-height">
+<% if pending and can? :manage, @pitch_card %>
+	<div class="push-bit">
+	  <div class="row-same-height">
 
-	<div class="col-xs-10 col-xs-height">
+		<div class="col-xs-12 col-xs-height col-middle">
 
-	  <% if pending and can? :manage, @pitch_card %>
-
-		  <div class="pull-right">
-
-			<div class="btn-group btn-group-sm">
-			  <%= f.submit "accept", class: "btn btn-alt btn-success" do %>
-				  <i class="fa fa-check"></i> accept
-			  <% end %>
-			  <%= f.submit "reject", class: "btn btn-alt btn-danger" do %>
-				  <i class="fa fa-times"></i> reject
-			  <% end %>
-			</div>
-
+		  <div class="inside">
+			<span class="text-muted pull-right"  style="margin-top: -4.5px">
+				<div class="btn-group btn-group-sm">
+				  <%= f.button(value: "accept", type: 'submit', class: "btn btn-alt btn-success") do %>
+					  <i class="fa fa-check"></i>
+				  <% end %>
+				  <%= f.button(value: "reject", type: 'submit', class: "btn btn-alt btn-danger") do %>
+					  <i class="fa fa-times"></i>
+				  <% end %>
+				</div>
+			</span>
+			<p class="text-muted">Update Pitch Card with suggestion?</p>
 		  </div>
-
-	  <% end %>
-
+		</div>
+	  </div>
 	</div>
-  </div>
-</div>
+<% end %>
 <div class="row-same-height">
   <div class="col-xs-2 col-xs-height col-middle">
 	<div class="text-center">
