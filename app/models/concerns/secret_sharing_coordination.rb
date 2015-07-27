@@ -56,6 +56,8 @@ module SecretSharingCoordination
       #   comment
       # Suggestion to encrypt:
       #   content
+
+      model.split
     end
 
     def decrypt_model(model_shares)

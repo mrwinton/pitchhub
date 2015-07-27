@@ -8,6 +8,8 @@ class PitchCard
   include Scopable
   # == Include Image
   include AssociatedImage
+  # == Include secret sharing
+  include SecretSharingCoordination
 
   # == Pagination, max per page
   paginates_per 20
@@ -55,6 +57,68 @@ class PitchCard
 
     # return blank string if we could not find the value proposition point
     ""
+  end
+
+  def self.split(pitch_card, n)
+
+    # contains the shares
+    pitch_card_array = []
+
+    # pitch_point_hash_array = { :facilitation => [0, 1, 2, ... , n] }
+    pitch_point_hash_of_arrays = {}
+
+    # construct the hash of arrays containing pitch point shares
+    pitch_card.pitch_points.each do |point|
+
+      pitch_point_hash_of_arrays[point.name] = []
+
+        # if it' a value proposition we don't want to encrypt
+        if point.name == "Value Proposition"
+
+          n.times{
+
+            pitch_point_hash_of_arrays[point.name] << point.value
+
+          }
+
+        else
+
+          # the secret shares for this pitch_point
+          shares = pitch_card.split_secret(secret)
+
+          pitch_point_hash_of_arrays[point.name] = shares
+
+
+        end
+    end
+
+    # for n times, add the pitch card share to array
+    (0..n).each do |counter|
+
+      # duplicate the original pitch card
+      pitch_card_share = pitch_card.dup
+
+      # using the pitch point has update the points
+      pitch_point_hash_of_arrays.each do |point_name, array_of_point_value_shares|
+
+        # get the value at the counter
+        share_value = array_of_point_value_shares[counter]
+
+        # update
+        pitch_card.pitch_points_attributes = [
+            { name: point_name, value: share_value }
+        ]
+
+      end
+
+      # add the share to the array
+      pitch_card_array << pitch_card_share
+
+    end
+
+    # now completed, return the array of pitch cards with secure pitch points
+    pitch_card_array
+
   end
 
 end
