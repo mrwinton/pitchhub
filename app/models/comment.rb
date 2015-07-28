@@ -35,4 +35,53 @@ class Comment
   validates :initiator_id, presence: true
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
 
+  def self.split(discourse, n)
+
+    # contains the shares
+    discourse_array = []
+
+    # share values
+    shares_values = discourse.split_secret(discourse.comment)
+
+    # for n times, add the discourse share to array
+    (0..n).each do |counter|
+
+      # duplicate the original discourse
+      discourse_share = discourse.dup
+
+      discourse_share.comment = shares_values[counter]
+
+      # add the share to the array
+      discourse_array << discourse_share
+
+    end
+
+    # now completed, return the array of discourses with secure comments
+    discourse_array
+
+  end
+
+  def self.combine(discourse_shares)
+
+    # get a share to serve as the base discourse that we will inject the secret_values with
+    discourse = discourse_shares.delete_at(0)
+
+    discourse_secret_shares = []
+
+    discourse_shares.each do |discourse_share|
+
+      discourse_secret_shares << discourse_share.comment
+
+    end
+
+    # combine the shares
+    secret_value = discourse.combine_secret_shares(discourse_secret_shares)
+
+    discourse.comment = secret_value
+
+    discourse
+
+  end
+
+
 end

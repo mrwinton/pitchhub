@@ -14,9 +14,9 @@ module SecretSharingCoordination
   module InstanceMethods
 
     # CRUD operations
-    def secret_save(model)
+    def secret_save(model, model_instance)
 
-      model_shares = encrypt_model(model)
+      model_shares = encrypt_model(model, model_instance)
 
       databases.each_with_index { |db, index| model_shares[index].with(database: db).save }
 
@@ -30,12 +30,12 @@ module SecretSharingCoordination
         model_shares << model_class.with(database: db).find(model_id)
       }
 
-      model = decrypt_model(model_shares)
+      model = decrypt_model(model_class, model_shares)
 
     end
 
-    def secret_update(model)
-      secret_save(model)
+    def secret_update(model, model_instance)
+      secret_save(model, model_instance)
     end
 
     def secret_delete(model_class, model_id)
@@ -48,19 +48,20 @@ module SecretSharingCoordination
     end
 
     # Model operations
-    def encrypt_model(model)
-      # model.attributes.attributes.each do |name, value|
-      # PitchCard to encrypt:
-      #   all pitch points except value proposition (embedded)
+    def encrypt_model(model, model_instance)
+
       # Comment to encrypt:
       #   comment
       # Suggestion to encrypt:
       #   content
 
-      model.split
+      model.split(model_instance, databases.length)
+
     end
 
-    def decrypt_model(model_shares)
+    def decrypt_model(model, model_shares)
+
+      model.combine(model_shares)
 
     end
 

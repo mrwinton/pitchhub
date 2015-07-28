@@ -83,7 +83,7 @@ class PitchCard
 
         else
 
-          # the secret shares for this pitch_point
+          # the secret shares array for this pitch_point
           shares = pitch_card.split_secret(secret)
 
           pitch_point_hash_of_arrays[point.name] = shares
@@ -118,6 +118,52 @@ class PitchCard
 
     # now completed, return the array of pitch cards with secure pitch points
     pitch_card_array
+
+  end
+
+  def self.combine(pitch_card_shares)
+
+    # get a share to serve as the base pitch_card that we will inject the secret_values with
+    pitch_card = pitch_card_shares.delete_at(0)
+
+    # for each pitch point that is active
+    # reject pitch points that are not selected
+    pitch_card.pitch_points.each do |point|
+
+      point_shares = []
+
+      # add this
+      point_shares << point.value
+
+      # for each share
+      pitch_card_shares.each do |pitch_card_share|
+
+        # for each pitch point in each share
+        pitch_card_share.pitch_points.each do |share_point|
+
+          # if the point name's are equal, add the value to the point shares
+          if point[:name] == share_point[:name]
+
+            point_shares << share_point.value
+
+          end
+
+        end
+
+      end
+
+      # combine the shares
+      secret_value = pitch_card.combine_secret_shares(point_shares)
+
+      # set share in base pitch_card
+      pitch_card.pitch_points_attributes = [
+          { name: point.name, value: secret_value }
+      ]
+
+    end
+
+    # return the pitch card with the secret value set
+    pitch_card
 
   end
 
