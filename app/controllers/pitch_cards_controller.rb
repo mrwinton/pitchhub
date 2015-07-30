@@ -147,7 +147,7 @@ class PitchCardsController < ApplicationController
 
   def search
       @pitch_cards = PitchCard.where(:'pitch_points.value' => /#{params["top-search"]}/).desc(:_id).page params[:page]
-      render 'index'
+      render 'index', :locals => {:title => 'Search Results'}
   end
 
   private
