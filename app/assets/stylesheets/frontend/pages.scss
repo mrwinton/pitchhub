@@ -9,8 +9,27 @@
 
 /* Index */
 
+#pitchhub-brand{
+  width: 2em;
+  height: auto;
+  margin-top: -6px;
+}
+
+#pitchhub-banner-logo{
+  font-family: 'Courgette', cursive;
+  color: white;
+  font-size: 6em;
+}
+
+#pitchhub-banner-copy{
+  font-weight: 200;
+  color: white;
+  font-size: 3em;
+}
+
 #banner{
   width:100%;
+  background-color: #2C8DCC;
   background-repeat:no-repeat;
   background-size:cover;
   color: $color_pitch_primary_text;
@@ -18,7 +37,11 @@
   position:relative
 }
 
-@media screen and (min-width: 40em){
+.site-nav a {
+  color: white;
+}
+
+@media screen {
   #banner{
     display:-webkit-box;
     display:-moz-box;
