@@ -17,19 +17,19 @@
 
 #pitchhub-banner-logo{
   font-family: 'Courgette', cursive;
-  color: white;
+  color: $color_dark;
   font-size: 6em;
 }
 
 #pitchhub-banner-copy{
   font-weight: 200;
-  color: white;
+  color: $color_dark;
   font-size: 3em;
 }
 
 #banner{
   width:100%;
-  background-color: #2C8DCC;
+  background-color: $color_light_main;
   background-repeat:no-repeat;
   background-size:cover;
   color: $color_pitch_primary_text;
@@ -38,7 +38,7 @@
 }
 
 .site-nav a {
-  color: white;
+  //color: white;
 }
 
 @media screen {
@@ -152,6 +152,18 @@
   margin-bottom: 0.3125em
 }
 
+
+.site-nav-divider{
+  color: #dadde1;
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0px 10px;
+  height: 34px;
+  line-height: 32px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
 /* Login */
 #login-background {
     width: 100%;
