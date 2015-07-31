@@ -9,9 +9,47 @@
 pitch_cards_number = 100
 max_suggestion = 10
 max_comments = 10
-scopes = DisclosureScopeHelper.scopes(nil)
+$scopes = DisclosureScopeHelper.scopes(nil)
 
 puts Rails.env
+
+puts "#{Rails.root}"
+
+#Image.create({
+#id => 52,
+#:asset => File.new("#{Rails.root}/img.png"),
+#:product_id => 52
+#})
+
+def new_user(email, first_name, last_name)
+  User.create!(:email => email, :password => 'password123', :first_name => first_name, :last_name => last_name)
+end
+
+def  new_suggestion(pc,pp,u,comment, sugg, status)
+  pitch_point = pc.pitch_points[pp]
+  suggestion = Suggestion.new
+
+  suggestion.author = u
+  suggestion.pitch_card = pc
+  suggestion.comment = comment
+  suggestion.content = sugg
+  suggestion.author_name = u.first_name + " " + u.last_name
+  suggestion.pitch_point_id = pitch_point._id
+  suggestion.pitch_point_name = pitch_point.name
+  suggestion.message_type = :root
+
+  suggestion.i_scope = "public"
+  suggestion.c_scope = "public"
+  suggestion.ic_scope = "public"
+  suggestion.status = status
+
+  suggestion.inject_scopes($scopes)
+
+  suggestion.save
+  pc.comments << suggestion
+end
+
+
 
 if Rails.env.test?
 
@@ -60,7 +98,7 @@ if Rails.env.test?
     pitch_card.i_scope = "public"
     pitch_card.c_scope = "public"
 
-    pitch_card.inject_scopes(scopes)
+    pitch_card.inject_scopes($scopes)
 
     value_proposition = PitchPoint.new
     value_proposition.name = pitch_point_value_proposition[:name]
@@ -113,7 +151,7 @@ if Rails.env.test?
         comment.i_scope = "public"
         comment.c_scope = "public"
 
-        comment.inject_scopes(scopes)
+        comment.inject_scopes($scopes)
 
         if comment.save
           puts " +--> Successfully added comment to Pitch Card " + n.to_s
@@ -153,7 +191,7 @@ if Rails.env.test?
         suggestion.i_scope = "public"
         suggestion.c_scope = "public"
 
-        suggestion.inject_scopes(scopes)
+        suggestion.inject_scopes($scopes)
 
         if suggestion.save
           puts " +--> Successfully added suggestion to Pitch Card " + n.to_s
@@ -178,6 +216,74 @@ if Rails.env.test?
 
 else
 
-  puts "Please seed in the TEST environment"
+  puts "Environment is NOT TEST, seeding historic cards."
+
+  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.clean
+
+  user_gn = new_user('erdbirne@gmail.com', 'Gregor','Neumayr') 
+  user_hd = new_user('hd@test.com','Humphrey','Davy')
+  user_js = new_user('js@test.com','Sir Joseph', 'Swan')
+  user_ke = new_user('ke@test.com','King Edward','VII')
+  user_te = new_user('te@test.com','Thomas','Edison')
+
+
+  pitch_point_hash_array = PitchPointsHelper.pitch_points_hash
+  pitch_point_value_proposition = pitch_point_hash_array.delete_at(0)
+  pitch_card = PitchCard.new
+
+  pitch_card.initiator = user_hd
+  pitch_card.status = :active
+
+  pitch_card.i_scope = "public"
+  pitch_card.c_scope = "public"
+  pitch_card.inject_scopes($scopes)
+
+  value_proposition = PitchPoint.new
+  value_proposition.name = pitch_point_value_proposition[:name]
+  value_proposition.selected = true
+  value_proposition.value = "Electric lamps light up the night."
+
+  pitch_card.pitch_points << value_proposition
+
+  challenge = PitchPoint.new
+  challenge.name = pitch_point_hash_array[0][:name]
+  challenge.selected = true
+  challenge.value = "develop a principle for an electrical light"
+
+  pitch_card.pitch_points << challenge
+
+  solve = PitchPoint.new
+  solve.name = pitch_point_hash_array[1][:name]
+  solve.selected = true
+  solve.value = "discharge a battery via carbon electrodes to create an arc"
+  
+  pitch_card.pitch_points << solve
+
+  pitch_card.created_at='03-03-1815'
+
+  new_suggestion(pitch_card,0,user_js,
+"I think we need to develop an electrical light bulb that is much more practical and long-lasting than the arc light bulb",
+"devise a practical, long-lasting electric light", :accepted)
+
+  pitch_card.save
+
+
+  puts "----------------------------------------------------------------"
+
+
+  user_as = new_user('as@test.com','Archimedes','of Syracuse')
+  user_bh = new_user('bh@test.com','Bill','Hamilton')
+  user_ae = new_user('ae@test.com','an', 'employee')
+  user_om = new_user('om@test.com','Otis "Dock"','Marston')
+
+
+  puts "----------------------------------------------------------------"
+
+  user_ah = new_user('ah@test.com','August Wilhelm','von Hofmann') 
+  user_wp = new_user('wp@test.com','William Henry','Perkin') 
+
+  puts "----------------------------------------------------------------"
+  puts "Seeding Pitch Cards"
 
 end
