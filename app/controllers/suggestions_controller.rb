@@ -1,5 +1,6 @@
 class SuggestionsController < ApplicationController
   include ActionView::Helpers::TextHelper
+  include SecretSharingController
   before_action :authenticate_user!
   before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :accept]
   before_action :set_suggestion, only: [:update, :destroy, :accept]
@@ -8,7 +9,7 @@ class SuggestionsController < ApplicationController
   # GET /pitch_cards/1/suggestions.json
   def index
     # Retrieve the comments (suggestions included) that the current user is permitted to see
-    @discourses = @pitch_card.comments.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
+    @discourses = get_discourses(@pitch_card, current_user, params[:page])
 
     # TODO for each discourse get it's children comments (if any)
 
@@ -45,7 +46,8 @@ class SuggestionsController < ApplicationController
     @suggestion.message_type = :root
 
     respond_to do |format|
-      if @suggestion.save
+      @suggestion = @suggestion.secret_save
+      if @suggestion.errors.any?
         current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Suggestion was successfully created.'
         format.html { redirect_to :back, notice: 'Suggestion was successfully created.' }
@@ -67,7 +69,8 @@ class SuggestionsController < ApplicationController
     @suggestion.inject_scopes(@scopes)
 
     respond_to do |format|
-      if @suggestion.update(suggestion_params)
+      @suggestion = @suggestion.secret_save
+      if @suggestion.errors.any?
         format.html { redirect_to :back, notice: 'Suggestion was successfully updated.' }
       else
         flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please fix before submitting'
@@ -104,8 +107,10 @@ class SuggestionsController < ApplicationController
           { id: pitch_point_id, value: updated_content }
       ]
 
-      if @pitch_card.save
-        if @suggestion.save
+      @pitch_card = @pitch_card.secret_save
+      if @pitch_card.errors.any?
+        @suggestion = @suggestion.secret_save
+        if @suggestion.errors.any?
           # the card and suggestion updates were successful
           respond_to do |format|
             format.html { redirect_to :back, notice: 'Suggestion was successfully accepted.' }
@@ -130,7 +135,8 @@ class SuggestionsController < ApplicationController
 
       @suggestion.status = :rejected
 
-      if @suggestion.save
+      @suggestion = @suggestion.secret_save
+      if @suggestion.errors.any?
         # the suggestion update was successful
         respond_to do |format|
           format.html { redirect_to :back, notice: 'Suggestion was successfully rejected.' }
@@ -151,11 +157,11 @@ class SuggestionsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_suggestion
-    @suggestion = Suggestion.find(params[:id])
+    @suggestion = Suggestion.secret_find(params[:id])
   end
 
   def set_pitch_card
-    @pitch_card = PitchCard.find(params[:pitch_card_id])
+    @pitch_card = PitchCard.secret_find(params[:pitch_card_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

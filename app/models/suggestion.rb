@@ -10,8 +10,8 @@ class Suggestion < Comment
     discourse_array = []
 
     # share values
-    comment_shares_values = discourse.split_secret(discourse.comment)
-    content_shares_values = discourse.split_secret(discourse.content)
+    comment_shares_values = SecretSharingHelper.split_secret(discourse.comment)
+    content_shares_values = SecretSharingHelper.split_secret(discourse.content)
 
     # for n times, add the discourse share to array
     (0..n).each do |counter|
@@ -48,8 +48,8 @@ class Suggestion < Comment
     end
 
     # combine the shares
-    comment_secret_value = discourse.combine_secret_shares(comment_secret_shares)
-    content_secret_value = discourse.combine_secret_shares(content_secret_shares)
+    comment_secret_value = SecretSharingHelper.combine_secret_shares(comment_secret_shares)
+    content_secret_value = SecretSharingHelper.combine_secret_shares(content_secret_shares)
 
     discourse.comment = comment_secret_value
     discourse.content = content_secret_value

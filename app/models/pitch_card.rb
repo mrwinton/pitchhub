@@ -9,7 +9,7 @@ class PitchCard
   # == Include Image
   include AssociatedImage
   # == Include secret sharing
-  include SecretSharingCoordination
+  include SecretSharingModel
 
   # == Pagination, max per page
   paginates_per 20
@@ -84,7 +84,7 @@ class PitchCard
         else
 
           # the secret shares array for this pitch_point
-          shares = pitch_card.split_secret(secret)
+          shares = SecretSharingHelper.split_secret(secret)
 
           pitch_point_hash_of_arrays[point.name] = shares
 
@@ -153,7 +153,7 @@ class PitchCard
       end
 
       # combine the shares
-      secret_value = pitch_card.combine_secret_shares(point_shares)
+      secret_value = SecretSharingHelper.combine_secret_shares(point_shares)
 
       # set share in base pitch_card
       pitch_card.pitch_points_attributes = [

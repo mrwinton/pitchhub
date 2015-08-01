@@ -5,13 +5,6 @@ class PitchCardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pitch_card, only: [:show, :edit, :update, :destroy, :complete, :activate]
 
-  # GET /pitch_cards
-  # GET /pitch_cards.json
-  def index
-    # TODO will most likely implement "more" button functionality rather than pagination
-    @pitch_cards = PitchCard.all
-  end
-
   # GET /pitch_cards/1
   # GET /pitch_cards/1.json
   def show
@@ -28,7 +21,6 @@ class PitchCardsController < ApplicationController
     @pitch_points = ApplicationController.helpers.pitch_points_hash
     # build the pitch card's points
     @pitch_points.length.times{@pitch_card.pitch_points.build}
-
   end
 
   # GET /pitch_cards/1/edit
@@ -48,7 +40,8 @@ class PitchCardsController < ApplicationController
     @pitch_card.initiator = current_user
 
     respond_to do |format|
-      if @pitch_card.save
+      @pitch_card = @pitch_card.secret_save
+      if @pitch_card.errors.any?
         format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
@@ -72,9 +65,11 @@ class PitchCardsController < ApplicationController
     @pitch_card.remove_image = params[:pitch_card][:remove_image]
     @pitch_card.inject_scopes(@scopes)
     previous_image = @pitch_card.image
+    @pitch_card = @pitch_card.assign_attributes(pitch_card_params)
 
     respond_to do |format|
-      if @pitch_card.update(pitch_card_params)
+      @pitch_card = @pitch_card.secret_save
+      if @pitch_card.errors.any?
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
@@ -105,7 +100,8 @@ class PitchCardsController < ApplicationController
     authorize! :manage, @pitch_card
     @pitch_card.status = :complete
     respond_to do |format|
-      if @pitch_card.save
+      @pitch_card = @pitch_card.secret_save
+      if @pitch_card.errors.any?
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
@@ -121,7 +117,8 @@ class PitchCardsController < ApplicationController
     authorize! :manage, @pitch_card
     @pitch_card.status = :active
     respond_to do |format|
-      if @pitch_card.save
+      @pitch_card = @pitch_card.secret_save
+      if @pitch_card.errors.any?
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
@@ -153,7 +150,7 @@ class PitchCardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pitch_card
-      @pitch_card = PitchCard.find(params[:id])
+      @pitch_card = PitchCard.secret_find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

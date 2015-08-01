@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
+  include SecretSharingController
   before_action :authenticate_user!
   before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :initiator_scope, :accept]
   before_action :set_comment, only: [:update, :destroy, :initiator_scope, :accept]
@@ -8,7 +9,8 @@ class CommentsController < ApplicationController
   # GET /pitch_cards/1/comments.json
   def index
     # Retrieve the comments (suggestions included) that the current user is permitted to see
-    @discourses = @pitch_card.comments.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
+    # @discourses = @pitch_card.comments.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
+    @discourses = get_discourses(@pitch_card, current_user, params[:page])
 
     # TODO for each discourse get it's children comments (if any)
 
@@ -44,7 +46,8 @@ class CommentsController < ApplicationController
     @comment.message_type = :root
 
     respond_to do |format|
-      if @comment.save
+      @comment = @comment.secret_save
+      if @comment.errors.any?
         current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Comment was successfully created.'
         format.html { redirect_to :back, notice: 'Comment was successfully created.' }
@@ -64,9 +67,11 @@ class CommentsController < ApplicationController
     @comment.i_scope = params[:comment][:i_scope]
     @comment.c_scope = params[:comment][:c_scope]
     @comment.inject_scopes(@scopes)
+    @comment = @comment.assign_attributes(comment_params)
 
     respond_to do |format|
-      if @comment.update(comment_params)
+      @comment = @comment.secret_save
+      if @comment.errors.any?
         format.html { redirect_to :back, notice: 'Comment was successfully updated.' }
       else
         flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
@@ -80,7 +85,7 @@ class CommentsController < ApplicationController
   # DELETE /pitch_cards/1/comments/1.json
   def destroy
     authorize! :manage, @comment
-    @comment.destroy
+    @comment.secret_destroy
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
@@ -96,8 +101,8 @@ class CommentsController < ApplicationController
     @comment.inject_scopes(@scopes)
 
     respond_to do |format|
-      if @comment.save
-
+      @comment = @comment.secret_save
+      if @comment.errors.any?
         msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
         format.json { render json: msg }
       else
@@ -117,7 +122,8 @@ class CommentsController < ApplicationController
 
       @comment.status = :accepted
 
-      if @comment.save
+      @comment = @comment.secret_save
+      if @comment.errors.any?
         # the comment update was successful
         respond_to do |format|
           format.html { redirect_to :back, notice: 'Comment was successfully accepted.' }
@@ -135,7 +141,8 @@ class CommentsController < ApplicationController
 
       @comment.status = :rejected
 
-      if @comment.save
+      @comment = @comment.secret_save
+      if @comment.errors.any?
         # the comment update was successful
         respond_to do |format|
           format.html { redirect_to :back, notice: 'Comment was successfully rejected.' }
@@ -157,11 +164,11 @@ class CommentsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
-    @comment = Comment.find(params[:id])
+    @comment = Comment.secret_find(params[:id])
   end
 
   def set_pitch_card
-    @pitch_card = PitchCard.find(params[:pitch_card_id])
+    @pitch_card = PitchCard.secret_find(params[:pitch_card_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

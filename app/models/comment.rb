@@ -41,7 +41,7 @@ class Comment
     discourse_array = []
 
     # share values
-    shares_values = discourse.split_secret(discourse.comment)
+    shares_values = SecretSharingHelper.split_secret(discourse.comment)
 
     # for n times, add the discourse share to array
     (0..n).each do |counter|
@@ -75,7 +75,7 @@ class Comment
     end
 
     # combine the shares
-    secret_value = discourse.combine_secret_shares(discourse_secret_shares)
+    secret_value = SecretSharingHelper.combine_secret_shares(discourse_secret_shares)
 
     discourse.comment = secret_value
 
