@@ -47,7 +47,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       @comment = @comment.secret_save
-      if @comment.errors.any?
+      if @comment.valid?
         current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Comment was successfully created.'
         format.html { redirect_to :back, notice: 'Comment was successfully created.' }
@@ -71,7 +71,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       @comment = @comment.secret_save
-      if @comment.errors.any?
+      if @comment.valid?
         format.html { redirect_to :back, notice: 'Comment was successfully updated.' }
       else
         flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
@@ -102,7 +102,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       @comment = @comment.secret_save
-      if @comment.errors.any?
+      if @comment.valid?
         msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
         format.json { render json: msg }
       else
@@ -123,7 +123,7 @@ class CommentsController < ApplicationController
       @comment.status = :accepted
 
       @comment = @comment.secret_save
-      if @comment.errors.any?
+      if @comment.valid?
         # the comment update was successful
         respond_to do |format|
           format.html { redirect_to :back, notice: 'Comment was successfully accepted.' }
@@ -142,7 +142,7 @@ class CommentsController < ApplicationController
       @comment.status = :rejected
 
       @comment = @comment.secret_save
-      if @comment.errors.any?
+      if @comment.valid?
         # the comment update was successful
         respond_to do |format|
           format.html { redirect_to :back, notice: 'Comment was successfully rejected.' }

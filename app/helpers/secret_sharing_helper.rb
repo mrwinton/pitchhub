@@ -20,11 +20,20 @@ module SecretSharingHelper
   def self.split_secret(secret)
 
     # databases.count = n, threshold = k
-    secret_containter = SecretSharing::Shamir::Container.new(databases.count,threshold)
 
-    secret_containter.secret = SecretSharing::Shamir::Secret.new(:secret => secret)
+    n = databases.count
+    k = threshold
 
-    secret_containter.shares
+    # for testing purposes
+    bytes = secret.bytesize
+
+    # note this lib only works when string is less than 512 bytes in length
+    # given ruby's 1 char to 1 byte mapping we are ok given:
+    #  - pitchpoint length max = 101
+    #  - discourse length max = 500
+    shares = ShamirSecretSharing::Base58.split(secret=secret, available=n, needed=k)
+
+    shares
 
   end
 
@@ -34,15 +43,10 @@ module SecretSharingHelper
 
   def self.combine_secret_shares(shares)
 
-    # databases.count = n, threshold = k
-    secret_containter = SecretSharing::Shamir::Container.new(databases.count,threshold)
+    secret = ShamirSecretSharing::Base58.combine(shares)
 
-    shares.each { |share|
-      secret_containter << share
-    }
-
-    if secret_containter.secret?
-      return secret_containter.secret
+    if secret
+      return secret
     else
       raise new Error
     end

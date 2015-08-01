@@ -41,7 +41,7 @@ class PitchCardsController < ApplicationController
 
     respond_to do |format|
       @pitch_card = @pitch_card.secret_save
-      if @pitch_card.errors.any?
+      if @pitch_card.valid?
         format.html { redirect_to @pitch_card, notice: 'Pitch Card was successfully created.' }
         format.json { render :show, status: :created, location: @pitch_card }
       else
@@ -69,7 +69,7 @@ class PitchCardsController < ApplicationController
 
     respond_to do |format|
       @pitch_card = @pitch_card.secret_save
-      if @pitch_card.errors.any?
+      if @pitch_card.valid?
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
@@ -101,7 +101,7 @@ class PitchCardsController < ApplicationController
     @pitch_card.status = :complete
     respond_to do |format|
       @pitch_card = @pitch_card.secret_save
-      if @pitch_card.errors.any?
+      if @pitch_card.valid?
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else
@@ -118,7 +118,7 @@ class PitchCardsController < ApplicationController
     @pitch_card.status = :active
     respond_to do |format|
       @pitch_card = @pitch_card.secret_save
-      if @pitch_card.errors.any?
+      if @pitch_card.valid?
         format.html { redirect_to @pitch_card, notice: 'Pitch card was successfully updated.' }
         format.json { render :show, status: :ok, location: @pitch_card }
       else

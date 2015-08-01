@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Pitchhub gems
 gem "multi_json", "~> 1.11.2"
+gem "moped"
 gem "mongoid", "~> 4.0.0"
 gem 'bson_ext'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
@@ -32,7 +33,8 @@ gem "mongoid-enum"
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
 # gem 'mongoid_denormalize', :git => 'https://github.com/mrwinton/mongoid_denormalize.git'
 gem 'kaminari'
-gem 'secretsharing', :git => 'https://github.com/grempe/secretsharing.git'
+# gem 'secretsharing', :git => 'https://github.com/grempe/secretsharing.git'
+gem 'shamir-secret-sharing', :git => 'https://github.com/lian/shamir-secret-sharing.git'
 
 
 # gem 'delayed_job_mongoid'

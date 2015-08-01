@@ -47,7 +47,7 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       @suggestion = @suggestion.secret_save
-      if @suggestion.errors.any?
+      if @suggestion.valid?
         current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Suggestion was successfully created.'
         format.html { redirect_to :back, notice: 'Suggestion was successfully created.' }
@@ -70,7 +70,7 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       @suggestion = @suggestion.secret_save
-      if @suggestion.errors.any?
+      if @suggestion.valid?
         format.html { redirect_to :back, notice: 'Suggestion was successfully updated.' }
       else
         flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please fix before submitting'
@@ -108,9 +108,9 @@ class SuggestionsController < ApplicationController
       ]
 
       @pitch_card = @pitch_card.secret_save
-      if @pitch_card.errors.any?
+      if @pitch_card.valid?
         @suggestion = @suggestion.secret_save
-        if @suggestion.errors.any?
+        if @suggestion.valid?
           # the card and suggestion updates were successful
           respond_to do |format|
             format.html { redirect_to :back, notice: 'Suggestion was successfully accepted.' }
@@ -136,7 +136,7 @@ class SuggestionsController < ApplicationController
       @suggestion.status = :rejected
 
       @suggestion = @suggestion.secret_save
-      if @suggestion.errors.any?
+      if @suggestion.valid?
         # the suggestion update was successful
         respond_to do |format|
           format.html { redirect_to :back, notice: 'Suggestion was successfully rejected.' }

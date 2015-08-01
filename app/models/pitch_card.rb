@@ -64,50 +64,59 @@ class PitchCard
     # contains the shares
     pitch_card_array = []
 
-    # pitch_point_hash_array = { :facilitation => [0, 1, 2, ... , n] }
-    pitch_point_hash_of_arrays = {}
+    pitch_points_hash = {}
+
+    id = BSON::ObjectId.new
 
     # construct the hash of arrays containing pitch point shares
     pitch_card.pitch_points.each do |point|
 
-      pitch_point_hash_of_arrays[point.name] = []
+      pitch_points_hash[point.name] = {:id => point.id, :raw_shares => []}
 
         # if it' a value proposition we don't want to encrypt
         if point.name == "Value Proposition"
 
           n.times{
+            pitch_points_hash[point.name][:raw_shares] << point.value
+          }
 
-            pitch_point_hash_of_arrays[point.name] << point.value
+        elsif point.value.blank?
 
+          n.times{
+            pitch_points_hash[point.name][:raw_shares] << ""
           }
 
         else
 
           # the secret shares array for this pitch_point
-          shares = SecretSharingHelper.split_secret(secret)
+          shares = SecretSharingHelper.split_secret(point.value)
 
-          pitch_point_hash_of_arrays[point.name] = shares
-
+          pitch_points_hash[point.name][:raw_shares] = shares
 
         end
     end
 
     # for n times, add the pitch card share to array
-    (0..n).each do |counter|
+    (0..n-1).each do |counter|
 
       # duplicate the original pitch card
       pitch_card_share = pitch_card.dup
 
       # using the pitch point has update the points
-      pitch_point_hash_of_arrays.each do |point_name, array_of_point_value_shares|
+      pitch_points_hash.each do |pitch_point, pitch_point_hash_value|
 
-        # get the value at the counter
-        share_value = array_of_point_value_shares[counter]
+        # get the values from the hash
+        raw_shares = pitch_point_hash_value[:raw_shares]
+        share_value = raw_shares[counter]
+        pitch_point_id = pitch_point_hash_value[:id]
 
         # update
-        pitch_card.pitch_points_attributes = [
-            { name: point_name, value: share_value }
+        pitch_card_share.pitch_points_attributes = [
+            { id: pitch_point_id, value: share_value }
         ]
+
+        # IMPORTANT: ensure they all have the same ids
+        pitch_card_share.id = id
 
       end
 
@@ -127,8 +136,8 @@ class PitchCard
     pitch_card = pitch_card_shares.delete_at(0)
 
     # for each pitch point that is active
-    # reject pitch points that are not selected
-    pitch_card.pitch_points.each do |point|
+    # reject pitch points that are blank or are the Value Proposition
+    pitch_card.pitch_points.reject {|p| p.value.blank? || p.name == "Value Proposition"}.each do |point|
 
       point_shares = []
 
@@ -157,7 +166,7 @@ class PitchCard
 
       # set share in base pitch_card
       pitch_card.pitch_points_attributes = [
-          { name: point.name, value: secret_value }
+          { id: point.id, value: secret_value }
       ]
 
     end

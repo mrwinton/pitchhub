@@ -3,11 +3,8 @@ module SecretSharingModel
 
   included do
 
-    databases = SecretSharingHelper.databases
-    threshold = SecretSharingHelper.threshold
-
     # Load Scopable Instance Methods
-    include Scopable::InstanceMethods
+    include SecretSharingModel::InstanceMethods
 
   end
 
@@ -17,22 +14,29 @@ module SecretSharingModel
     def secret_save
 
       model_instance = self
+      plain_instance = model_instance.dup
+      plain_instance.id = model_instance.id #ensure that they still have the same id
       model_shares = SecretSharingHelper.encrypt_model(self.class, model_instance)
 
-      databases.each_with_index { |db, index|
+      SecretSharingHelper.databases.each_with_index { |db, index|
 
         share = model_shares[index]
 
-        if share.with(database: db).save
+        # for testing purposes
+        is_new = share.new_record?
+
+        success = share.with(database: db).save
+
+        if success
           #   success
         else
           # errors, so return the model instance with the errors that were found
-          model_instance.errors = share.errors
-          return model_instance
+          return plain_instance
+
         end
       }
 
-      model_instance
+      model_shares.first
 
     end
 
@@ -44,7 +48,7 @@ module SecretSharingModel
 
       id = self.id
 
-      databases.each { |db|
+      SecretSharingHelper.databases.each { |db|
         model = self.class.with(database: db).find(id)
         model.destroy
       }
@@ -60,11 +64,11 @@ module SecretSharingModel
 
       model_shares = []
 
-      databases.each { |db|
-        model_shares << self.class.with(database: db).find(model_id)
+      SecretSharingHelper.databases.each { |db|
+        model_shares << self.with(database: db).find(model_id)
       }
 
-      model = SecretSharingHelper.decrypt_model(self.class, model_shares)
+      model = SecretSharingHelper.decrypt_model(self, model_shares)
 
     end
 

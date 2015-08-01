@@ -1,20 +1,13 @@
 module SecretSharingController
   extend ActiveSupport::Concern
 
-  included do
-
-    databases = SecretSharingHelper.databases
-    threshold = SecretSharingHelper.threshold
-
-  end
-
   private
 
   def get_discourses(pitch_card, user, page)
 
     discourses_shares_array = []
 
-    databases.each { |db|
+    SecretSharingHelper.databases.each { |db|
       discourses_shares_array << pitch_card.comments.with(database: db).initiator_content_scoped_for(user).desc(:_id).page( page )
     }
 
@@ -41,7 +34,7 @@ module SecretSharingController
 
       }
 
-      if discourse_shares.size > threshold
+      if discourse_shares.size > SecretSharingHelper.threshold
 
         if share.class.name == "Suggestion"
           discourse = SecretSharingHelper.decrypt_model(Suggestion.class, discourse_shares)
@@ -62,7 +55,7 @@ module SecretSharingController
 
   def get_pitch_cards_encrypted(user, page)
 
-    db = databases.first
+    db = SecretSharingHelper.databases.first
 
     PitchCard.with(database: db).content_scoped_for(user).desc(:_id).page( page )
 
@@ -72,7 +65,7 @@ module SecretSharingController
 
     pitch_cards_shares_array = []
 
-    databases.each { |db|
+    SecretSharingHelper.databases.each { |db|
       pitch_cards_shares_array << PitchCard.with(database: db).content_scoped_for(user).desc(:_id).page( page )
     }
 
@@ -99,7 +92,7 @@ module SecretSharingController
 
       }
 
-      if pitch_card_shares.size > threshold
+      if pitch_card_shares.size > SecretSharingHelper.threshold
 
         discourse = SecretSharingHelper.decrypt_model(PitchCard.class, pitch_card_shares)
 
