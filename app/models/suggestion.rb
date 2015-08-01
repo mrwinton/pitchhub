@@ -22,6 +22,9 @@ class Suggestion < Comment
       discourse_share.comment = comment_shares_values[counter]
       discourse_share.content = content_shares_values[counter]
 
+      # IMPORTANT: ensure they all have the same ids
+      discourse_share.id = id
+
       # add the share to the array
       discourse_array << discourse_share
 

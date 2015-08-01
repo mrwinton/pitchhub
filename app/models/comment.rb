@@ -2,8 +2,11 @@ class Comment
   include Mongoid::Document
   include Mongoid::Enum
   include Mongoid::Timestamps
+  # == Include Scope Of Disclosure abilities to PitchCard
   include Scopable
   include InitiatorAcceptableAndScopable
+  # == Include secret sharing
+  include SecretSharingModel
 
   # == Pagination, max per page
   paginates_per 20
@@ -50,6 +53,9 @@ class Comment
       discourse_share = discourse.dup
 
       discourse_share.comment = shares_values[counter]
+
+      # IMPORTANT: ensure they all have the same ids
+      discourse_share.id = id
 
       # add the share to the array
       discourse_array << discourse_share
