@@ -3,6 +3,30 @@ module SecretSharingController
 
   private
 
+  def get_initiated(user, page)
+
+    db = SecretSharingHelper.databases.first
+
+    PitchCard.with(database: db).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
+
+  end
+
+  def get_collaborated(user, page)
+
+    db = SecretSharingHelper.databases.first
+
+    collab_cards = user.collab_pitch_cards
+
+    collab_cards_ids = []
+
+    collab_cards.each { |card|
+      collab_cards_ids << card.id
+    }
+
+    PitchCard.with(database: db).where("_id" => { "$in" => collab_cards_ids }).desc(:_id).page( page )
+
+  end
+
   def get_discourses(pitch_card, user, page)
 
     discourses_shares_array = []

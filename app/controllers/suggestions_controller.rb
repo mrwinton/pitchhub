@@ -3,7 +3,7 @@ class SuggestionsController < ApplicationController
   include SecretSharingController
   before_action :authenticate_user!
   before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :accept]
-  before_action :set_suggestion, only: [:update, :destroy, :accept]
+  before_action :set_suggestion, only: [:update, :destroy, :initiator_scope, :accept]
 
   # GET /pitch_cards/1/suggestions
   # GET /pitch_cards/1/suggestions.json
@@ -88,6 +88,26 @@ class SuggestionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Suggestion was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # POST /pitch_cards/1/suggestions/initiator_scope
+  # POST /pitch_cards/1/suggestions/initiator_scope.json
+  def initiator_scope
+    # Inject the initiator scope object
+    @scopes = ApplicationController.helpers.scopes(current_user)
+    @suggestion.ic_scope = params[:ic_scope]
+    @suggestion.inject_scopes(@scopes)
+
+    respond_to do |format|
+      @suggestion = @suggestion.secret_save
+      if @suggestion.valid?
+        msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
+        format.json { render json: msg }
+      else
+        flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please fix before submitting'
+        format.json { render json: @suggestion.errors, status: :unprocessable_entity }
+      end
     end
   end
 

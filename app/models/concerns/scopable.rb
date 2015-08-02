@@ -25,6 +25,7 @@ module Scopable
     # scopes to make the query syntax more readable and concise
     scope :content_scoped_for, ->(user){
       where('$or' => [
+                {'initiator_id' => user.id },
                 {'content_scope._type' => "PublicDisclosureScope"},
                 {'content_scope._type' => "PrivateDisclosureScope", "initiator_id" => user.id },
                 {'content_scope._type' => "MemberDisclosureScope"},

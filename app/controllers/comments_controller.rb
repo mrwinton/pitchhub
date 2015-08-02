@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
   include SecretSharingController
   before_action :authenticate_user!
-  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :initiator_scope, :accept]
+  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :accept]
   before_action :set_comment, only: [:update, :destroy, :initiator_scope, :accept]
 
   # GET /pitch_cards/1/comments

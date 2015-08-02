@@ -6,7 +6,9 @@
 
 <% options = narrowed_options_for_select( all_available_ic_scopes, display_content_scope ) %>
 
-<%= form_for(discourse, :url=>initiator_scope_pitch_card_comment_path(@pitch_card, discourse), id: "initiator-scope-form", method: "post") do |f| %>
+<% url_path = discourse.class.name == "Suggestion" ? initiator_scope_pitch_card_suggestion_path(@pitch_card, discourse) : initiator_scope_pitch_card_comment_path(@pitch_card, discourse) %>
+
+<%= form_for(discourse, :url=> url_path, id: "initiator-scope-form", method: "post") do |f| %>
 	<div class="form-group">
 	  <%= select_tag(:ic_scope, options.join(" ").html_safe, :class => 'select-scope') %>
 	</div>

@@ -1,5 +1,6 @@
 class PitchCardsController < ApplicationController
   include ActionView::Helpers::TextHelper
+  include SecretSharingController
   layout 'backend/base'
 
   before_action :authenticate_user!
@@ -131,14 +132,14 @@ class PitchCardsController < ApplicationController
   # GET /initiated
   # GET /initiated.json
   def initiated
-    @pitch_cards = current_user.init_pitch_cards.page params[:page]
+    @pitch_cards = get_initiated(current_user, params[:page]) #current_user.init_pitch_cards.page params[:page]
     render 'index', :locals => {:title => 'Initiated Pitch Cards'}
   end
 
   # GET /collabs
   # GET /collabs.json
   def collabs
-    @pitch_cards = current_user.collab_pitch_cards.page params[:page]
+    @pitch_cards = get_collaborated(current_user, params[:page]) #current_user.collab_pitch_cards.page params[:page]
     render 'index', :locals => {:title => 'Collaborated Pitch Cards'}
   end
 

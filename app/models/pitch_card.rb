@@ -128,28 +128,6 @@ class PitchCard
       # IMPORTANT: ensure they all have the same ids
       pitch_card_share.id = id
 
-      # # using the pitch point has update the points
-      # pitch_points_hash.each do |pitch_point, pitch_point_hash_value|
-      #
-        # # get the values from the hash
-        # raw_shares = pitch_point_hash_value[:raw_shares]
-        # share_value = raw_shares[counter]
-        # pitch_point_id = pitch_point_hash_value[:id]
-      #
-      #   # given the point's name find the corresponding point
-      #
-      #   # set the point's id
-      #
-      #   # update
-      #   pitch_card_share.pitch_points_attributes = [
-      #       { id: pitch_point_id, value: share_value }
-      #   ]
-      #
-        # # IMPORTANT: ensure they all have the same ids
-        # pitch_card_share.id = id
-      #
-      # end
-
       # add the share to the array
       pitch_card_array << pitch_card_share
 
