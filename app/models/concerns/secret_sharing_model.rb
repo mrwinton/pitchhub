@@ -18,20 +18,18 @@ module SecretSharingModel
       plain_instance.id = model_instance.id #ensure that they still have the same id
       model_shares = SecretSharingHelper.encrypt_model(self.class, model_instance)
 
-      # TODO should remove when deployed in production
-      # TODO should be avoided by setting one of the dbs as default?
-      # required to save the image when developing locally
-      self.id = model_shares.first.id
-      self.save
-
       SecretSharingHelper.databases.each_with_index { |db, index|
 
         share = model_shares[index]
 
-        # for testing purposes
-        is_new = share.new_record?
+        is_new = self.new_record?
 
-        success = share.with(database: db).save
+        if is_new
+          success = share.with(database: db).save
+        else
+          share.new_record = false
+          success = share.with(database: db).update
+        end
 
         if success
           #   success
@@ -41,6 +39,12 @@ module SecretSharingModel
 
         end
       }
+
+      # TODO should remove when deployed in production
+      # TODO should be avoided by setting one of the dbs as default?
+      # required to save the image when developing locally
+      self.id = model_shares.first.id
+      self.save
 
       model_shares.first
 

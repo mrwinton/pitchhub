@@ -66,12 +66,19 @@ class PitchCard
 
     pitch_points_hash = {}
 
-    id = BSON::ObjectId.new
+    # ensure that we keep the id if it's been persisted
+    if pitch_card.new_record?
+      id = BSON::ObjectId.new
+    else
+      id = pitch_card.id
+    end
 
     # construct the hash of arrays containing pitch point shares
     pitch_card.pitch_points.each do |point|
 
-      pitch_points_hash[point.name] = {:id => point.id, :raw_shares => []}
+      is_shiny_and_new = point.new_record?
+
+      pitch_points_hash[point.name] = {:id => point.id, :is_new => is_shiny_and_new, :raw_shares => []}
 
         # if it' a value proposition we don't want to encrypt
         if point.name == "Value Proposition"
@@ -100,25 +107,48 @@ class PitchCard
     (0..n-1).each do |counter|
 
       # duplicate the original pitch card
+      # this is where the ids change between the pitch points
       pitch_card_share = pitch_card.dup
 
-      # using the pitch point has update the points
-      pitch_points_hash.each do |pitch_point, pitch_point_hash_value|
+      pitch_card_share.pitch_points.each do |point|
 
+        pitch_point_hash_value = pitch_points_hash[point.name]
         # get the values from the hash
         raw_shares = pitch_point_hash_value[:raw_shares]
         share_value = raw_shares[counter]
         pitch_point_id = pitch_point_hash_value[:id]
+        is_new = pitch_point_hash_value[:is_new]
 
-        # update
-        pitch_card_share.pitch_points_attributes = [
-            { id: pitch_point_id, value: share_value }
-        ]
-
-        # IMPORTANT: ensure they all have the same ids
-        pitch_card_share.id = id
+        point.value = share_value
+        point.id = pitch_point_id
+        point.new_record = is_new
 
       end
+
+      # IMPORTANT: ensure they all have the same ids
+      pitch_card_share.id = id
+
+      # # using the pitch point has update the points
+      # pitch_points_hash.each do |pitch_point, pitch_point_hash_value|
+      #
+        # # get the values from the hash
+        # raw_shares = pitch_point_hash_value[:raw_shares]
+        # share_value = raw_shares[counter]
+        # pitch_point_id = pitch_point_hash_value[:id]
+      #
+      #   # given the point's name find the corresponding point
+      #
+      #   # set the point's id
+      #
+      #   # update
+      #   pitch_card_share.pitch_points_attributes = [
+      #       { id: pitch_point_id, value: share_value }
+      #   ]
+      #
+        # # IMPORTANT: ensure they all have the same ids
+        # pitch_card_share.id = id
+      #
+      # end
 
       # add the share to the array
       pitch_card_array << pitch_card_share

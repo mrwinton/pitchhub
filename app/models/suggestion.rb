@@ -9,12 +9,19 @@ class Suggestion < Comment
     # contains the shares
     discourse_array = []
 
+    # ensure that we keep the id if it's been persisted
+    if discourse.new_record?
+      id = BSON::ObjectId.new
+    else
+      id = discourse.id
+    end
+
     # share values
     comment_shares_values = SecretSharingHelper.split_secret(discourse.comment)
     content_shares_values = SecretSharingHelper.split_secret(discourse.content)
 
     # for n times, add the discourse share to array
-    (0..n).each do |counter|
+    (0..n-1).each do |counter|
 
       # duplicate the original discourse
       discourse_share = discourse.dup

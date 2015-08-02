@@ -8,7 +8,8 @@ module SecretSharingController
     discourses_shares_array = []
 
     SecretSharingHelper.databases.each { |db|
-      discourses_shares_array << pitch_card.comments.with(database: db).initiator_content_scoped_for(user).desc(:_id).page( page )
+      # discourses_shares_array << pitch_card.comments.with(database: db).initiator_content_scoped_for(user).desc(:_id).page( page )
+      discourses_shares_array << Comment.with(database: db).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
     }
 
     base_shares_array = discourses_shares_array.delete_at(0)
@@ -25,8 +26,11 @@ module SecretSharingController
 
         matching_shares = other_shares_array.select{ |other_share| share.id == other_share.id }
 
-        if matching_shares.size == 0
+        # check that we found one and only one matching share
+        if matching_shares.size == 1
+          # get the share
           matching_share = matching_shares.first
+          # add it to our shares array for this discourse
           discourse_shares << matching_share
         else
           raise Error
@@ -37,14 +41,16 @@ module SecretSharingController
       if discourse_shares.size > SecretSharingHelper.threshold
 
         if share.class.name == "Suggestion"
-          discourse = SecretSharingHelper.decrypt_model(Suggestion.class, discourse_shares)
+
+          discourse = SecretSharingHelper.decrypt_model(Suggestion, discourse_shares)
         else
-          discourse = SecretSharingHelper.decrypt_model(Comment.class, discourse_shares)
+          discourse = SecretSharingHelper.decrypt_model(Comment, discourse_shares)
         end
 
         discourses_secrets_array << discourse
       else
-        put "not enough shares"
+        # TODO throw warning?
+        # not enough shares
       end
 
     }
@@ -94,7 +100,7 @@ module SecretSharingController
 
       if pitch_card_shares.size > SecretSharingHelper.threshold
 
-        discourse = SecretSharingHelper.decrypt_model(PitchCard.class, pitch_card_shares)
+        discourse = SecretSharingHelper.decrypt_model(PitchCard, pitch_card_shares)
 
         pitch_cards_secrets_array << discourse
       else
