@@ -30,9 +30,7 @@ gem 'bson_ext'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem "mongoid-enum"
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
-# gem 'mongoid_denormalize', :git => 'https://github.com/mrwinton/mongoid_denormalize.git'
 gem 'kaminari'
-gem 'secretsharing', :git => 'https://github.com/grempe/secretsharing.git'
 
 
 # gem 'delayed_job_mongoid'
