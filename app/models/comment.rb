@@ -34,5 +34,5 @@ class Comment
   validates :pitch_point_name, presence: true
   validates :initiator_id, presence: true
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
-  
+
 end

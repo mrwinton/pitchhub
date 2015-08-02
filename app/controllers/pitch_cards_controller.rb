@@ -5,13 +5,6 @@ class PitchCardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pitch_card, only: [:show, :edit, :update, :destroy, :complete, :activate]
 
-  # GET /pitch_cards
-  # GET /pitch_cards.json
-  def index
-    # TODO will most likely implement "more" button functionality rather than pagination
-    @pitch_cards = PitchCard.all
-  end
-
   # GET /pitch_cards/1
   # GET /pitch_cards/1.json
   def show
