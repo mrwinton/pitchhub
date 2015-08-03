@@ -73,4 +73,36 @@ module PitchCardsHelper
 
   end
 
+  def narrowed_scopes(scopes, scope)
+
+    selected_scope_found = false
+    narrowed_scopes = []
+
+    scopes.each do |s|
+
+      # check that we've found the selected scope
+      unless selected_scope_found
+        if is_selected_scope(s, scope)
+          selected_scope_found = true
+        end
+      end
+
+      # once we've the selected scope, add all following scopes
+      if selected_scope_found
+
+        if scope != nil and is_selected_scope(s, scope)
+          option = { :is_selected => true, :name => s[:name], :id => s[:id] }
+        else
+          option = { :is_selected => false, :name => s[:name], :id => s[:id] }
+        end
+
+        narrowed_scopes << option
+      end
+
+    end
+
+    narrowed_scopes
+
+  end
+
 end

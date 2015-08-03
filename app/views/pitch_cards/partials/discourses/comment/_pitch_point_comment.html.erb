@@ -1,4 +1,3 @@
-<% css_point = point[:name].downcase.tr(' ', '-')%>
 <% image_point = point[:name].downcase.tr(' ', '_')%>
 <% image_pending = 'points/pending/'+image_point+'.png'%>
 <% image_rejected = 'points/rejected/'+image_point+'.png'%>
@@ -8,33 +7,8 @@
 <% pending = comment.pending? %>
 <% rejected = comment.rejected? %>
 
-
 <!-- Discourse -->
-<% if pending and can? :manage, @pitch_card %>
-	<div class="push-bit">
-	  <div class="row-same-height">
-
-		<div class="col-xs-12 col-xs-height col-middle">
-
-		  <div class="inside">
-			<span class="text-muted pull-right"  style="margin-top: -4.5px">
-				<div class="btn-group btn-group-sm">
-
-				  <%= f.button(value: "accept", type: 'submit', class: "btn btn-alt btn-success") do %>
-					  <i class="fa fa-check"></i>
-				  <% end %>
-				  <%= f.button(value: "reject", type: 'submit', class: "btn btn-alt btn-danger") do %>
-					  <i class="fa fa-times"></i>
-				  <% end %>
-
-				</div>
-			</span>
-			<p class="text-muted">Was this comment helpful?</p>
-		  </div>
-		</div>
-	  </div>
-	</div>
-<% end %>
+<%= render partial: 'pitch_cards/partials/discourses/actions/discourse_actions', locals: { point: point, discourse: comment, ic_scopes: ic_scopes, pending: pending } %>
 
 <div class="row-same-height">
   <div class="col-xs-2 col-xs-height col-middle">
@@ -56,9 +30,7 @@
 		<small>
 		  <abbr class="timeago" title="<%= comment.created_at.to_time.iso8601 %>"></abbr>
 		</small>
-		<% if can? :manage, @pitch_card %>
-			<%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: comment, ic_scopes: ic_scopes} %>
-		<% end %>
+		<span data-toggle="tooltip" title="From Web"><i class="fa fa-globe"></i></span>
 	  </span>
 	  <strong><%= author + " commented"%></strong>
 	</div>
