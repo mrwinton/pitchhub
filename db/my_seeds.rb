@@ -125,8 +125,8 @@ if Rails.env.test?
 
     end
 
-    has_suggestions = (1 == rand(2) ? true : false)
-    has_comments = (1 == rand(2) ? true : false)
+    has_suggestions = true #(1 == rand(2) ? true : false)
+    has_comments = true #(1 == rand(2) ? true : false)
 
     if has_comments
 
@@ -143,8 +143,7 @@ if Rails.env.test?
         comment_length = DiscoursesHelper.comment_max_length - 1
         comment.comment = Faker::Lorem.characters(rand(comment_length) + 1)
         comment.author_name = Faker::Name.name
-        comment.initiator_id = initiator.id
-        comment.pitch_point_id = pitch_point.id
+        comment.pitch_point_id = pitch_point._id
         comment.pitch_point_name = pitch_point.name
         comment.message_type = :root
 
@@ -183,7 +182,6 @@ if Rails.env.test?
         content_length = PitchPointsHelper.pitch_point_max_length - 1
         suggestion.content = Faker::Lorem.characters(rand(content_length) + 1)
         suggestion.author_name = Faker::Name.name
-        suggestion.initiator_id = initiator.id
         suggestion.pitch_point_id = pitch_point._id
         suggestion.pitch_point_name = pitch_point.name
         suggestion.message_type = :root
