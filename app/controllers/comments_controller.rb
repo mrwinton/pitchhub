@@ -90,18 +90,19 @@ class CommentsController < ApplicationController
   # POST /pitch_cards/1/comments/initiator_scope
   # POST /pitch_cards/1/comments/initiator_scope.json
   def initiator_scope
+    authorize! :manage, @pitch_card
+
     # Inject the initiator scope object
     @scopes = ApplicationController.helpers.scopes(current_user)
-    @comment.ic_scope = params[:ic_scope]
+    @comment.ic_scope = params[:selected_scope_value]
     @comment.inject_scopes(@scopes)
 
     respond_to do |format|
       if @comment.save
-
-        msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
-        format.json { render json: msg }
+        format.html { redirect_to :back, notice: 'Scope successfully saved.' }
+        format.json { head :no_content }
       else
-        flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
+        format.html { redirect_to :back, notice: 'Scope failed to save, please try again' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end

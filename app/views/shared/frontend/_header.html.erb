@@ -1,7 +1,9 @@
 <header>
   <div class="container">
     <a href="#" class="site-logo">
-      PITCHHUB
+      <!--PITCHHUB-->
+	  <% value_proposition_image = 'idea.png'%>
+	  <%= image_tag_with_at2x value_proposition_image, :id =>  "pitchhub-brand" %>
     </a>
 
     <nav>
@@ -18,9 +20,11 @@
         <li>
         <a href="#">Explore</a>
         </li>
+		<li class="site-nav-divider">|</li>
         <li>
 		  <%= link_to "Sign up", new_user_registration_path %>
         </li>
+		<li class="site-nav-divider">|</li>
         <li>
 		  <%= link_to "Sign in", new_user_session_path %>
         </li>
