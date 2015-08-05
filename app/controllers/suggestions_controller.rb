@@ -96,16 +96,16 @@ class SuggestionsController < ApplicationController
   def initiator_scope
     # Inject the initiator scope object
     @scopes = ApplicationController.helpers.scopes(current_user)
-    @suggestion.ic_scope = params[:ic_scope]
+    @suggestion.ic_scope = params[:selected_scope_value]
     @suggestion.inject_scopes(@scopes)
 
     respond_to do |format|
       @suggestion = @suggestion.secret_save
       if @suggestion.valid?
-        msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
-        format.json { render json: msg }
+        format.html { redirect_to :back, notice: 'Scope successfully saved.' }
+        format.json { head :no_content }
       else
-        flash.now[:alert] = pluralize(@suggestion.errors.count, "error") + ' found, please fix before submitting'
+        format.html { redirect_to :back, alert: 'Scope failed to save, please try again' }
         format.json { render json: @suggestion.errors, status: :unprocessable_entity }
       end
     end

@@ -95,11 +95,10 @@ class CommentsController < ApplicationController
   # POST /pitch_cards/1/comments/initiator_scope
   # POST /pitch_cards/1/comments/initiator_scope.json
   def initiator_scope
-    authorize! :manage, @pitch_card
 
     # Inject the initiator scope object
     @scopes = ApplicationController.helpers.scopes(current_user)
-    @comment.ic_scope = params[:ic_scope]
+    @comment.ic_scope = params[:selected_scope_value]
     @comment.inject_scopes(@scopes)
 
     respond_to do |format|
