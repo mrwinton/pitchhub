@@ -39,8 +39,9 @@
 		  <% display_content_scope = initiator_content_scope.present? ? initiator_content_scope : content_scope %>
 		  <% options = narrowed_scopes( all_available_ic_scopes, display_content_scope ) %>
 		  <% default_option = options.select { |scope| scope[:is_selected] }.first %>
+		  <% url_path = discourse.class.name == "Suggestion" ? initiator_scope_pitch_card_suggestion_path(@pitch_card, discourse) : initiator_scope_pitch_card_comment_path(@pitch_card, discourse) %>
 
-		  <%= form_for(discourse, :url=>initiator_scope_pitch_card_comment_path(@pitch_card, discourse), html: { class: "scope-discourse-form" }, method: "post") do |f| %>
+		  <%= form_for(discourse, :url=>url_path, html: { class: "scope-discourse-form" }, method: "post") do |f| %>
 
 			  <div style="display: none">
 				<%= text_field_tag "selected_scope_value", default_option[:id], class: "selected-scope-value" %>

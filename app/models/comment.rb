@@ -2,8 +2,11 @@ class Comment
   include Mongoid::Document
   include Mongoid::Enum
   include Mongoid::Timestamps
+  # == Include Scope Of Disclosure abilities to PitchCard
   include Scopable
   include InitiatorAcceptableAndScopable
+  # == Include secret sharing
+  include SecretSharingModel
 
   # == Pagination, max per page
   paginates_per 20
@@ -34,5 +37,64 @@ class Comment
   validates :pitch_point_name, presence: true
   validates :initiator_id, presence: true
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
+
+  def self.split(discourse, n)
+
+    # contains the shares
+    discourse_array = []
+
+    # ensure that we keep the id if it's been persisted
+    if discourse.new_record?
+      id = BSON::ObjectId.new
+    else
+      id = discourse.id
+    end
+
+    # share values
+    shares_values = SecretSharingHelper.split_secret(discourse.comment)
+
+    # for n times, add the discourse share to array
+    (0..n-1).each do |counter|
+
+      # duplicate the original discourse
+      discourse_share = discourse.dup
+
+      discourse_share.comment = shares_values[counter]
+
+      # IMPORTANT: ensure they all have the same ids
+      discourse_share.id = id
+
+      # add the share to the array
+      discourse_array << discourse_share
+
+    end
+
+    # now completed, return the array of discourses with secure comments
+    discourse_array
+
+  end
+
+  def self.combine(discourse_shares)
+
+    # get a share to serve as the base discourse that we will inject the secret_values with
+    discourse = discourse_shares.delete_at(0)
+
+    discourse_secret_shares = []
+
+    discourse_shares.each do |discourse_share|
+
+      discourse_secret_shares << discourse_share.comment
+
+    end
+
+    # combine the shares
+    secret_value = SecretSharingHelper.combine_secret_shares(discourse_secret_shares)
+
+    discourse.comment = secret_value
+
+    discourse
+
+  end
+
 
 end

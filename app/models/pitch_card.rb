@@ -8,6 +8,8 @@ class PitchCard
   include Scopable
   # == Include Image
   include AssociatedImage
+  # == Include secret sharing
+  include SecretSharingModel
 
   # == Pagination, max per page
   paginates_per 20
@@ -55,6 +57,131 @@ class PitchCard
 
     # return blank string if we could not find the value proposition point
     ""
+  end
+
+  def self.split(pitch_card, n)
+
+    # contains the shares
+    pitch_card_array = []
+
+    pitch_points_hash = {}
+
+    # ensure that we keep the id if it's been persisted
+    if pitch_card.new_record?
+      id = BSON::ObjectId.new
+    else
+      id = pitch_card.id
+    end
+
+    # construct the hash of arrays containing pitch point shares
+    pitch_card.pitch_points.each do |point|
+
+      is_shiny_and_new = point.new_record?
+
+      pitch_points_hash[point.name] = {:id => point.id, :is_new => is_shiny_and_new, :raw_shares => []}
+
+        # if it' a value proposition we don't want to encrypt
+        if point.name == "Value Proposition"
+
+          n.times{
+            pitch_points_hash[point.name][:raw_shares] << point.value
+          }
+
+        elsif point.value.blank?
+
+          n.times{
+            pitch_points_hash[point.name][:raw_shares] << ""
+          }
+
+        else
+
+          # the secret shares array for this pitch_point
+          shares = SecretSharingHelper.split_secret(point.value)
+
+          pitch_points_hash[point.name][:raw_shares] = shares
+
+        end
+    end
+
+    # for n times, add the pitch card share to array
+    (0..n-1).each do |counter|
+
+      # duplicate the original pitch card
+      # this is where the ids change between the pitch points
+      pitch_card_share = pitch_card.dup
+
+      pitch_card_share.pitch_points.each do |point|
+
+        pitch_point_hash_value = pitch_points_hash[point.name]
+        # get the values from the hash
+        raw_shares = pitch_point_hash_value[:raw_shares]
+        share_value = raw_shares[counter]
+        pitch_point_id = pitch_point_hash_value[:id]
+        is_new = pitch_point_hash_value[:is_new]
+
+        point.value = share_value
+        point.id = pitch_point_id
+        point.new_record = is_new
+
+      end
+
+      # IMPORTANT: ensure they all have the same ids
+      pitch_card_share.id = id
+
+      # add the share to the array
+      pitch_card_array << pitch_card_share
+
+    end
+
+    # now completed, return the array of pitch cards with secure pitch points
+    pitch_card_array
+
+  end
+
+  def self.combine(pitch_card_shares)
+
+    # get a share to serve as the base pitch_card that we will inject the secret_values with
+    pitch_card = pitch_card_shares.delete_at(0)
+
+    # for each pitch point that is active
+    # reject pitch points that are blank or are the Value Proposition
+    pitch_card.pitch_points.reject {|p| p.value.blank? || p.name == "Value Proposition"}.each do |point|
+
+      point_shares = []
+
+      # add this
+      point_shares << point.value
+
+      # for each share
+      pitch_card_shares.each do |pitch_card_share|
+
+        # for each pitch point in each share
+        pitch_card_share.pitch_points.each do |share_point|
+
+          # if the point name's are equal, add the value to the point shares
+          if point[:name] == share_point[:name]
+
+            point_shares << share_point.value
+
+          end
+
+        end
+
+      end
+
+      # combine the shares
+      secret_value = SecretSharingHelper.combine_secret_shares(point_shares)
+
+      # set share in base pitch_card
+      pitch_card.pitch_points_attributes = [
+          { id: point.id, value: secret_value }
+      ]
+
+    end
+
+    # return the pitch card with the secret value set
+    pitch_card
+
   end
 
 end

@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/lian/shamir-secret-sharing.git
+  revision: 648562b2515f170047ddddde2c79e8b3426be523
+  specs:
+    shamir-secret-sharing (0.0.1)
+
+GIT
   remote: https://github.com/mrwinton/mongoid-embedded-errors.git
   revision: bdc67d2e4f45e8ce208468ec50dce67a339d379a
   specs:
@@ -409,6 +415,7 @@ DEPENDENCIES
   mongoid-enum
   mongoid-paperclip
   mongoid_search
+  moped
   multi_json (~> 1.11.2)
   public_activity
   rails (= 4.2.1)
@@ -419,6 +426,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  shamir-secret-sharing!
   shoulda-matchers
   spring
   therubyracer

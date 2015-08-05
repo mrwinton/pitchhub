@@ -9,6 +9,6 @@ class PitchPoint
 
   field :selected,    type: Boolean
 
-  field :value,        type: String
+  field :value,       type: String
 
 end
