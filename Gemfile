@@ -31,6 +31,7 @@ gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem "mongoid-enum"
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
 gem 'kaminari'
+gem 'ahoy_matey'
 
 
 # gem 'delayed_job_mongoid'
