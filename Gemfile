@@ -33,7 +33,6 @@ gem "mongoid-enum"
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
 # gem 'mongoid_denormalize', :git => 'https://github.com/mrwinton/mongoid_denormalize.git'
 gem 'kaminari'
-# gem 'secretsharing', :git => 'https://github.com/grempe/secretsharing.git'
 gem 'shamir-secret-sharing', :git => 'https://github.com/lian/shamir-secret-sharing.git'
 
 
