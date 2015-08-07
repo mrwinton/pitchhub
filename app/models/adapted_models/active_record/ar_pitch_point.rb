@@ -1,2 +1,2 @@
-class ARPitchPoint
+class ARPitchPoint < ActiveRecord::Base
 end

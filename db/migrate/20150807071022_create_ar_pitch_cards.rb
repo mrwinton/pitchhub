@@ -1,10 +1,11 @@
 class CreateARPitchCards < ActiveRecord::Migration
   def self.up
-    create_table :ar_pitch_cards do |t|
-      # t.string :title,  :null => false
-      # t.boolean :done,  :null => false, :default => false
-      #
-      # t.timestamps
+    create_table "ar_pitch_cards", :force => true, id: false do |t|
+      t.string :object_id, primary_key: true
+      t.string "status"
+      t.string "initiator_id"
+      t.datetime "created_at"
+      t.datetime "updated_at"
     end
   end
 

@@ -1,2 +1,2 @@
-class ARPitchCard
+class ARPitchCard < ActiveRecord::Base
 end

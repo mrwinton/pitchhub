@@ -1,2 +1,2 @@
-class ARComment
+class ARComment < ActiveRecord::Base
 end

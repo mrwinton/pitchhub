@@ -1,2 +1,2 @@
-class ARSuggestion
+class ARSuggestion < ActiveRecord::Base
 end
