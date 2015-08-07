@@ -29,6 +29,7 @@ module Pitchhub
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.autoload_paths << "#{Rails.root}/app/models/adapted_models/active_record"
     config.autoload_paths << "#{Rails.root}/app/models/disclosure_scopes"
     config.autoload_paths << "#{Rails.root}/app/models/groups"
     config.autoload_paths << "#{Rails.root}/app/validators"
