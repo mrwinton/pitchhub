@@ -1,3 +1,3 @@
 class ActiveRecordSuggestion < ActiveRecord::Base
-  self.table_name = "suggestions"
+  self.table_name = "discourses"
 end

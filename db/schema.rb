@@ -11,48 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807071023) do
-
-  create_table "comments", id: false, force: :cascade do |t|
-    t.string   "object_id"
-    t.string   "author_id",        null: false
-    t.string   "message_type",     null: false
-    t.string   "comment",          null: false
-    t.string   "author_name",      null: false
-    t.string   "pitch_point_id",   null: false
-    t.string   "pitch_point_name", null: false
-    t.string   "initiator_id",     null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pitch_cards", id: false, force: :cascade do |t|
-    t.string   "object_id"
-    t.string   "status"
-    t.string   "initiator_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pitch_points", id: false, force: :cascade do |t|
-    t.string  "object_id"
-    t.string  "name"
-    t.boolean "selected"
-    t.string  "value"
-  end
-
-  create_table "suggestions", id: false, force: :cascade do |t|
-    t.string   "object_id"
-    t.string   "author_id",        null: false
-    t.string   "message_type",     null: false
-    t.string   "comment",          null: false
-    t.string   "content",          null: false
-    t.string   "author_name",      null: false
-    t.string   "pitch_point_id",   null: false
-    t.string   "pitch_point_name", null: false
-    t.string   "initiator_id",     null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end

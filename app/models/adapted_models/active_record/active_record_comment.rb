@@ -1,3 +1,3 @@
 class ActiveRecordComment < ActiveRecord::Base
-  self.table_name = "comments"
+  self.table_name = "discourses"
 end
