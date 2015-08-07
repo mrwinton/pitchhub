@@ -1,0 +1,2 @@
+class ARPitchCard
+end

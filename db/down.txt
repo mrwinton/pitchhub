@@ -1,4 +1,0 @@
-db.comments.remove({})
-db.discourses.remove({})
-db.pitch_cards.remove({})
-db.users.remove({})
