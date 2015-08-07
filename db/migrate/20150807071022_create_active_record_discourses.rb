@@ -1,4 +1,4 @@
-class CreateActiveRecordComments < ActiveRecord::Migration
+class CreateActiveRecordDiscourses < ActiveRecord::Migration
   def change
     create_table "discourses", :force => true, id: false do |t|
       t.string :object_id, primary_key: true
