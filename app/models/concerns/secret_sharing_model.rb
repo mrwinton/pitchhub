@@ -24,11 +24,28 @@ module SecretSharingModel
 
         is_new = self.new_record?
 
-        if is_new
-          success = share.with(database: db).save
+        if db[:type] == "mongo"
+          if is_new
+            success = share.with(database: db[:name]).save
+          else
+            share.new_record = false
+            success = share.with(database: db[:name]).update
+          end
         else
-          share.new_record = false
-          success = share.with(database: db).update
+          # else it's sql
+          if is_new
+            share = share.to_active_record_model
+            success = share.save
+          else
+            share = share.to_active_record_model
+            # get the share from the db
+            share_from_db = share.class.find_by(object_id: share.object_id)
+            # copy any changes across
+            share_from_db.update_from(share)
+            # save the updated share
+            success = share_from_db.save
+          end
+
         end
 
         if success
@@ -59,7 +76,7 @@ module SecretSharingModel
       id = self.id
 
       SecretSharingHelper.databases.each { |db|
-        model = self.class.with(database: db).find(id)
+        model = self.class.with(database: db[:name]).find(id)
         model.destroy
       }
 
@@ -74,8 +91,20 @@ module SecretSharingModel
 
       model_shares = []
 
-      SecretSharingHelper.databases.each { |db|
-        model_shares << self.with(database: db).find(model_id)
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
+        model_shares << self.with(database: db[:name]).find(model_id)
+      }
+
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|
+
+        # get the record's class
+        clazz = self.active_record_class
+        # find instances given the id
+        alt_model_share = clazz.find_by(object_id: model_id)
+        # convert it into a mongoid share
+        model_share = alt_model_share.to_mongoid_model model_shares.first
+        # add the converted shares to the results
+        model_shares << model_share
       }
 
       model = SecretSharingHelper.decrypt_model(self, model_shares)

@@ -1,5 +1,7 @@
 class PitchPoint
   include Mongoid::Document
+  # == Include active record adaptability
+  include ActiveRecordAdaptable
 
   validates_with PitchPointValidator
 

@@ -5,15 +5,15 @@ module SecretSharingController
 
   def get_initiated(user, page)
 
-    db = SecretSharingHelper.databases.first
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first[:name]
 
-    PitchCard.with(database: db).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
+    PitchCard.with(database: db[:name]).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
 
   end
 
   def get_collaborated(user, page)
 
-    db = SecretSharingHelper.databases.first
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first
 
     collab_cards = user.collab_pitch_cards
 
@@ -23,7 +23,7 @@ module SecretSharingController
       collab_cards_ids << card.id
     }
 
-    PitchCard.with(database: db).where("_id" => { "$in" => collab_cards_ids }).desc(:_id).page( page )
+    PitchCard.with(database: db[:name]).where("_id" => { "$in" => collab_cards_ids }).desc(:_id).page( page )
 
   end
 
@@ -31,9 +31,9 @@ module SecretSharingController
 
     discourses_shares_array = []
 
-    SecretSharingHelper.databases.each { |db|
+    SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
       # discourses_shares_array << pitch_card.comments.with(database: db).initiator_content_scoped_for(user).desc(:_id).page( page )
-      discourses_shares_array << Comment.with(database: db).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
+      discourses_shares_array << Comment.with(database: db[:name]).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
     }
 
     base_shares_array = discourses_shares_array.delete_at(0)
@@ -85,9 +85,9 @@ module SecretSharingController
 
   def get_pitch_cards_encrypted(user, page)
 
-    db = SecretSharingHelper.databases.first
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first
 
-    PitchCard.with(database: db).content_scoped_for(user).desc(:_id).page( page )
+    PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
 
   end
 
@@ -95,8 +95,8 @@ module SecretSharingController
 
     pitch_cards_shares_array = []
 
-    SecretSharingHelper.databases.each { |db|
-      pitch_cards_shares_array << PitchCard.with(database: db).content_scoped_for(user).desc(:_id).page( page )
+    SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
+      pitch_cards_shares_array << PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
     }
 
     base_shares_array = pitch_cards_shares_array.delete_at(0)

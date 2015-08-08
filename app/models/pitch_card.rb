@@ -10,6 +10,8 @@ class PitchCard
   include AssociatedImage
   # == Include secret sharing
   include SecretSharingModel
+  # == Include active record adaptability
+  include ActiveRecordAdaptable
 
   # == Pagination, max per page
   paginates_per 20

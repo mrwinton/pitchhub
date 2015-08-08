@@ -1,7 +1,12 @@
 module SecretSharingHelper
 
   def self.databases
-    ["pitchhub_ci", "pitchhub_vuw", "pitchhub_aws"]
+    [
+        {:name => "pitchhub_ci", :type => "mongo" },
+        {:name => "pitchhub_vuw", :type => "mongo" },
+        {:name => "pitchhub_aws", :type => "mongo" },
+        {:name => "pitchhub_sql", :type => "sqlite" }
+    ]
   end
 
   def databases
@@ -20,12 +25,8 @@ module SecretSharingHelper
   def self.split_secret(secret)
 
     # databases.count = n, threshold = k
-
     n = databases.count
     k = threshold
-
-    # for testing purposes
-    bytes = secret.bytesize
 
     # note this lib only works when string is less than 512 bytes in length
     # given ruby's 1 char to 1 byte mapping we are ok given:
