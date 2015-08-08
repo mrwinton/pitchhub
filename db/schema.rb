@@ -11,6 +11,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150807071022) do
+
+  create_table "discourses", force: :cascade do |t|
+    t.string   "object_id",               null: false
+    t.string   "pitch_card_id",           null: false
+    t.string   "author_id",               null: false
+    t.string   "discourse_type",          null: false
+    t.string   "message_type",            null: false
+    t.string   "comment",                 null: false
+    t.string   "content"
+    t.string   "author_name",             null: false
+    t.string   "pitch_point_id",          null: false
+    t.string   "pitch_point_name",        null: false
+    t.string   "initiator_id",            null: false
+    t.string   "identity_scope",          null: false
+    t.string   "content_scope",           null: false
+    t.string   "initiator_content_scope"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pitch_cards", force: :cascade do |t|
+    t.string   "object_id",      null: false
+    t.string   "status"
+    t.string   "initiator_id"
+    t.string   "identity_scope"
+    t.string   "content_scope"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pitch_points", force: :cascade do |t|
+    t.string  "object_id",     null: false
+    t.string  "pitch_card_id", null: false
+    t.string  "name"
+    t.boolean "selected"
+    t.string  "value"
+  end
 
 end

@@ -1,24 +1,6 @@
 module ActiveRecordAdaptable
   extend ActiveSupport::Concern
 
-  def self.active_record_class
-
-    case self.name
-      when 'PitchCard'
-        result = ActiveRecordPitchCard
-      when 'PitchPoint'
-        result = ActiveRecordPitchPoint
-      when 'Comment'
-        result = ActiveRecordComment
-      when 'Suggestion'
-        result = ActiveRecordSuggestion
-      else
-        result = nil
-    end
-
-    result
-  end
-
   def to_active_record_model
 
     case self.class.name
@@ -55,24 +37,22 @@ module ActiveRecordAdaptable
     result
   end
 
-  private
-
   # adapt methods
   def to_active_record_comment
 
-    ar_comment = ActiveRecordComment.new
-
-    ar_comment.object_id = self.id.to_s
-    ar_comment.pitch_card_id = self.pitch_card.id.to_s
-    ar_comment.author_id = self.author.id.to_s
-    ar_comment.message_type = self.message_type
-    ar_comment.comment = self.comment
-    ar_comment.author_name = self.author_name
-    ar_comment.pitch_point_id = self.pitch_point_id
-    ar_comment.pitch_point_name = self.pitch_point_name
-    ar_comment.initiator_id = self.initiator_id.to_s
-    ar_comment.identity_scope = self.identity_scope.class.name
-    ar_comment.content_scope = self.content_scope.class.name
+    ar_comment = ActiveRecordComment.new do |c|
+      c.object_id = self.id.to_s
+      c.pitch_card_id = self.pitch_card.id.to_s
+      c.author_id = self.author.id.to_s
+      c.message_type = self.message_type
+      c.comment = self.comment
+      c.author_name = self.author_name
+      c.pitch_point_id = self.pitch_point_id
+      c.pitch_point_name = self.pitch_point_name
+      c.initiator_id = self.initiator_id.to_s
+      c.identity_scope = self.identity_scope.class.name
+      c.content_scope = self.content_scope.class.name
+    end
 
     if self.initiator_content_scope.present?
       ar_comment.initiator_content_scope = self.initiator_content_scope._type
@@ -82,24 +62,26 @@ module ActiveRecordAdaptable
       ar_comment.new_record = false
     end
 
+    ar_comment
+
   end
 
   def to_active_record_suggestion
 
-    ar_suggestion = ActiveRecordSuggestion.new
-
-    ar_suggestion.object_id = self.id.to_s
-    ar_suggestion.pitch_card_id = self.pitch_card.id.to_s
-    ar_suggestion.author_id = self.author.id.to_s
-    ar_suggestion.message_type = self.message_type
-    ar_suggestion.comment = self.comment
-    ar_suggestion.content = self.content
-    ar_suggestion.author_name = self.author_name
-    ar_suggestion.pitch_point_id = self.pitch_point_id
-    ar_suggestion.pitch_point_name = self.pitch_point_name
-    ar_suggestion.initiator_id = self.initiator_id.to_s
-    ar_suggestion.identity_scope = self.identity_scope.class.name
-    ar_suggestion.content_scope = self.content_scope.class.name
+    ar_suggestion = ActiveRecordSuggestion.new do |s|
+      s.object_id = self.id.to_s
+      s.pitch_card_id = self.pitch_card.id.to_s
+      s.author_id = self.author.id.to_s
+      s.message_type = self.message_type
+      s.comment = self.comment
+      s.content = self.content
+      s.author_name = self.author_name
+      s.pitch_point_id = self.pitch_point_id
+      s.pitch_point_name = self.pitch_point_name
+      s.initiator_id = self.initiator_id.to_s
+      s.identity_scope = self.identity_scope.class.name
+      s.content_scope = self.content_scope.class.name
+    end
 
     if self.initiator_content_scope.present?
       ar_suggestion.initiator_content_scope = self.initiator_content_scope.class.name
@@ -109,36 +91,52 @@ module ActiveRecordAdaptable
       ar_suggestion.new_record = false
     end
 
+    ar_suggestion
+
   end
 
   def to_active_record_pitch_point
 
-    ar_pitch_point = ActiveRecordPitchPoint.new
-
-    ar_pitch_point.object_id = self.id.to_s
-    ar_pitch_point.name = self.name
-    ar_pitch_point.selected = self.selected
-    ar_pitch_point.value = self.value
+    ar_pitch_point = ActiveRecordPitchPoint.new do |pp|
+      pp.object_id = self.id.to_s
+      pp.name = self.name
+      pp.selected = self.selected
+      pp.value = self.value
+    end
 
     unless self.new_record?
       ar_pitch_point.new_record = false
     end
 
+    ar_pitch_point
+
   end
 
   def to_active_record_pitch_card
 
-    ar_pitch_card = ActiveRecordPitchCard.new
+    object_id = self.id.to_s
+    initiator_id = self.initiator.id.to_s
+    i_scope = self.identity_scope.class.name
+    c_scope = self.content_scope.class.name
 
-    ar_pitch_card.object_id = self.id.to_s
-    ar_pitch_card.status = self.status
-    ar_pitch_card.initiator_id = self.initiator.id
-    ar_pitch_card.identity_scope = self.identity_scope.class.name
-    ar_pitch_card.content_scope = self.content_scope.class.name
+    pitch_card = ActiveRecordPitchCard.new do |pc|
+      pc.identity_scope = i_scope
+      pc.content_scope = c_scope
+      pc.initiator_id = initiator_id
+      pc.object_id = object_id
+      pc.status = self.status
+    end
 
     unless self.new_record?
-      ar_pitch_card.new_record = false
+      pitch_card.new_record = false
     end
+
+    self.pitch_points.reject{|p| p.value.blank?}.each do |point|
+      ar_point = point.to_active_record_model
+      ar_point.save
+    end
+
+    pitch_card
 
   end
 
@@ -195,6 +193,28 @@ module ActiveRecordAdaptable
 
     if self.content_scope != other_pitch_card.content_scope
       other_pitch_card.content_scope = self.content_scope
+    end
+
+  end
+
+  module ClassMethods
+
+    def active_record_class
+
+      case self.name
+        when 'PitchCard'
+          result = ActiveRecordPitchCard
+        when 'PitchPoint'
+          result = ActiveRecordPitchPoint
+        when 'Comment'
+          result = ActiveRecordComment
+        when 'Suggestion'
+          result = ActiveRecordSuggestion
+        else
+          result = nil
+      end
+
+      result
     end
 
   end

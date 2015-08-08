@@ -19,8 +19,6 @@ module MongoidAdaptable
     result
   end
 
-  private
-
   # adapt methods
   def to_mongoid_comment(base_mongoid_comment)
 
@@ -78,16 +76,14 @@ module MongoidAdaptable
       end
 
       if ar_pitch_point.present?
-
         point.value = ar_pitch_point.value
         point.id = BSON::ObjectId.from_string(ar_pitch_point.object_id)
         point.new_record = is_new
-
       end
 
-      adapted_pitch_card
-
     end
+
+    adapted_pitch_card
 
   end
 

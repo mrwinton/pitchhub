@@ -35,9 +35,6 @@ gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embe
 gem 'kaminari'
 gem 'shamir-secret-sharing', :git => 'https://github.com/lian/shamir-secret-sharing.git'
 
-# For redundancy
-gem 'sqlite3'
-
 # gem 'delayed_job_mongoid'
 gem 'active_link_to', '~> 1.0.3'
 gem 'cancancan', '~> 1.10'
@@ -49,6 +46,9 @@ gem 'public_activity'
 
 # https://github.com/alexreisner/geocoder
 gem 'geocoder'
+
+# For redundancy
+gem 'sqlite3'
 
 group :development do
   gem 'metric_fu'
