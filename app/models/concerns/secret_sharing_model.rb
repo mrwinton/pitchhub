@@ -34,11 +34,40 @@ module SecretSharingModel
         else
           # else it's sql
           if is_new
+
+            # special handling for pitch card's pitch points
+            if share.class.name == "PitchCard"
+              share.save_pitch_points
+            end
+
             share = share.to_active_record_model
             success = share.save
           else
+
+            # special handling for pitch card's pitch points
+            if share.class.name == "PitchCard"
+              share.pitch_points.reject{|p| p.value.blank?}.each do |point|
+                # convert the point to an active record model
+                ar_point = point.to_active_record_model
+                # get the share from the db
+                ar_point_from_db = ar_point.class.find_by(object_id: ar_point.object_id)
+                # check that the record was in the database
+                if ar_point_from_db.present?
+                  # copy any changes across
+                  ar_point_from_db.update_from(ar_point)
+                  # save the updated pitch point
+                  ar_point_from_db.save
+                else
+                  # it's a new point, so set it's pitch_card_id
+                  ar_point.pitch_card_id = share.id.to_s
+                  # was not in the database, so just save
+                  ar_point.save
+                end
+              end
+            end
+
             share = share.to_active_record_model
-            # get the share from the db
+
             share_from_db = share.class.find_by(object_id: share.object_id)
             # copy any changes across
             share_from_db.update_from(share)
@@ -75,8 +104,12 @@ module SecretSharingModel
 
       id = self.id
 
-      SecretSharingHelper.databases.each { |db|
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
         model = self.class.with(database: db[:name]).find(id)
+        model.destroy
+      }
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|
+        model = self.class.find_by(object_id: id.to_s)
         model.destroy
       }
 
@@ -108,6 +141,9 @@ module SecretSharingModel
       }
 
       model = SecretSharingHelper.decrypt_model(self, model_shares)
+
+      # explicit return
+      model
 
     end
 

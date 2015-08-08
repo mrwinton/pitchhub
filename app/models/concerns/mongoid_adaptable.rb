@@ -56,7 +56,8 @@ module MongoidAdaptable
 
   def to_mongoid_pitch_card(base_mongoid_pitch_card)
 
-    ar_pitch_points = ActiveRecordPitchPoint.find_by(object_id: self.object_id)
+    # get all pitch points with the pitch_card_id
+    ar_pitch_points = ActiveRecordPitchPoint.where(pitch_card_id: self.object_id)
 
     is_new = base_mongoid_pitch_card.new_record?
 
@@ -68,6 +69,7 @@ module MongoidAdaptable
 
       ar_pitch_point = nil
 
+      # there will be at least one pitch point due to value proposition
       ar_pitch_points.each do |ar_point|
         if ar_point.name == point.name
           ar_pitch_point = ar_point

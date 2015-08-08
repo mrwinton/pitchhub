@@ -19,24 +19,6 @@ module ActiveRecordAdaptable
     result
   end
 
-  def update_from(other_ar_model)
-
-    case self.class.name
-      when 'PitchCard'
-        result = self.update_pitch_card other_ar_model
-      when 'PitchPoint'
-        result = self.update_pitch_point other_ar_model
-      when 'Comment'
-        result = self.update_comment other_ar_model
-      when 'Suggestion'
-        result = self.update_suggestion other_ar_model
-      else
-        result = nil
-    end
-
-    result
-  end
-
   # adapt methods
   def to_active_record_comment
 
@@ -58,9 +40,9 @@ module ActiveRecordAdaptable
       ar_comment.initiator_content_scope = self.initiator_content_scope._type
     end
 
-    unless self.new_record?
-      ar_comment.new_record = false
-    end
+    # unless self.new_record?
+    #   ar_comment.new_record = false
+    # end
 
     ar_comment
 
@@ -87,9 +69,9 @@ module ActiveRecordAdaptable
       ar_suggestion.initiator_content_scope = self.initiator_content_scope.class.name
     end
 
-    unless self.new_record?
-      ar_suggestion.new_record = false
-    end
+    # unless self.new_record?
+    #   ar_suggestion.new_record = false
+    # end
 
     ar_suggestion
 
@@ -104,9 +86,9 @@ module ActiveRecordAdaptable
       pp.value = self.value
     end
 
-    unless self.new_record?
-      ar_pitch_point.new_record = false
-    end
+    # unless self.new_record?
+    #   ar_pitch_point.new_record = false
+    # end
 
     ar_pitch_point
 
@@ -127,72 +109,22 @@ module ActiveRecordAdaptable
       pc.status = self.status
     end
 
-    unless self.new_record?
-      pitch_card.new_record = false
-    end
-
-    self.pitch_points.reject{|p| p.value.blank?}.each do |point|
-      ar_point = point.to_active_record_model
-      ar_point.save
-    end
+    # unless self.new_record?
+    #   pitch_card.new_record = false
+    # end
 
     pitch_card
 
   end
 
-  # update methods
-  def update_comment(other_comment)
+  def save_pitch_points
 
-    if self.comment != other_comment.comment
-      other_comment.comment = self.comment
-    end
+    object_id = self.id.to_s
 
-    if self.identity_scope != other_comment.identity_scope
-      other_comment.identity_scope = self.identity_scope
-    end
-
-    if self.content_scope != other_comment.content_scope
-      other_comment.content_scope = self.content_scope
-    end
-
-  end
-
-  def update_suggestion(other_suggestion)
-
-    if self.comment != other_suggestion.comment
-      other_suggestion.comment = self.comment
-    end
-
-    if self.content != other_suggestion.content
-      other_suggestion.content = self.content
-    end
-
-    if self.identity_scope != other_suggestion.identity_scope
-      other_suggestion.identity_scope = self.identity_scope
-    end
-
-    if self.content_scope != other_suggestion.content_scope
-      other_suggestion.content_scope = self.content_scope
-    end
-
-  end
-
-  def update_pitch_point(other_pitch_point)
-
-    if self.value != other_pitch_point.value
-      other_pitch_point.value = self.value
-    end
-
-  end
-
-  def update_pitch_card(other_pitch_card)
-
-    if self.identity_scope != other_pitch_card.identity_scope
-      other_pitch_card.identity_scope = self.identity_scope
-    end
-
-    if self.content_scope != other_pitch_card.content_scope
-      other_pitch_card.content_scope = self.content_scope
+    self.pitch_points.reject{|p| p.value.blank?}.each do |point|
+      ar_point = point.to_active_record_model
+      ar_point.pitch_card_id = object_id
+      ar_point.save
     end
 
   end
