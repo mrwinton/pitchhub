@@ -5,7 +5,7 @@ module SecretSharingController
 
   def get_initiated(user, page)
 
-    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first[:name]
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first
 
     PitchCard.with(database: db[:name]).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
 
