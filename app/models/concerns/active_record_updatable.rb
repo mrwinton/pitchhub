@@ -78,9 +78,6 @@ module ActiveRecordUpdatable
 
   def update_pitch_point(updated_pitch_point)
 
-    cur_val = self.value
-    upd_val = updated_pitch_point.value
-
     if self.value != updated_pitch_point.value
       self.value = updated_pitch_point.value
     end
