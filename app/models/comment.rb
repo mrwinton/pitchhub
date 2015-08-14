@@ -83,6 +83,8 @@ class Comment
 
     discourse_secret_shares = []
 
+    discourse_secret_shares << discourse.comment
+
     discourse_shares.each do |discourse_share|
 
       discourse_secret_shares << discourse_share.comment

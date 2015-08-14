@@ -49,6 +49,9 @@ class Suggestion < Comment
     comment_secret_shares = []
     content_secret_shares = []
 
+    comment_secret_shares << discourse.comment
+    content_secret_shares << discourse.content
+
     discourse_shares.each do |discourse_share|
 
       comment_secret_shares << discourse_share.comment

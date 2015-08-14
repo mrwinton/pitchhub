@@ -1,0 +1,18 @@
+octopus:
+  environments:
+    - development
+    - test
+  development:
+    pitchhub_sql_shard_1:
+      adapter: sqlite3
+      database: db/sqlite/development/pitchhub_sql_shard_1.sqlite3
+    pitchhub_sql_shard_2:
+      adapter: sqlite3
+      database: db/sqlite/development/pitchhub_sql_shard_2.sqlite3
+  test:
+    pitchhub_sql_shard_1:
+      adapter: sqlite3
+      database: db/sqlite/test/pitchhub_sql_shard_1.sqlite3
+    pitchhub_sql_shard_2:
+      adapter: sqlite3
+      database: db/sqlite/test/pitchhub_sql_shard_2.sqlite3

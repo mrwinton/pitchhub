@@ -37,10 +37,10 @@ module SecretSharingModel
 
             # special handling for pitch card's pitch points
             if share.class.name == "PitchCard"
-              share.save_pitch_points
+              share.save_pitch_points(db[:name])
             end
 
-            share = share.to_active_record_model
+            share = share.to_active_record_model(db[:name])
             success = share.save
           else
 
@@ -48,9 +48,9 @@ module SecretSharingModel
             if share.class.name == "PitchCard"
               share.pitch_points.reject{|p| p.value.blank?}.each do |point|
                 # convert the point to an active record model
-                ar_point = point.to_active_record_model
+                ar_point = point.to_active_record_model(db[:name])
                 # get the share from the db
-                ar_point_from_db = ar_point.class.find_by(object_id: ar_point.object_id)
+                ar_point_from_db = ar_point.class.using(db[:name]).find_by(object_id: ar_point.object_id)
                 # check that the record was in the database
                 if ar_point_from_db.present?
                   # copy any changes across
@@ -66,9 +66,9 @@ module SecretSharingModel
               end
             end
 
-            share = share.to_active_record_model
+            share = share.to_active_record_model(db[:name])
 
-            share_from_db = share.class.find_by(object_id: share.object_id)
+            share_from_db = share.class.using(db[:name]).find_by(object_id: share.object_id)
             # copy any changes across
             share_from_db.update_from(share)
             # save the updated share
@@ -104,12 +104,12 @@ module SecretSharingModel
 
       id = self.id
 
-      SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
         model = self.class.with(database: db[:name]).find(id)
         model.destroy
       }
       SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|
-        model = self.class.find_by(object_id: id.to_s)
+        model = self.class.using(db[:name]).find_by(object_id: id.to_s)
         model.destroy
       }
 
@@ -124,7 +124,7 @@ module SecretSharingModel
 
       model_shares = []
 
-      SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
         model_shares << self.with(database: db[:name]).find(model_id)
       }
 
@@ -133,7 +133,9 @@ module SecretSharingModel
         # get the record's class
         clazz = self.active_record_class
         # find instances given the id
-        alt_model_share = clazz.find_by(object_id: model_id)
+
+        alt_model_share = clazz.using(db[:name]).find_by(object_id: model_id)
+
         # convert it into a mongoid share
         model_share = alt_model_share.to_mongoid_model model_shares.first
         # add the converted shares to the results

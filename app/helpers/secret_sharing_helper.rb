@@ -2,10 +2,10 @@ module SecretSharingHelper
 
   def self.databases
     [
-        {:name => "pitchhub_ci", :type => "mongo" },
-        {:name => "pitchhub_vuw", :type => "mongo" },
-        {:name => "pitchhub_aws", :type => "mongo" },
-        {:name => "pitchhub_sql", :type => "sqlite" }
+        {:name => "pitchhub_mongo_shard_1", :type => "mongo" },
+        {:name => "pitchhub_mongo_shard_2", :type => "mongo" },
+        {:name => "pitchhub_sql_shard_1", :type => "sql" },
+        {:name => "pitchhub_sql_shard_2", :type => "sql" }
     ]
   end
 
@@ -14,7 +14,7 @@ module SecretSharingHelper
   end
 
   def self.threshold
-    2
+    3
   end
 
   def threshold

@@ -8,12 +8,18 @@ module MongoidAdaptable
         result = self.to_mongoid_pitch_card base_mongoid_model
       when 'ActiveRecordPitchPoint'
         result = self.to_mongoid_pitch_point base_mongoid_model
-      when 'ActiveRecordComment'
-        result = self.to_mongoid_comment base_mongoid_model
-      when 'ActiveRecordSuggestion'
-        result = self.to_mongoid_suggestion base_mongoid_model
       else
         result = nil
+    end
+
+    if result == nil
+      if self.class.name == 'ActiveRecordSuggestion' || self.class.name == 'ActiveRecordComment'
+        if self.discourse_type == 'comment'
+          result = self.to_mongoid_comment base_mongoid_model
+        elsif self.discourse_type == 'suggestion'
+          result = self.to_mongoid_suggestion base_mongoid_model
+        end
+      end
     end
 
     result
@@ -56,8 +62,10 @@ module MongoidAdaptable
 
   def to_mongoid_pitch_card(base_mongoid_pitch_card)
 
+    shard = self.current_shard
+
     # get all pitch points with the pitch_card_id
-    ar_pitch_points = ActiveRecordPitchPoint.where(pitch_card_id: self.object_id)
+    ar_pitch_points = ActiveRecordPitchPoint.using(shard).where(pitch_card_id: self.object_id)
 
     is_new = base_mongoid_pitch_card.new_record?
 

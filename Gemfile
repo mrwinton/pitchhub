@@ -3,6 +3,10 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 
+# For redundancy
+gem 'sqlite3'
+gem 'ar-octopus'
+
 # Authentication
 gem 'devise'
 gem 'devise-bootstrap-views'
@@ -46,9 +50,6 @@ gem 'public_activity'
 
 # https://github.com/alexreisner/geocoder
 gem 'geocoder'
-
-# For redundancy
-gem 'sqlite3'
 
 group :development do
   gem 'metric_fu'

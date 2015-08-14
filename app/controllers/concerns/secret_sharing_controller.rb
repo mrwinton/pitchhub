@@ -5,7 +5,7 @@ module SecretSharingController
 
   def get_initiated(user, page)
 
-    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.first
 
     PitchCard.with(database: db[:name]).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
 
@@ -13,7 +13,7 @@ module SecretSharingController
 
   def get_collaborated(user, page)
 
-    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.first
 
     collab_cards = user.collab_pitch_cards
 
@@ -31,10 +31,44 @@ module SecretSharingController
 
     discourses_shares_array = []
 
-    SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
+    SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
       # discourses_shares_array << pitch_card.comments.with(database: db).initiator_content_scoped_for(user).desc(:_id).page( page )
       discourses_shares_array << Comment.with(database: db[:name]).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
     }
+
+    if discourses_shares_array.any?
+      SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|
+
+        alt_discourse_shares = []
+
+        pitch_card_id = pitch_card.id.to_s
+        # find instances given the id
+        # alt_model_shares = ActiveRecordComment.where(:pitch_card_id => pitch_card_id).using(db[:name])
+        first_shares = discourses_shares_array.first
+
+        clazz = ActiveRecordComment
+
+        alt_model_shares = clazz.using(db[:name]).where(pitch_card_id: pitch_card_id)
+
+        alt_model_shares.each do |alt_model_share|
+
+          matching_mongoid_models = first_shares.select{ |share|
+            share.id.to_s == alt_model_share.object_id
+          }
+
+          base_mongoid_model = matching_mongoid_models.first
+
+          # convert it into a mongoid share
+          model_share = alt_model_share.to_mongoid_model base_mongoid_model
+          # add the converted shares to the results
+          alt_discourse_shares << model_share
+        end
+
+        discourses_shares_array << alt_discourse_shares
+
+      }
+    end
+
 
     base_shares_array = discourses_shares_array.delete_at(0)
 
@@ -62,7 +96,7 @@ module SecretSharingController
 
       }
 
-      if discourse_shares.size > SecretSharingHelper.threshold
+      if discourse_shares.size >= SecretSharingHelper.threshold
 
         if share.class.name == "Suggestion"
 
@@ -85,7 +119,7 @@ module SecretSharingController
 
   def get_pitch_cards_encrypted(user, page)
 
-    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.first
+    db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.first
 
     PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
 
@@ -95,9 +129,21 @@ module SecretSharingController
 
     pitch_cards_shares_array = []
 
-    SecretSharingHelper.databases.reject{ |db| db[:type] == "sqlite" }.each { |db|
+    SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
       pitch_cards_shares_array << PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
     }
+    # TODO
+    # SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|
+    #
+    #   # get the record's class
+    #   clazz = self.active_record_class
+    #   # find instances given the id
+    #   alt_model_share = clazz.using(db[:name]).find_by(object_id: model_id)
+    #   # convert it into a mongoid share
+    #   model_share = alt_model_share.to_mongoid_model model_shares.first
+    #   # add the converted shares to the results
+    #   model_shares << model_share
+    # }
 
     base_shares_array = pitch_cards_shares_array.delete_at(0)
 
