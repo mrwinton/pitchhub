@@ -144,7 +144,8 @@ class PitchCardsController < ApplicationController
   end
 
   def search
-      @pitch_cards = PitchCard.where(:'pitch_points.value' => /#{params["top-search"]}/).desc(:_id).page params[:page]
+      # @pitch_cards = PitchCard.where(:'pitch_points.value' => /#{params["top-search"]}/).desc(:_id).page params[:page]
+      @pitch_cards = PitchCard.where({'pitch_points.value' => /#{params["top-search"]}/, 'pitch_points.name' => "Value Proposition" }).desc(:_id).page params[:page]
       escaped_search = params["top-search"]
       title = "Search Results for \""+ escaped_search +"\""
       render 'index', :locals => {:title => title}
