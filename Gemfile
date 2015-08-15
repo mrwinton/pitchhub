@@ -48,6 +48,8 @@ gem 'cancancan', '~> 1.10'
 gem 'mongoid_search'
 gem 'public_activity'
 
+gem 'jquery-infinite-pages'
+
 # https://github.com/alexreisner/geocoder
 gem 'geocoder'
 

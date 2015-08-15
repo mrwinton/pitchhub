@@ -18,5 +18,6 @@
 //= require vendor/timeago
 //= require vendor/masonry.min
 //= require vendor/imagesLoaded.min
+//= require jquery.infinite-pages
 //= require turbolinks
 //= require jquery_ujs
