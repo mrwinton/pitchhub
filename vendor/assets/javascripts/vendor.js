@@ -19,5 +19,6 @@
 //= require vendor/masonry.min
 //= require vendor/imagesLoaded.min
 //= require jquery.infinite-pages
+//= require vendor/d3.min
 //= require turbolinks
 //= require jquery_ujs
