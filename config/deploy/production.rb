@@ -17,7 +17,7 @@ role :db,  %w{pitchhub@gmail.com}
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-server '131.203.18.18', user: 'deploy', roles: %w{web app}
+server '131.203.18.18', user: 'michael', roles: %w{web app}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
