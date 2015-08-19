@@ -10,10 +10,11 @@ pitch_cards_number = 100
 max_suggestion = 10
 max_comments = 10
 $scopes = DisclosureScopeHelper.scopes(nil)
+$pitch_points = PitchPointsHelper.pitch_points_hash
 
-puts Rails.env
+#puts Rails.env
 
-puts "#{Rails.root}"
+#puts "#{Rails.root}"
 
 #Image.create({
 #id => 52,
@@ -25,14 +26,16 @@ def new_user(email, first_name, last_name)
   User.create!(:email => email, :password => 'password123', :first_name => first_name, :last_name => last_name)
 end
 
-def  new_suggestion(pc,pp,u,comment, sugg, status)
+def new_suggestion(pc,pp,u,comment, sugg, status)
   pitch_point = pc.pitch_points[pp]
+
   suggestion = Suggestion.new
 
   suggestion.author = u
   suggestion.pitch_card = pc
   suggestion.comment = comment
   suggestion.content = sugg
+  suggestion.initiator_id = pc.initiator.id
   suggestion.author_name = u.first_name + " " + u.last_name
   suggestion.pitch_point_id = pitch_point._id
   suggestion.pitch_point_name = pitch_point.name
@@ -46,9 +49,29 @@ def  new_suggestion(pc,pp,u,comment, sugg, status)
   suggestion.inject_scopes($scopes)
 
   suggestion.save
-  pc.comments << suggestion
+  return suggestion
 end
 
+def new_pc(u, val)
+  pitch_point_value_proposition = $pitch_points[0]
+  pitch_card = PitchCard.new
+
+  pitch_card.initiator = u
+  pitch_card.status = :active
+
+  pitch_card.i_scope = "public"
+  pitch_card.c_scope = "public"
+  pitch_card.inject_scopes($scopes)
+
+  value_proposition = PitchPoint.new
+  value_proposition.name = pitch_point_value_proposition[:name]
+  value_proposition.selected = true
+  value_proposition.value = val
+
+  pitch_card.pitch_points << value_proposition
+
+  return pitch_card
+end
 
 
 if Rails.env.test?
@@ -227,34 +250,18 @@ else
   user_ke = new_user('ke@test.com','King Edward','VII')
   user_te = new_user('te@test.com','Thomas','Edison')
 
-
-  pitch_point_hash_array = PitchPointsHelper.pitch_points_hash
-  pitch_point_value_proposition = pitch_point_hash_array.delete_at(0)
-  pitch_card = PitchCard.new
-
-  pitch_card.initiator = user_hd
-  pitch_card.status = :active
-
-  pitch_card.i_scope = "public"
-  pitch_card.c_scope = "public"
-  pitch_card.inject_scopes($scopes)
-
-  value_proposition = PitchPoint.new
-  value_proposition.name = pitch_point_value_proposition[:name]
-  value_proposition.selected = true
-  value_proposition.value = "Electric lamps light up the night."
-
-  pitch_card.pitch_points << value_proposition
+  pitch_card = new_pc(user_hd, "Electric lamps light up the night")
+  
 
   challenge = PitchPoint.new
-  challenge.name = pitch_point_hash_array[0][:name]
+  challenge.name = ($pitch_points)[1][:name]
   challenge.selected = true
   challenge.value = "develop a principle for an electrical light"
 
   pitch_card.pitch_points << challenge
 
   solve = PitchPoint.new
-  solve.name = pitch_point_hash_array[1][:name]
+  solve.name = ($pitch_points)[2][:name]
   solve.selected = true
   solve.value = "discharge a battery via carbon electrodes to create an arc"
   
@@ -262,9 +269,11 @@ else
 
   pitch_card.created_at='03-03-1815'
 
-  new_suggestion(pitch_card,0,user_js,
+  suggestion = new_suggestion(pitch_card,1,user_js,
 "I think we need to develop an electrical light bulb that is much more practical and long-lasting than the arc light bulb",
 "devise a practical, long-lasting electric light", :accepted)
+
+  pitch_card.comments << suggestion
 
   pitch_card.save
 
