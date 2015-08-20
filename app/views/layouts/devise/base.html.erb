@@ -5,19 +5,16 @@
 
 <% content_for :content do %>
 
-	<div id="auth-background"></div>
+	<div id="page-top" class="page-container">
 
-    <div id="page-top" class="page-container">
+	  <div class="push-top-bottom">
 
-	  <div class="row">
-
-		<div>
-
+		<div class="row row-no-margin">
 		  <%= yield %>
-
 		</div>
+
 	  </div>
-    </div>
+	</div>
 
 <% end %>
-<%= render template: 'layouts/application' %>
+<%= render template: 'layouts/devise/application' %>

@@ -36,7 +36,16 @@ class User
   has_many :init_pitch_cards, class_name: "PitchCard", inverse_of: "initiator"
   has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard", inverse_of: "collaborators"
 
+  attr_accessor :access_code
+
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validate :has_correct_access_code
+
+  def has_correct_access_code
+    if self.access_code != ENV["ACCESS_CODE"]
+      errors.add(:access_code, "not valid")
+    end
+  end
 
 end
