@@ -37,7 +37,16 @@ class ApplicationController < ActionController::Base
 
   def track_action
 
-    encoded_filtered_params = request.filtered_parameters.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+    # we want to only log strings, so filter out anything that can't be recognised as UTF-8
+    encoded_filtered_params = Hash[
+        request.filtered_parameters.collect do |k, v|
+          if (v.respond_to?(:encoding))
+            [ k, v.dup.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'}) ]
+          else
+            # it's not a string, so it's likely an image so don't try and encode it
+          end
+        end
+    ]
 
     ahoy.track "Processed #{controller_name}##{action_name}", encoded_filtered_params
   end

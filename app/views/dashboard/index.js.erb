@@ -1,0 +1,16 @@
+var pre = '<div class="row"><div class="col-md-12">';
+var post = '</div></div>';
+
+<% @pitch_cards.each do |card| %>
+// Append new data
+	$(pre+"<%=j render partial: 'pitch_cards/partials/card/mini_card', locals: { pitch_card: card, should_center: true } %>"+post)
+		.appendTo($("#dashboard-content #pitch-cards"));
+<% end %>
+
+// Update pagination link
+<% if @pitch_cards.last_page? %>
+$('.pagination').html("That's all, folks!");
+<% else %>
+$('.pagination')
+		.html("<%=j link_to_next_page(@pitch_cards, 'Next Page', :remote => true) %>");
+<% end %>

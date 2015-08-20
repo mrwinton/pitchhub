@@ -49,35 +49,5 @@ $(function() {
 
     setTimeout(doChange, delay);
 
-    // feature rotator
-    //function shuffle(array) {
-    //    for (var i = array.length - 1; i > 0; i--) {
-    //        var j = Math.floor(Math.random() * (i + 1));
-    //        var temp = array[i];
-    //        array[i] = array[j];
-    //        array[j] = temp;
-    //    }
-    //    return array;
-    //}
-
-    // http://momentumdash.com
-    //var $feature = $('.feature');
-    //var features = ["inspiration", "todo", "weather", "quotes", "photography", "focus", "positivity", "motivation"];
-    //shuffle(features);
-    //$feature.html(features[features.length - 1]);
-    //$feature.css('width', $feature.width());
-    //
-    //$.fn.rotateFeatures = function() {
-    //    var feature = features.shift()
-    //    features.push(feature);
-    //
-    //    var self = this;
-    //    self.fadeTo(fadetime, 0, function() {
-    //        self.append('<span class="prototype">' + feature + '</span>');
-    //        var newWidth = self.find('.prototype').width();
-    //        self.css('width', newWidth + 'px').html(feature).fadeTo(fadetime, 1);
-    //    });
-    //    return this;
-    //};
 
 });

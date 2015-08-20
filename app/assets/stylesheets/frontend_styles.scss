@@ -7,6 +7,7 @@
 
 /* Variables used in 'main/' and 'themes' */
 @import "shared/variables";
+@import "shared/bs_height_support";
 
 /* Main */
 @import "frontend/layout.scss";
@@ -16,3 +17,4 @@
 @import "frontend/bs_overwrite.scss";
 @import "frontend/extras.scss";
 @import "frontend/word_switcher.scss";
+@import "frontend/pulse.scss";

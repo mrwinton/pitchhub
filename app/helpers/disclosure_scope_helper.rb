@@ -15,13 +15,13 @@ module DisclosureScopeHelper
 
     scopes = scope_hashes(options[:only])
 
+    # TODO allow user defined groups
     # Get the user's defined groups, Members or Geographic
-    curr_user.groups.each do |group|
-      # TODO check that id returns the ID, it may be "_id"
-      group_disclosure_scope = GroupDisclosureScope.new
-      group_disclosure_scope.group = group
-      scopes << { :id => group.id, :scope => group_disclosure_scope,  :name => "my group: "+group.name }
-    end
+    # curr_user.groups.each do |group|
+    #   group_disclosure_scope = GroupDisclosureScope.new
+    #   group_disclosure_scope.group = group
+    #   scopes << { :id => group.id, :scope => group_disclosure_scope,  :name => "my group: "+group.name }
+    # end
 
     scopes
 

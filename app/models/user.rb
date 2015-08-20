@@ -1,13 +1,9 @@
 class User
   include Mongoid::Document
   include Mongoid::Paperclip
-  include Geocoder::Model::Mongoid
 
   # == Include Image
   include AssociatedImage
-
-  geocoded_by :address # can also be an IP address
-  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? } # auto-fetch coordinates if it's not present or updated
 
   # Include devise modules
   devise :database_authenticatable, :registerable,
@@ -34,16 +30,22 @@ class User
   field :first_name, type: String
   field :last_name, type: String
 
-  field :coordinates, :type => Array
-  field :address
-
   has_many :groups, class_name: "Group"
   has_many :comments, class_name: "Comment"
 
   has_many :init_pitch_cards, class_name: "PitchCard", inverse_of: "initiator"
   has_and_belongs_to_many :collab_pitch_cards, class_name: "PitchCard", inverse_of: "collaborators"
 
+  attr_accessor :access_code
+
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validate :has_correct_access_code
+
+  def has_correct_access_code
+    if self.access_code != ENV["ACCESS_CODE"]
+      errors.add(:access_code, "not valid")
+    end
+  end
 
 end

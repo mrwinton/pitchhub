@@ -11,27 +11,32 @@
 
 <%= render partial: "shared/backend/content_header", locals: {content_title: "Pitch Cards Dashboard", content_subtitle: ""} %>
 
-<% @pitch_cards.each do |card| %>
-	<div class="row">
-	  <div class="col-md-12">
-		  <%= render partial: 'pitch_cards/partials/card/mini_card', locals: { pitch_card: card, should_center: true } %>
+<div id="dashboard-content">
+  <div id="pitch-cards">
+	<% @pitch_cards.each do |card| %>
+		<div class="row">
+		  <div class="col-md-12">
+			<%= render partial: 'pitch_cards/partials/card/mini_card', locals: { pitch_card: card, should_center: true } %>
+		  </div>
+		</div>
+	<% end %>
+  </div>
+  <% unless @pitch_cards.empty? %>
+	  <div class="row">
+		<div class="col-md-2 col-md-offset-5 text-center">
+		  <div class="pagination">
+			<%= link_to_next_page(@pitch_cards, 'Next Page', :remote => true) %>
+		  </div>
+		</div>
 	  </div>
-	</div>
-<% end %>
+  <% end %>
+</div>
 
 <% if @pitch_cards.empty? %>
 
 	<div class="row">
 	  <div class="col-md-2 col-md-offset-5">
 		<h4 class="push-top-bottom text-center">Nothing here yet...</h4>
-	  </div>
-	</div>
-
-<% else %>
-
-	<div class="row">
-	  <div class="col-md-2 col-md-offset-5 text-center">
-		<%= paginate @pitch_cards %>
 	  </div>
 	</div>
 

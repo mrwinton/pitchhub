@@ -2,6 +2,7 @@
   position:relative;
   display:inline-block;
   vertical-align:top;
+  -o-transition:width 1000ms cubic-bezier(0.215,0.61,0.355,1);
   -webkit-transition:width 1000ms cubic-bezier(0.215,0.61,0.355,1);
   -moz-transition:width 1000ms cubic-bezier(0.215,0.61,0.355,1);
   transition:width 1.0s cubic-bezier(0.215,0.61,0.355,1);
@@ -9,6 +10,7 @@
 }
 
 #hero-word-switcher.in span {
+  -o-transform-origin:center 35px;
   -webkit-transform-origin:center 35px;
   -moz-transform-origin:center 35px;
   transform-origin:center 35px;
@@ -17,6 +19,7 @@
 }
 
 #hero-word-switcher.in span.inactive {
+  -o-animation:leave-word 600ms;
   -webkit-animation:leave-word 600ms;
   -moz-animation:leave-word 600ms;
   transform: rotateX(180deg);
@@ -26,6 +29,7 @@
 #hero-word-switcher.in span.active {
   opacity: 1;
   transform: rotateX(0deg);
+  -o-animation:enter-word 1000ms;
   -webkit-animation:enter-word 1000ms;
   -moz-animation:enter-word 1000ms;
   animation: enter-word 1.0s;

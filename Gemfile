@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 
-# Authentication
+# Authenticate using the Devise library, with views styled in bootsrap. Read more: https://github.com/plataformatec/devise
 gem 'devise'
 gem 'devise-bootstrap-views'
 
@@ -23,14 +23,31 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Pitchhub gems
+# Use JSON to support the MongoDB library
 gem "multi_json", "~> 1.11.2"
+# Use Mongoid as an ODM to interface with MongoDB instances
 gem "mongoid", "~> 4.0.0"
+# Use BSON to support the MongoDB library
 gem 'bson_ext'
+
+# Extend the Mongoid library, to use paperclip for file uploads
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
+# Extend the Mongoid library, to support enums
 gem "mongoid-enum"
+# Extend the Mongoid library, to propagate errors in embedded documents up to the root document
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
+
+# Use a pagination library
 gem 'kaminari'
+# Enchance UX, to infinite scroll paginated pages
+gem 'jquery-infinite-pages'
+# Extend Rails 'link_to' to also indicate when the link should be 'active'
+gem 'active_link_to', '~> 1.0.3'
+
+# Authorise with the cancancan library. Read more: https://github.com/CanCanCommunity/cancancan
+gem 'cancancan', '~> 1.10'
+
+# Track user activity
 gem 'ahoy_matey'
 
 # Deployment gems
@@ -39,31 +56,10 @@ gem 'capistrano-bundler', '~> 1.1.2'
 gem 'capistrano-rails', '~> 1.1.1'
 gem 'capistrano-rbenv', github: "capistrano/rbenv"
 
-# gem 'delayed_job_mongoid'
-gem 'active_link_to', '~> 1.0.3'
-gem 'cancancan', '~> 1.10'
-
-# https://github.com/mauriciozaffari/mongoid_search
-# https://github.com/pokonski/public_activity
-gem 'mongoid_search'
-gem 'public_activity'
-
-# https://github.com/alexreisner/geocoder
-gem 'geocoder'
-
 group :development do
-  gem 'metric_fu'
+  # Use a better, more interactive, error interface
   gem 'better_errors'
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Access an IRB console on exception pages or by using <%= console %> in views

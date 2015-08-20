@@ -1,10 +1,14 @@
-<div id="login-container">
-
-  <%= bootstrap_devise_error_messages! %>
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-		<h4><%= t('.change_your_password', :default => 'Change your password') %></h4>
-	  </div>
+<div class="col-md-4 col-md-offset-4">
+  <h1 id="pitchhub-brand-text" class="text-center push-top-bottom animation-fadeInQuickInv">
+	<a href="/">pitchhub</a>
+  </h1>
+  <div class="panel-devise">
+	<%= pitchhub_devise_error_messages! %>
+  </div>
+  <div class="panel panel-default panel-devise">
+	<div class="panel-heading">
+	  <h4><%= t('.change_your_password', :default => 'Change your password?') %></h4>
+	</div>
 	  <div class="panel-body">
 		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, role: "form" }) do |f| %>
 		  <%= f.hidden_field :reset_password_token %>

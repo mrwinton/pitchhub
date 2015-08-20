@@ -7,6 +7,7 @@
 	<!-- page specific body attributes -->
 	<%= javascript_include_tag 'frontend/frontend_application', 'data-turbolinks-track' => true %>
 	<%= javascript_include_tag 'frontend/pages/home', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'frontend/pages/nz', 'data-turbolinks-track' => true %>
 <% end %>
 
 <section id='banner'>
@@ -23,9 +24,6 @@
                                     </span>
                                 </span>
 		</h2>
-		<!--<p>-->
-		<!--because life's a pitch!-->
-		<!--</p>-->
 	  </div>
 	</div>
   </div>
@@ -33,6 +31,29 @@
   <!--<a class="scroll" data-role="scroll-trigger" href="#search"><i class='fa fa-chevron-down'></i></a>-->
 
 </section>
+
+<section class="site-content site-section site-slide-content" style="background-color: #F8F9FB; padding-bottom: 50px;">
+  <div class="container">
+	<div class="row">
+	  <div class="row-same-height">
+		<div class="col-md-6 site-block visibility-none col-md-height col-middle" data-toggle="animation-appear" data-animation-class="animation-fadeInRight" data-element-offset="-180">
+		  <div style="padding-left: 20px; padding-right: 20px;">
+			<div class="visible-sm visible-xs push-bit"></div>
+			<p class="promo-content" style="margin-top: -50px">Join the NZ innovation network, pitch your own ideas, work on others' and have some fun, because life's a pitch!</p>
+			<br>
+			<p class="promo-content"> <%= link_to "Sign up!", new_user_registration_path %></p>
+		  </div>
+		</div>
+		<div class="col-md-6 site-block visibility-none col-md-height" data-toggle="animation-appear" data-animation-class="animation-fadeInLeft" data-element-offset="-180">
+		  <%= hidden_field_tag "nz-svg-url", asset_path('nz.svg') %>
+		  <div id="nz-container" class="text-center" style="width: 100%; height: 540px;">
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+</section>
+
 
 <!--<section id="search" class="site-content bg-alt site-section">-->
 <!--<div class="container">-->
