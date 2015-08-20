@@ -50,13 +50,13 @@ gem 'cancancan', '~> 1.10'
 # Track user activity
 gem 'ahoy_matey'
 
-# Deployment gems
-gem 'capistrano', '~> 3.1.0'
-gem 'capistrano-bundler', '~> 1.1.2'
-gem 'capistrano-rails', '~> 1.1.1'
-gem 'capistrano-rbenv', github: "capistrano/rbenv"
-
 group :development do
+  # Deployment gems
+  gem 'capistrano', '~> 3.1.0'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rails', '~> 1.1.1'
+  gem 'capistrano-rbenv', github: "capistrano/rbenv"
+
   # Use a better, more interactive, error interface
   gem 'better_errors'
 end
