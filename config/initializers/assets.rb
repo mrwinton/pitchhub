@@ -21,6 +21,7 @@ Rails.application.config.assets.precompile += %w( vendor.js )
 
 Rails.application.config.assets.precompile += %w( frontend/frontend_application.js )
 Rails.application.config.assets.precompile += %w( frontend/pages/home.js )
+Rails.application.config.assets.precompile += %w( frontend/pages/nz.js )
 
 Rails.application.config.assets.precompile += %w( backend/backend_application.js )
 Rails.application.config.assets.precompile += %w( backend/pages/login.js )

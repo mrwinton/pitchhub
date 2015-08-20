@@ -33,6 +33,11 @@ gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embe
 gem 'kaminari'
 gem 'ahoy_matey'
 
+# Deployment gems
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rails', '~> 1.1.1'
+gem 'capistrano-rbenv', github: "capistrano/rbenv"
 
 # gem 'delayed_job_mongoid'
 gem 'active_link_to', '~> 1.0.3'
@@ -42,6 +47,8 @@ gem 'cancancan', '~> 1.10'
 # https://github.com/pokonski/public_activity
 gem 'mongoid_search'
 gem 'public_activity'
+
+gem 'jquery-infinite-pages'
 
 # https://github.com/alexreisner/geocoder
 gem 'geocoder'

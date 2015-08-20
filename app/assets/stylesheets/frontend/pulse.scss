@@ -1,0 +1,58 @@
+@keyframes pulse_pt {
+  0% {
+    fill: $color_pitch_pulse;
+  }
+  50% {
+    fill: $color_pitch_dark_pulse;
+  }
+  100% {
+    fill: $color_pitch_pulse;
+  }
+}
+
+@-webkit-keyframes pulse_pt {
+  0% {
+    fill: $color_pitch_pulse;
+  }
+  50% {
+    fill: $color_pitch_dark_pulse;
+  }
+  100% {
+    fill: $color_pitch_pulse;
+  }
+}
+
+@-o-keyframes pulse_pt {
+  0% {
+    fill: $color_pitch_pulse;
+  }
+  50% {
+    fill: $color_pitch_dark_pulse;
+  }
+  100% {
+    fill: $color_pitch_pulse;
+  }
+}
+
+@-moz-keyframes pulse_pt {
+  0% {
+    fill: $color_pitch_pulse;
+  }
+  50% {
+    fill: $color_pitch_dark_pulse;
+  }
+  100% {
+    fill: $color_pitch_pulse;
+  }
+}
+
+.pulse {
+  -o-animation:pulse_pt 2500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-animation:pulse_pt 2500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-animation:pulse_pt 2500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation: pulse_pt 2.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.normal {
+  fill: $color_pitch_pulse;
+}
