@@ -39,13 +39,26 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 
 namespace :deploy do
 
+  desc 'Create a shared directory to keep the files that we do not keep in git'
+  task :setup_config do
+    # create a shared directory to keep files that are not in git and that are used for the application
+    run "mkdir -p #{shared_path}/config"
+    put File.read("config/local_env.yml.template"), "#{shared_path}/config/local_env.yml"
+    puts "Now edit the config files in #{shared_path}."
+  end
+
+  desc 'Symlink the shared local_env config file in the current release'
+  task :symlink_config do
+    # symlink the shared local_env config file in the current release
+    run "ln -nfs #{shared_path}/config/local_env.yml #{release_path}/config/local_env.yml"
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
-
   after :publishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
 end
