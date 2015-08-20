@@ -12,3 +12,5 @@ SECRET_KEY_BASE_PRODUCTION: ''
 
 DOMAIN_NAME_LOCAL: 'localhost:3000'
 DOMAIN_NAME: 'pitchhub.net'
+
+ACCESS_CODE: ''
