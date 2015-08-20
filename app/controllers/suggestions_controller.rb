@@ -93,7 +93,7 @@ class SuggestionsController < ApplicationController
   def accept
     authorize! :manage, @pitch_card
 
-    if params[:commit] == "accept"
+    if params[:button] == "accept"
       # the user pressed accept
 
       updated_content = @suggestion.content

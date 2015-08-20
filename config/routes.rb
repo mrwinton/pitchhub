@@ -12,9 +12,10 @@ Rails.application.routes.draw do
     member do
       post :complete, :activate
     end
-    resources :comments, only: [:index, :new, :create, :update, :destroy, :initiator_scope] do
+    resources :comments, only: [:index, :new, :create, :update, :destroy, :initiator_scope, :accept] do
       member do
         post 'initiator_scope'
+        post 'accept'
       end
     end
     resources :suggestions, only: [:index, :new, :create, :update, :destroy, :accept] do

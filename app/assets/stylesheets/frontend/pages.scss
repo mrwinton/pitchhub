@@ -9,8 +9,27 @@
 
 /* Index */
 
+#pitchhub-brand{
+  width: 2em;
+  height: auto;
+  margin-top: -6px;
+}
+
+#pitchhub-banner-logo{
+  font-family: 'Courgette', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: $color_dark;
+  font-size: 6em;
+}
+
+#pitchhub-banner-copy{
+  font-weight: 200;
+  color: $color_dark;
+  font-size: 3em;
+}
+
 #banner{
   width:100%;
+  background-color: $color_light_main;
   background-repeat:no-repeat;
   background-size:cover;
   color: $color_pitch_primary_text;
@@ -18,7 +37,11 @@
   position:relative
 }
 
-@media screen and (min-width: 40em){
+.site-nav a {
+  //color: white;
+}
+
+@media screen {
   #banner{
     display:-webkit-box;
     display:-moz-box;
@@ -129,6 +152,18 @@
   margin-bottom: 0.3125em
 }
 
+
+.site-nav-divider{
+  color: #dadde1;
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0px 10px;
+  height: 34px;
+  line-height: 32px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
 /* Login */
 #login-background {
     width: 100%;

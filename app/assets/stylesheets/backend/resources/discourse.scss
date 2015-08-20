@@ -237,3 +237,36 @@
 .scope-hidden{
   opacity: 0;
 }
+
+.inside-short{
+  margin-top: 5px;
+}
+
+.discourse-scope-button{
+  width: 32px;
+  border-bottom-right-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  color: #607D8B;
+}
+
+.selected-scope{
+  color: $color_pitch_secondary_text;
+  padding-right: 10px;
+}
+
+.discourse-action-btn{
+  border-color: #DBE1E8;
+  background-color: #FFF;
+  color: $color_pitch_primary;
+}
+.discourse-action-btn:hover,
+.discourse-action-btn:focus,{
+  border-color: #DBE1E8;
+  background-color: #EAEDF1;
+  color: $color_pitch_primary;
+  margin-left: -1px;
+}
+
+.inside-trim-top{
+  margin-top: 10px;
+}

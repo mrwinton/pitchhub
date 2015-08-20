@@ -1,0 +1,79 @@
+<% show_accept = pending and can? :manage, @pitch_card %>
+<% show_scope = discourse.initiator_content_scope.blank? and can? :manage, @pitch_card %>
+<% inside_short = (show_scope and show_accept) ? "inside-short" : "" %>
+<% is_suggestion = discourse.class.name == "Suggestion" ? "suggestion" : "comment" %>
+<% discourse_type = is_suggestion ? "suggestion" : "comment" %>
+
+<% if  show_accept || show_scope %>
+	<div class="push-bit">
+
+	  <% if show_accept%>
+		  <%= form_for(discourse, :url=>accept_pitch_card_comment_path(@pitch_card, discourse), method: "post") do |f| %>
+			  <div class="row-same-height">
+				<div class="col-xs-12 col-xs-height col-middle">
+				  <div class="inside inside-trim-top">
+				<span class="text-muted pull-right"  style="margin-top: -4.5px">
+					<div class="btn-group btn-group-sm">
+					  <%= f.button(value: "accept", type: 'submit', class: "btn discourse-action-btn") do %>
+						  <i class="fa fa-check"></i>
+					  <% end %>
+					  <%= f.button(value: "reject", type: 'submit', class: "btn discourse-action-btn") do %>
+						  <i class="fa fa-times"></i>
+					  <% end %>
+					</div>
+				</span>
+					<% if is_suggestion %>
+						<p class="text-muted">Update Pitch Card with suggestion?</p>
+					<% else %>
+						<p class="text-muted">Was this comment helpful?</p>
+					<% end %>
+				  </div>
+				</div>
+			  </div>
+		  <% end %>
+	  <% end %>
+	  <% if show_scope %>
+		  <% all_available_ic_scopes = scope_hashes %>
+		  <% content_scope = discourse.content_scope.present? ? discourse.content_scope : nil %>
+		  <% initiator_content_scope = discourse.initiator_content_scope.present? ? discourse.initiator_content_scope : nil %>
+		  <% display_content_scope = initiator_content_scope.present? ? initiator_content_scope : content_scope %>
+		  <% options = narrowed_scopes( all_available_ic_scopes, display_content_scope ) %>
+		  <% default_option = options.select { |scope| scope[:is_selected] }.first %>
+
+		  <%= form_for(discourse, :url=>initiator_scope_pitch_card_comment_path(@pitch_card, discourse), html: { class: "scope-discourse-form" }, method: "post") do |f| %>
+
+			  <div style="display: none">
+				<%= text_field_tag "selected_scope_value", default_option[:id], class: "selected-scope-value" %>
+			  </div>
+			  <div class="row-same-height">
+
+				<div class="col-xs-12 col-xs-height col-middle">
+				  <div class="inside inside-trim-top <%= inside_short%>">
+				<span class="pull-right"  style="margin-top: -4.5px">
+				  	<span class="selected-scope"><%= default_option[:name] %></span>
+					<div class="btn-group btn-group-sm">
+					  <button type="button" class="btn discourse-action-btn dropdown-toggle discourse-scope-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-caret-down"></i>
+						<span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					  <ul class="dropdown-menu dropdown-menu-right">
+						<% options.each  do |option| %>
+							<li>
+							  <a id="<%= option[:id] %>" class="selectable-scope" href="#"><%= option[:name] %></a>
+							</li>
+						<% end %>
+					  </ul>
+					  <%= f.button(value: "save", type: 'submit', class: "btn discourse-action-btn") do %>
+						  <i class="fa fa-floppy-o"></i>
+					  <% end %>
+					</div>
+				</span>
+					<p class="text-muted">Show this <%= discourse_type %> to: </p>
+				  </div>
+				</div>
+			  </div>
+		  <% end %>
+	  <% end %>
+
+	</div>
+<% end %>

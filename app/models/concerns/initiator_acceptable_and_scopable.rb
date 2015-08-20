@@ -22,7 +22,7 @@ module InitiatorAcceptableAndScopable
     # scopes to make the query syntax s readable and concise
     scope :initiator_content_scoped_for, ->(user){
       where('$or' => [
-                { 'initiator_content_scope' => { "$exists" => false }, "initiator_id" => user.id },
+                { "initiator_id" => user.id },
                 { 'initiator_content_scope' => { "$exists" => false }, "author_id" => user.id },
                 { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "PublicDisclosureScope"},
                 { 'initiator_content_scope' => { "$exists" => true }, 'initiator_content_scope._type' => "PrivateDisclosureScope", "initiator_id" => user.id },

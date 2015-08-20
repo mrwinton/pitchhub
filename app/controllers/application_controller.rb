@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  after_filter :track_action
+
   protected
 
   def configure_permitted_parameters
@@ -31,6 +33,13 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
+  end
+
+  def track_action
+
+    encoded_filtered_params = request.filtered_parameters.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+
+    ahoy.track "Processed #{controller_name}##{action_name}", encoded_filtered_params
   end
 
 end

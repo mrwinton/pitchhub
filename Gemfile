@@ -24,13 +24,20 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Pitchhub gems
-gem 'mongoid', github: 'mongoid/mongoid'
+gem "multi_json", "~> 1.11.2"
+gem "mongoid", "~> 4.0.0"
 gem 'bson_ext'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem "mongoid-enum"
 gem 'mongoid-embedded-errors', :git => 'https://github.com/mrwinton/mongoid-embedded-errors.git'
-gem 'mongoid_denormalize', :git => 'https://github.com/mrwinton/mongoid_denormalize.git'
 gem 'kaminari'
+gem 'ahoy_matey'
+
+# Deployment gems
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rails', '~> 1.1.1'
+gem 'capistrano-rbenv', github: "capistrano/rbenv"
 
 # gem 'delayed_job_mongoid'
 gem 'active_link_to', '~> 1.0.3'

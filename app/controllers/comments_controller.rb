@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
   before_action :authenticate_user!
-  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :initiator_scope]
-  before_action :set_comment, only: [:update, :destroy, :initiator_scope]
+  before_action :set_pitch_card, only: [:index, :new, :create, :update, :destroy, :initiator_scope, :accept]
+  before_action :set_comment, only: [:update, :destroy, :initiator_scope, :accept]
 
   # GET /pitch_cards/1/comments
   # GET /pitch_cards/1/comments.json
@@ -90,22 +90,70 @@ class CommentsController < ApplicationController
   # POST /pitch_cards/1/comments/initiator_scope
   # POST /pitch_cards/1/comments/initiator_scope.json
   def initiator_scope
+    authorize! :manage, @pitch_card
+
     # Inject the initiator scope object
     @scopes = ApplicationController.helpers.scopes(current_user)
-    @comment.ic_scope = params[:ic_scope]
+    @comment.ic_scope = params[:selected_scope_value]
     @comment.inject_scopes(@scopes)
 
     respond_to do |format|
       if @comment.save
-
-        msg = { :status => :ok, :message => "Success!", :content => params[:ic_scope] }
-        format.json { render json: msg }
+        format.html { redirect_to :back, notice: 'Scope successfully saved.' }
+        format.json { head :no_content }
       else
-        flash.now[:alert] = pluralize(@comment.errors.count, "error") + ' found, please fix before submitting'
+        format.html { redirect_to :back, notice: 'Scope failed to save, please try again' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
+
+  # POST /pitch_cards/1/comments/1/accept
+  # POST /pitch_cards/1/comments/1/accept.json
+  def accept
+    authorize! :manage, @pitch_card
+
+    if params[:button] == "accept"
+      # the user pressed accept
+
+      @comment.status = :accepted
+
+      if @comment.save
+        # the comment update was successful
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Comment was successfully accepted.' }
+          format.json { head :no_content }
+        end
+      else
+        # the card update was successful but the comment was not
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Comment was accepted, but an error occurred...' }
+          format.json { head :no_content }
+        end
+      end
+
+    else # user pressed reject
+
+      @comment.status = :rejected
+
+      if @comment.save
+        # the comment update was successful
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Comment was successfully rejected.' }
+          format.json { head :no_content }
+        end
+      else
+        # the comment update failed
+        respond_to do |format|
+          format.html { redirect_to :back, notice: 'Failed to reject comment, please try again' }
+          format.json { head :no_content }
+        end
+      end
+
+    end
+
+  end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.

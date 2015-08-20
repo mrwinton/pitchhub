@@ -28,7 +28,11 @@ class Comment
 
   # == Validation
   validates :author, presence: true
+  validates :author_name, presence: true
   validates :pitch_card, presence: true
+  validates :pitch_point_id, presence: true
+  validates :pitch_point_name, presence: true
+  validates :initiator_id, presence: true
   validates_length_of :comment, :maximum => DiscoursesHelper.comment_max_length, :allow_blank => false
 
 end

@@ -9,31 +9,8 @@
 <% rejected = suggestion.rejected? %>
 
 <!-- Discourse -->
-<div class="push-bit">
-  <div class="row-same-height">
+<%= render partial: 'pitch_cards/partials/discourses/actions/discourse_actions', locals: { point: point, discourse: suggestion, ic_scopes: ic_scopes, pending: pending } %>
 
-	<div class="col-xs-10 col-xs-height">
-
-	  <% if pending and can? :manage, @pitch_card %>
-
-		  <div class="pull-right">
-
-			<div class="btn-group btn-group-sm">
-			  <%= f.submit "accept", class: "btn btn-alt btn-success" do %>
-				  <i class="fa fa-check"></i> accept
-			  <% end %>
-			  <%= f.submit "reject", class: "btn btn-alt btn-danger" do %>
-				  <i class="fa fa-times"></i> reject
-			  <% end %>
-			</div>
-
-		  </div>
-
-	  <% end %>
-
-	</div>
-  </div>
-</div>
 <div class="row-same-height">
   <div class="col-xs-2 col-xs-height col-middle">
 	<div class="text-center">
@@ -58,12 +35,8 @@
 	<div class="inside">
 	  <p>
 		<span class="text-muted pull-right" style="margin-top: -4.5px;">
-	  	<small><abbr class="timeago" title="<%= suggestion.created_at.to_time.iso8601 %>"></abbr></small>
-
-		<% if can? :manage, @pitch_card %>
-		  <%= render partial: "pitch_cards/partials/discourses/initiator_scope/initiator_scope", locals: {discourse: suggestion, ic_scopes: ic_scopes, } %>
-	  	<% end %>
-
+	  	  <small><abbr class="timeago" title="<%= suggestion.created_at.to_time.iso8601 %>"></abbr></small>
+		  <span data-toggle="tooltip" title="From Web"><i class="fa fa-globe"></i></span>
 		</span>
 		<strong><%= author + " suggested" %></strong>
 	  </p>
