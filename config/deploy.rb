@@ -37,6 +37,9 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+set :scm, "git"
+set :user, "michael"  # The server's user for deploys
+
 namespace :deploy do
 
   desc 'Create a shared directory to keep the files that we do not keep in git'
