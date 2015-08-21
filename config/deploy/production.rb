@@ -17,7 +17,7 @@ set :stage, :production
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-server '131.203.18.18', user: 'michael', roles: %w{web app}
+server 'pitchhub.net', user: 'michael', roles: %w{web app}
 
 # set :ssh_options, {
 #     forward_agent: true,
