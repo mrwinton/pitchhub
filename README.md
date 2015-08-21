@@ -131,11 +131,13 @@ Finally, to completely wipe the virtual machine from the disk **destroying all i
 
 Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more information on Vagrant.
 
-## Secrets.yml
+## Setup the Secrets
 
-To run Pitchhub the `config/secrets.yml` needs to be created and populated for each environment (Development, Testing and Production).
+PitchHub's secrets are stored in `local_env.yml`, when you checkout the project this file does not exist.
 
-You can generate secret tokens with the following command:
+Let's fix this, duplicate the `local_env.yml.example` and remove the `example` suffix.
+
+Fill in the secrets, to do this you can use the following command:
 
     $ rake secret
 
