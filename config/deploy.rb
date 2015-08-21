@@ -40,6 +40,8 @@ set :scm, "git"
 set :user, "michael"  # The server's user for deploys
 set :log_level, :debug
 
+set :linked_files, %w{config/local_env.yml}
+
 namespace :deploy do
 
   desc 'Create a shared directory to keep the files that we do not keep in git'
@@ -50,14 +52,6 @@ namespace :deploy do
     end
     puts File.read("config/local_env.yml.example"), "#{shared_path}/config/local_env.yml"
     puts "Now edit the config files in #{shared_path}."
-  end
-
-  desc 'Symlink the shared local_env config file in the current release'
-  task :symlink_config do
-    # symlink the shared local_env config file in the current release
-    on roles(:app) do
-      execute "ln -nfs #{shared_path}/config/local_env.yml #{release_path}/config/local_env.yml"
-    end
   end
 
   desc 'Restart application'
