@@ -5,15 +5,14 @@
 // about supported directives.
 //
 //= require jquery
-// require vendor/jquery-1.11.2.min
 //= require vendor/bootstrap.min
+//= require vendor/bootstrap-maxlength.min.js
+//= require vendor/bootstrap-modal
+//= require vendor/bootstrap-modalmanager
+//= require vendor/fuelux.min.js
 //= require vendor/pnotify.custom.min
 //= require vendor/plugins
 //= require vendor/simple_flash.js
-//= require vendor/bootstrap-maxlength.min.js
-//= require vendor/fuelux.min.js
-//= require vendor/bootstrap-modal
-//= require vendor/bootstrap-modalmanager
 //= require vendor/lodash.min
 //= require vendor/timeago
 //= require vendor/masonry.min
