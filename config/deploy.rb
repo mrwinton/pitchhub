@@ -48,7 +48,7 @@ namespace :deploy do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
     end
-    put File.read("config/local_env.yml.template"), "#{shared_path}/config/local_env.yml"
+    puts File.read("config/local_env.yml.example"), "#{shared_path}/config/local_env.yml"
     puts "Now edit the config files in #{shared_path}."
   end
 
