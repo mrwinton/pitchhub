@@ -41,7 +41,7 @@ var App = function() {
 
         // Scroll to top functionality
         scrollToTop();
-        
+
         // Resize #page-content to fill empty space if exists (also add it to resize and orientationchange events)
         resizePageContent();
         $(window).resize(function(){ resizePageContent(); });
@@ -55,7 +55,7 @@ var App = function() {
         $('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ e.preventDefault(); $(this).tab('show'); });
 
         // Initialize dropdown
-        $('#user-dropdown').dropdown();
+        $('.dropdown-toggle').dropdown();
 
         // Initialize Tooltips
         $('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
