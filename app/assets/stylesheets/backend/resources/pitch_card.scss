@@ -122,6 +122,8 @@ textarea[disabled].form-pitch-point{
   padding: 5px;
   resize: none;
   width: 100%;
+  max-height: 300px;
+  min-height: 100px;
   height: auto;
   display: block;
   overflow: hidden;
