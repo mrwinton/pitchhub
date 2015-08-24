@@ -307,8 +307,8 @@ else
 
   puts "Environment is NOT TEST, seeding historic cards."
 
-  # DatabaseCleaner.strategy = :truncation
-  # DatabaseCleaner.clean
+  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.clean
 
   user_gn = new_user('erdbirne@gmail.com', 'Gregor','Neumayr') 
   user_hd = new_user('hd@test.com','Humphrey','Davy')
@@ -386,25 +386,32 @@ else
   user_ah = new_user('ah@test.com','August Wilhelm','von Hofmann') 
   user_wp = new_user('wp@test.com','William Henry','Perkin') 
 
-  pitch_card = new_pcard(user_as, date, 'A cure for Malaria',
+  pitch_card = new_pcard(user_ah, date, 'A cure for Malaria',
      'find a way to synthesize Quinine','I offer a study place at the Royal College of Chemistry in London','',
       nil, nil, 'malaria.jpg')
 
-  new_suggestion(pitch_card, $challid, user_wp, '04-06-1960', 
-    'I can offer to do the planning and logistics for this. We are going to need 2500 tons of fuel',
-    'go up the grand canyon in three jet boats as a demo',
+  new_suggestion(pitch_card, $solvid, user_wp, '14-09-1856', 
+    'this idea will hopefully work.. take me!',
+    'two equivalents of N-allyltoluidine + three oxygen atoms => quinine + water',
     :accepted, 'members')
   
+  new_suggestion(pitch_card, $challid, user_wp, '14-09-1857',
+    'this attempt did not work. However, I solved the challenge of making artificial dyes.',
+    'create the first artificial dye: mauve',
+    :accepted, 'members')
 
   puts "----------------------------------------------------------------"
 
-  pitch_card = new_pcard(user_as, date, 'transport material against gravity',
-     '','','use a screw to translate rotary motion into linear motion for transportation',
-      nil, 'is this useful to you?', 'ford-t.jpg')
+  user_hf = new_user('hf@test.com', 'Henry', 'Ford')
+  user_wt = new_user('wi@test.com', 'Wheeliam', 'Turner')
 
-  pitch_card = new_pcard(user_as, date, 'transport material against gravity',
-     '','','use a screw to translate rotary motion into linear motion for transportation',
-      nil, 'is this useful to you?', 'wheel.jpg')
+  pitch_card = new_pcard(user_hf, date, 'replace horse drawn carriages with an affordable mechanical automobile for the middle class',
+     'we need to create an affordable product that is reliable and able to be mass produced','I have got a factory in detroit that can handle the assembly process','',
+      nil, nil, 'ford-t.jpg')
+
+  pitch_card = new_pcard(user_wt, '01-01-0000', 'the wheel: take the vertical component out of the work',
+     '','','',
+      nil, nil, 'wheel.jpg')
 
 
   puts "Seeding Pitch Cards"
