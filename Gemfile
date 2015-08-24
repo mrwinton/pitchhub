@@ -53,6 +53,10 @@ gem 'ahoy_matey'
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', '~> 2.0'
 
+# Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing.
+# (only supports truncation with MongoDB as of 4/5/15)
+gem 'database_cleaner'
+
 group :development do
   # Deployment gems
   gem 'capistrano', '~> 3.1.0'
@@ -87,8 +91,5 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'faker'
-  # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing.
-  # (only supports truncation with MongoDB as of 4/5/15)
-  gem 'database_cleaner'
 end
 
