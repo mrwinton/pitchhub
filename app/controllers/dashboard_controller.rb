@@ -6,8 +6,7 @@ class DashboardController < ApplicationController
 
     # Retrieve the Pitch Cards that the current user is permitted to see, sort most recent first
     @pitch_cards = PitchCard.content_scoped_for(current_user).desc(:_id).page params[:page]
-
-    render 'index'
+    render 'pitch_cards/index', :locals => {:title => 'Pitch Cards Dashboard'}
   end
 
 end
