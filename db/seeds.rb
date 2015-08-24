@@ -310,7 +310,7 @@ else
   # DatabaseCleaner.strategy = :truncation
   # DatabaseCleaner.clean
 
-  user_gn = new_user('erdbirne@gmail.com', 'Gregor','Neumayr') 
+  # user_gn = new_user('erdbirne@gmail.com', 'Gregor','Neumayr')
   user_hd = new_user('hd@test.com','Humphrey','Davy')
   user_js = new_user('js@test.com','Sir Joseph', 'Swan')
   user_ke = new_user('ke@test.com','King Edward','VII')
