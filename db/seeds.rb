@@ -11,7 +11,6 @@ max_suggestion = 10
 max_comments = 10
 $scopes = DisclosureScopeHelper.scopes(nil)
 
-
 $valid=0
 $challid=1
 $enabid=2
@@ -308,8 +307,8 @@ else
 
   puts "Environment is NOT TEST, seeding historic cards."
 
-  DatabaseCleaner.strategy = :truncation
-  DatabaseCleaner.clean
+  # DatabaseCleaner.strategy = :truncation
+  # DatabaseCleaner.clean
 
   user_gn = new_user('erdbirne@gmail.com', 'Gregor','Neumayr') 
   user_hd = new_user('hd@test.com','Humphrey','Davy')
