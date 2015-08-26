@@ -42,6 +42,9 @@ var App = function() {
         // Scroll to top functionality
         scrollToTop();
 
+        // Template Options, change features
+        templateOptions();
+
         // Resize #page-content to fill empty space if exists (also add it to resize and orientationchange events)
         resizePageContent();
         $(window).resize(function(){ resizePageContent(); });
@@ -53,9 +56,6 @@ var App = function() {
 
         // Initialize tabs
         $('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ e.preventDefault(); $(this).tab('show'); });
-
-        // Initialize dropdown
-        $('.dropdown-toggle').dropdown();
 
         // Initialize Tooltips
         $('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
@@ -457,6 +457,148 @@ var App = function() {
         });
     };
 
+    /* Template Options, change features functionality */
+    var templateOptions = function() {
+        /*
+         * Color Themes
+         */
+        var colorList   = $('.sidebar-themes');
+        var themeLink   = $('#theme-link');
+
+        var themeColor  = themeLink.length ? themeLink.attr('href') : 'default';
+        var cookies     = page.hasClass('enable-cookies') ? true : false;
+
+        var themeColorCke;
+
+        // If cookies have been enabled
+        if (cookies) {
+            themeColorCke = $.cookie('optionThemeColor') ? $.cookie('optionThemeColor') : false;
+
+            // Update color theme
+            if (themeColorCke) {
+                if (themeColorCke === 'default') {
+                    if (themeLink.length) {
+                        themeLink.remove();
+                        themeLink = $('#theme-link');
+                    }
+                } else {
+                    if (themeLink.length) {
+                        themeLink.attr('href', themeColorCke);
+                    } else {
+                        $('link[href="css/themes.css"]')
+                            .before('<link id="theme-link" rel="stylesheet" href="' + themeColorCke + '">');
+
+                        themeLink = $('#theme-link');
+                    }
+                }
+            }
+
+            themeColor = themeColorCke ? themeColorCke : themeColor;
+        }
+
+        // Set the active color theme link as active
+        $('a[data-theme="' + themeColor + '"]', colorList)
+            .parent('li')
+            .addClass('active');
+
+        // When a color theme link is clicked
+        $('a', colorList).click(function(e){
+            // Get theme name
+            themeColor = $(this).data('theme');
+
+            $('li', colorList).removeClass('active');
+            $(this).parent('li').addClass('active');
+
+            if (themeColor === 'default') {
+                if (themeLink.length) {
+                    themeLink.remove();
+                    themeLink = $('#theme-link');
+                }
+            } else {
+                if (themeLink.length) {
+                    themeLink.attr('href', themeColor);
+                } else {
+                    $('link[href="css/themes.css"]').before('<link id="theme-link" rel="stylesheet" href="' + themeColor + '">');
+                    themeLink = $('#theme-link');
+                }
+            }
+
+            // If cookies have been enabled, save the new options
+            if (cookies) {
+                $.cookie('optionThemeColor', themeColor, {expires: 7});
+            }
+        });
+
+        // Prevent template options dropdown from closing on clicking options
+        $('.dropdown-options a').click(function(e){ e.stopPropagation(); });
+
+        /* Page Style */
+        var optMainStyle        = $('#options-main-style');
+        var optMainStyleAlt     = $('#options-main-style-alt');
+
+        if (page.hasClass('style-alt')) {
+            optMainStyleAlt.addClass('active');
+        } else {
+            optMainStyle.addClass('active');
+        }
+
+        optMainStyle.click(function() {
+            page.removeClass('style-alt');
+            $(this).addClass('active');
+            optMainStyleAlt.removeClass('active');
+        });
+
+        optMainStyleAlt.click(function() {
+            page.addClass('style-alt');
+            $(this).addClass('active');
+            optMainStyle.removeClass('active');
+        });
+
+        /* Header options */
+        var optHeaderDefault    = $('#options-header-default');
+        var optHeaderInverse    = $('#options-header-inverse');
+
+        if (header.hasClass('navbar-default')) {
+            optHeaderDefault.addClass('active');
+        } else {
+            optHeaderInverse.addClass('active');
+        }
+
+        optHeaderDefault.click(function() {
+            header.removeClass('navbar-inverse').addClass('navbar-default');
+            $(this).addClass('active');
+            optHeaderInverse.removeClass('active');
+        });
+
+        optHeaderInverse.click(function() {
+            header.removeClass('navbar-default').addClass('navbar-inverse');
+            $(this).addClass('active');
+            optHeaderDefault.removeClass('active');
+        });
+    };
+
+    /* Datatables basic Bootstrap integration (pagination integration included under the Datatables plugin in plugins.js) */
+    var dtIntegration = function() {
+        $.extend(true, $.fn.dataTable.defaults, {
+            "sDom": "<'row'<'col-sm-6 col-xs-5'l><'col-sm-6 col-xs-7'f>r>t<'row'<'col-sm-5 hidden-xs'i><'col-sm-7 col-xs-12 clearfix'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_",
+                "sSearch": "<div class=\"input-group\">_INPUT_<span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span></div>",
+                "sInfo": "<strong>_START_</strong>-<strong>_END_</strong> of <strong>_TOTAL_</strong>",
+                "oPaginate": {
+                    "sPrevious": "",
+                    "sNext": ""
+                }
+            }
+        });
+        $.extend($.fn.dataTableExt.oStdClasses, {
+            "sWrapper": "dataTables_wrapper form-inline",
+            "sFilterInput": "form-control",
+            "sLengthSelect": "form-control"
+        });
+    };
+
     /* Print functionality - Hides all sidebars, prints the page and then restores them (To fix an issue with CSS print styles in webkit browsers)  */
     var handlePrint = function() {
         // Store all #page-container classes
@@ -479,6 +621,9 @@ var App = function() {
         },
         sidebar: function(mode, extra) {
             handleSidebar(mode, extra); // Handle sidebars - access functionality from everywhere
+        },
+        datatables: function() {
+            dtIntegration(); // Datatables Bootstrap integration
         },
         pagePrint: function() {
             handlePrint(); // Print functionality

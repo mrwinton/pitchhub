@@ -14,9 +14,11 @@ $(function() {
 
         if (attr !== "pulse") {
             $(pt).attr("class", "pulse");
+            console.log("set");
 
         } else {
             $(pt).attr("class", "");
+            console.log("unset");
         }
 
     }
@@ -33,8 +35,13 @@ $(function() {
             function(){
 
                 var length = pts.length;
+
                 var number = Math.floor(Math.random() * length);
+
+                console.log("hey: "+number);
+
                 var pt = pts[number];
+
                 pulse(pt);
 
             }, 1233);
@@ -43,8 +50,13 @@ $(function() {
             function(){
 
                 var length = pts.length;
+
                 var number = Math.floor(Math.random() * length);
+
+                console.log("hey: "+number);
+
                 var pt = pts[number];
+
                 pulse(pt);
 
             }, 2200);
@@ -53,8 +65,13 @@ $(function() {
             function(){
 
                 var length = pts.length;
+
                 var number = Math.floor(Math.random() * length);
+
+                console.log("hey: "+number);
+
                 var pt = pts[number];
+
                 pulse(pt);
 
             }, 3090);

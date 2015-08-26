@@ -35,5 +35,3 @@ Rails.application.config.assets.precompile += %w( backend/shared/grid.js )
 
 Rails.application.config.assets.precompile += %w( shared/soon.js )
 
-#fonts
-Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf|woff2)\z/

@@ -9,6 +9,8 @@ $(function() {
 
     // Hero word switcher
 
+    console.log("test");
+
     var switcher = $('#hero-word-switcher');
     var delay = 3141;
     var count = switcher.find('span').length;
