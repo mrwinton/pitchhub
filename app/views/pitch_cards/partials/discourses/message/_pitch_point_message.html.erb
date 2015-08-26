@@ -7,6 +7,8 @@
 <% author = can_see_author ? discourse.author_name : "Anonymous" %>
 <% pending = discourse.pending? %>
 <% rejected = discourse.rejected? %>
+<% is_suggestion = discourse.class.name == "Suggestion" %>
+<% discourse_type = is_suggestion ? "suggestion" : "comment" %>
 
 <!-- Discourse -->
 <%= render partial: 'pitch_cards/partials/discourses/actions/discourse_actions', locals: { point: point, discourse: discourse, ic_scopes: ic_scopes, pending: pending } %>
@@ -25,25 +27,57 @@
 	  <% end %>
 	</div>
   </div>
-  <% if discourse.class.name == "Suggestion" %>
-	  <div class="col-xs-10 col-xs-height">
-		<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
-	  </div>
+  <% if is_suggestion %>
+	  <% can_manage = can? :manage, discourse %>
+	  <% if can_manage %>
+		  <div class="col-xs-9 col-xs-height">
+			<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
+		  </div>
+		  <div class="col-xs-1 col-xs-height col-top">
+			<%= link_to pitch_card_suggestion_path(@pitch_card, discourse), method: :delete, data: { confirm: 'This will destroy the ' + discourse_type + ' for good. Are you sure?' } do %>
+				<i class="fa fa-times delete-pitch"></i>
+			<% end %>
+		  </div>
+	  <% else %>
+		  <div class="col-xs-10 col-xs-height">
+			<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
+		  </div>
+	  <% end %>
   <% else %>
-	  <div class="col-xs-10 col-xs-height col-middle">
-		<div class="inside">
-	  <span class="text-muted pull-right"  style="margin-top: -4.5px">
-		<small>
-		  <abbr class="timeago" title="<%= discourse.created_at.to_time.iso8601 %>"></abbr>
-		</small>
-		<span data-toggle="tooltip" title="From Web"><i class="fa fa-globe"></i></span>
-	  </span>
-		  <strong><%= author + " commented"%></strong>
-		</div>
-	  </div>
+	  <% can_manage = can? :manage, discourse %>
+	  <% if can_manage %>
+		  <div class="col-xs-9 col-xs-height col-middle">
+			<div class="inside">
+			  <span class="text-muted pull-right"  style="margin-top: -4.5px">
+				<small>
+				  <abbr class="timeago" title="<%= discourse.created_at.to_time.iso8601 %>"></abbr>
+				</small>
+				<span data-toggle="tooltip" title="From Web"><i class="fa fa-globe"></i></span>
+			  </span>
+			  <strong><%= author + " commented"%></strong>
+			</div>
+		  </div>
+		  <div class="col-xs-1 col-xs-height col-top">
+			<%= link_to pitch_card_comment_path(@pitch_card, discourse), method: :delete, data: { confirm: 'This will destroy the ' + discourse_type + ' for good. Are you sure?' } do %>
+				<i class="fa fa-times delete-pitch"></i>
+			<% end %>
+		  </div>
+	  <% else %>
+		  <div class="col-xs-10 col-xs-height col-middle">
+			<div class="inside">
+			  <span class="text-muted pull-right"  style="margin-top: -4.5px">
+				<small>
+				  <abbr class="timeago" title="<%= discourse.created_at.to_time.iso8601 %>"></abbr>
+				</small>
+				<span data-toggle="tooltip" title="From Web"><i class="fa fa-globe"></i></span>
+			  </span>
+			  <strong><%= author + " commented"%></strong>
+			</div>
+		  </div>
+	  <% end %>
   <% end %>
 </div>
-<% if discourse.class.name == "Suggestion" %>
+<% if is_suggestion %>
 	<div class="row-same-height">
 	  <div class="col-xs-12 col-xs-height col-middle">
 		<div class="inside">

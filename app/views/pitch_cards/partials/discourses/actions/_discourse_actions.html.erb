@@ -1,4 +1,3 @@
-
 <% can_manage = can? :manage, @pitch_card %>
 <% show_accept = (pending and can_manage) %>
 <% show_scope = (discourse.initiator_content_scope.blank? and can_manage) %>
