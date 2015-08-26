@@ -17,13 +17,11 @@
   end
 
 %>
-
-	<% if discourse.class.name == "Suggestion" %>
-		<%= render partial: 'pitch_cards/partials/discourses/suggestion/pitch_point_suggestion_form', locals: { point: point, suggestion: discourse, ic_scopes: ic_scopes } %>
-	<% else %>
-		<%= render partial: 'pitch_cards/partials/discourses/comment/pitch_point_comment_form', locals: { point: point, comment: discourse, ic_scopes: ic_scopes  } %>
-	<% end %>
-
+	<div class="col-md-10 col-md-offset-1">
+	  <div id="discourse-content" class="block block-bordered pitch-card-discourse row">
+			<%= render partial: 'pitch_cards/partials/discourses/message/pitch_point_message', locals: { point: point, discourse: discourse, ic_scopes: ic_scopes } %>
+	  </div>
+	</div>
 
 <% end %>
 
