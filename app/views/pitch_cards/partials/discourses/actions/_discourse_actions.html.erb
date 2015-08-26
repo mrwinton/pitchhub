@@ -3,7 +3,7 @@
 <% show_accept = (pending and can_manage) %>
 <% show_scope = (discourse.initiator_content_scope.blank? and can_manage) %>
 <% inside_short = (show_scope and show_accept) ? "inside-short" : "" %>
-<% is_suggestion = discourse.class.name == "Suggestion" ? "suggestion" : "comment" %>
+<% is_suggestion = discourse.class.name == "Suggestion" %>
 <% discourse_type = is_suggestion ? "suggestion" : "comment" %>
 
 <% if  show_accept || show_scope %>
