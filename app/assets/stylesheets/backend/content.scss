@@ -562,3 +562,12 @@ a.widget.widget-hover-effect4:active {
   margin-left: 0;
   margin-right: 0;
 }
+
+.delete-pitch{
+  z-index: 10000;
+  color: #c77e80;
+}
+
+.delete-pitch:hover{
+  color: #843534;
+}
