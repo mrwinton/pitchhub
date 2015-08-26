@@ -10,6 +10,8 @@ set :stage, :production
 # role :web, %w{pitchhub@gmail.com}
 # role :db,  %w{pitchhub@gmail.com}
 
+set :log_level, :debug
+
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server

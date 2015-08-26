@@ -8,7 +8,8 @@ set :repo_url, 'git@github.com:mrwinton/pitchhub.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/var/www/pitchhub'
+# set :deploy_to, '/var/www/pitchhub'
+set :deploy_to, '/home/michael/pitchhub'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -37,21 +38,20 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 
 set :scm, "git"
 set :user, "michael"  # The server's user for deploys
+set :log_level, :debug
+
+set :linked_files, %w{config/local_env.yml}
 
 namespace :deploy do
 
   desc 'Create a shared directory to keep the files that we do not keep in git'
   task :setup_config do
     # create a shared directory to keep files that are not in git and that are used for the application
-    run "mkdir -p #{shared_path}/config"
-    put File.read("config/local_env.yml.template"), "#{shared_path}/config/local_env.yml"
+    on roles(:app) do
+      execute "mkdir -p #{shared_path}/config"
+    end
+    puts File.read("config/local_env.yml.example"), "#{shared_path}/config/local_env.yml"
     puts "Now edit the config files in #{shared_path}."
-  end
-
-  desc 'Symlink the shared local_env config file in the current release'
-  task :symlink_config do
-    # symlink the shared local_env config file in the current release
-    run "ln -nfs #{shared_path}/config/local_env.yml #{release_path}/config/local_env.yml"
   end
 
   desc 'Restart application'
