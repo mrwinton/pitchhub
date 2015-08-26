@@ -19,11 +19,22 @@
 		  <div class="text-center">
 			<%= image_tag_with_at2x value_proposition_image, :class =>  "pitch-point-image-restrained" %>
 		  </div>
-
 		</div>
-		<div class="col-xs-10 col-xs-height">
-		  <%= text_area_tag "textarea-input", pitch_card.value_proposition, class: "form-horizontal form-control-borderless form-pitch-point", disabled: :true %>
-		</div>
+		<% can_manage = can? :manage, pitch_card %>
+		<% if can_manage %>
+			<div class="col-xs-9 col-xs-height">
+			  <%= text_area_tag "textarea-input", pitch_card.value_proposition, class: "form-horizontal form-control-borderless form-pitch-point", disabled: :true %>
+			</div>
+			<div class="col-xs-1 col-xs-height col-top">
+			  <%= link_to pitch_card, method: :delete, data: { confirm: 'This will destroy the pitch card for good. Are you sure?' } do %>
+				  <i class="fa fa-times delete-pitch"></i>
+			  <% end %>
+			</div>
+		<% else %>
+			<div class="col-xs-10 col-xs-height">
+			  <%= text_area_tag "textarea-input", pitch_card.value_proposition, class: "form-horizontal form-control-borderless form-pitch-point", disabled: :true %>
+			</div>
+		<% end %>
 	  </div>
 	</div>
   </div>
