@@ -135,6 +135,9 @@ textarea[disabled].form-pitch-point{
   border: 5px solid $color_light_secondary;
   border-radius: 5px;
   min-width: 325px;
+  max-width: 575px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: $color_light_ultra;
 }
 

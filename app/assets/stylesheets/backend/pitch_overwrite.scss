@@ -119,6 +119,15 @@ textarea.form-control{
   padding-right: 0px !important;
 }
 
+.no-left-padding{
+  padding-left: 0px !important;
+}
+
+.no-side-padding{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
 .popover{
   max-width: 260px;
 }

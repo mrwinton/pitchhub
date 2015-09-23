@@ -174,7 +174,10 @@
 .pitch-card-discourse{
   border: 5px solid $color_light_secondary;
   border-radius: 5px;
-  //min-width: 325px;
+  min-width: 325px;
+  max-width: 575px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pitch-card-status-label .pulsating {
@@ -270,4 +273,8 @@
 
 .inside-trim-top{
   margin-top: 10px;
+}
+
+.nudge-right{
+  padding-left: 2em;
 }

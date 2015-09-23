@@ -12,7 +12,7 @@
 		  <% accept_path = is_suggestion ? accept_pitch_card_suggestion_path(@pitch_card, discourse) : accept_pitch_card_comment_path(@pitch_card, discourse) %>
 		  <%= form_for(discourse, :url=> accept_path, method: "post") do |f| %>
 			  <div class="row-same-height">
-				<div class="col-xs-12 col-xs-height col-middle">
+				<div class="col-xs-12 col-xs-height no-side-padding col-middle">
 				  <div class="inside inside-trim-top">
 				<span class="text-muted pull-right"  style="margin-top: -4.5px">
 					<div class="btn-group btn-group-sm">
@@ -49,7 +49,7 @@
 			  </div>
 			  <div class="row-same-height">
 
-				<div class="col-xs-12 col-xs-height col-middle">
+				<div class="col-xs-12 col-xs-height no-side-padding col-middle">
 				  <div class="inside inside-trim-top <%= inside_short%>">
 				<span class="pull-right"  style="margin-top: -4.5px">
 				  	<span class="selected-scope"><%= default_option[:name] %></span>
