@@ -7,10 +7,14 @@ class CommentsController < ApplicationController
   # GET /pitch_cards/1/comments
   # GET /pitch_cards/1/comments.json
   def index
-    # Retrieve the comments (suggestions included) that the current user is permitted to see
-    @discourses = @pitch_card.comments.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
+    # Retrieve the root comments (suggestions included) that the current user is permitted to see
+    @discourses = @pitch_card.comments.root.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
 
-    # TODO for each discourse get it's children comments (if any)
+    # TODO for these root comments get their children
+    # root_ids = @discourses.collect { |discourse| discourse.id }
+
+    @comments = @pitch_card.comments.descendant.initiator_content_scoped_for(current_user)#.find({'_id' => { "$in" => root_ids}})
+    @comment = Comment.new
 
     respond_to do |format|
       format.js
@@ -23,6 +27,12 @@ class CommentsController < ApplicationController
     @comment.comment = params[:content]
     @pitch_point_id = params[:pitch_point_id]
     @pitch_point_name = params[:pitch_point_name]
+
+    if params[:parent].present?
+      @comment.parent = Comment.find(params[:parent])
+      @comment.message_type = :descendant
+    end
+
     respond_to do |format|
       format.js
     end
@@ -41,6 +51,8 @@ class CommentsController < ApplicationController
     @comment.author_name = current_user.first_name + " " + current_user.last_name
     # Set the PitchCard initiator's id
     @comment.initiator_id = @pitch_card.initiator.id
+
+    # TODO update with possibility of descendant
     @comment.message_type = :root
 
     respond_to do |format|
@@ -168,7 +180,7 @@ class CommentsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def comment_params
     # Screen the baddies
-    params.require(:comment).permit(:pitch_point_id, :pitch_point_name, :comment, :initiator_content_scope, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name)
+    params.require(:comment).permit(:pitch_point_id, :pitch_point_name, :comment, :initiator_content_scope, :i_scope, :c_scope, :ic_scope, :type, :first_name, :last_name, :parent, :message_type)
   end
 
 end

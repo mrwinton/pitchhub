@@ -6,7 +6,8 @@
  *= require_self
  */
 
-$(function() {
+
+function registerModalListeners(){
     $('form[data-toggle=modal]').on('click', function() {
         return $('.dropdown').removeClass('open');
     });
@@ -74,4 +75,8 @@ $(function() {
     $(document).on('click', '#ajax-modal', function(e) {
         return e.stopPropagation();
     });
+}
+
+$(function() {
+    registerModalListeners();
 });

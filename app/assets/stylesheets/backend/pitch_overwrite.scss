@@ -135,3 +135,7 @@ textarea.form-control{
 .pitch-point-message {
   margin-top: -15px !important;
 }
+
+.comment-text-area{
+  resize:vertical; max-height:300px; min-height:15px;
+}

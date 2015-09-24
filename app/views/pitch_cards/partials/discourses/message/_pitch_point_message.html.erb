@@ -14,7 +14,7 @@
 <%= render partial: 'pitch_cards/partials/discourses/actions/discourse_actions', locals: { point: point, discourse: discourse, ic_scopes: ic_scopes, pending: pending } %>
 
 <div class="row-same-height">
-  <div class="col-xs-2 col-xs-height col-middle">
+  <div class="col-xs-2 col-xs-height no-left-padding col-middle">
 	<div class="text-center">
 	  <% if pending %>
 		  <%= image_tag_with_at2x image_pending, :class =>  "pitch-point-image-restrained" %>
@@ -30,10 +30,10 @@
   <% if is_suggestion %>
 	  <% can_manage = can? :manage, discourse %>
 	  <% if can_manage %>
-		  <div class="col-xs-9 col-xs-height">
+		  <div class="col-xs-9 no-side-padding col-xs-height">
 			<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
 		  </div>
-		  <div class="col-xs-1 col-xs-height col-top">
+		  <div class="col-xs-1 no-right-padding col-xs-height col-top">
 			<%= link_to pitch_card_suggestion_path(@pitch_card, discourse), method: :delete, data: { confirm: 'This will destroy the ' + discourse_type + ' for good. Are you sure?' } do %>
 				<i class="fa fa-times delete-pitch"></i>
 			<% end %>
@@ -63,7 +63,7 @@
 			<% end %>
 		  </div>
 	  <% else %>
-		  <div class="col-xs-10 col-xs-height col-middle">
+		  <div class="col-xs-10 col-xs-height no-side-padding col-middle">
 			<div class="inside">
 			  <span class="text-muted pull-right"  style="margin-top: -4.5px">
 				<small>
@@ -79,7 +79,7 @@
 </div>
 <% if is_suggestion %>
 	<div class="row-same-height">
-	  <div class="col-xs-12 col-xs-height col-middle">
+	  <div class="col-xs-12 col-xs-height no-side-padding col-middle">
 		<div class="inside">
 		  <p>
 		<span class="text-muted pull-right" style="margin-top: -4.5px;">
@@ -96,6 +96,21 @@
   <div class="media-body">
 	<hr/>
 	<p><%= simple_format(discourse.comment) %></p>
+	<hr/>
+	<ul class="media-list push nudge-right">
+	<%
+	   discourse_comments = @comments.select { |c|  c.parent.id = discourse.id  }
+	   if discourse_comments.any?
+	%>
+		<!-- Comments -->
+			<% discourse_comments.each do |c|%>
+				<%= render partial: 'pitch_cards/partials/discourses/comments/show', locals: {  comment: c } %>
+			<% end %>
+		<!-- END Comments -->
+	<% end %>
+	<!-- NEW Descendant Comment-->
+	<%= render partial: 'pitch_cards/partials/discourses/comments/new', locals: {  point: point, discourse: discourse } %>
+	</ul>
   </div>
 </div>
 <!-- END Discourse -->

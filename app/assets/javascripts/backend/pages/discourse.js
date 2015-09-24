@@ -52,6 +52,7 @@ var Discourse = function() {
                 $(content).removeClass("hidden");
                 jQuery("abbr.timeago").timeago();
                 scopingInit();
+                registerModalListeners();
                 $(content).addClass("animation-fadeInQuick");
             }
         }

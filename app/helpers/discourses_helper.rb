@@ -1,7 +1,7 @@
 module DiscoursesHelper
 
   def self.comment_max_length
-    500
+    5000
   end
 
   def comment_max_length
