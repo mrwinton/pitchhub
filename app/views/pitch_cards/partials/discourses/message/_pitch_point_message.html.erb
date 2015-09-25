@@ -45,7 +45,7 @@
 		</div>
 	  </div>
 	  <div class="col-xs-11 no-right-padding col-xs-height">
-		<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point message", placeholder: point[:placeholder], disabled: :true %>
+		<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless message-form-pitch-point", placeholder: point[:placeholder], disabled: :true %>
 	  </div>
 	</div>
 	<div class="row">
@@ -57,25 +57,7 @@
 	  </div>
 	</div>
 
-
-	  <!--<div class="media">-->
-	  <!--<div class="media-body">-->
-		<!--<div class="pull-left">-->
-		  <!--<% if pending %>-->
-			  <!--<%= image_tag_with_at2x image_pending, :class =>  "pitch-point-image-restrained" %>-->
-		  <!--<% else %>-->
-			  <!--<% if rejected %>-->
-				  <!--<%= image_tag_with_at2x image_rejected, :class =>  "pitch-point-image-restrained" %>-->
-			  <!--<% else %>-->
-				  <!--<%= image_tag_with_at2x image_accepted, :class =>  "pitch-point-image-restrained" %>-->
-			  <!--<% end %>-->
-		  <!--<% end %>-->
-		<!--</div>-->
-		<!--<%= text_area_tag css_point+"-textarea-input", discourse.content, class: "form-horizontal form-control-borderless form-pitch-point", placeholder: point[:placeholder], disabled: :true %>-->
-	  <!--</div>-->
-	<!--</div>-->
-
-	<div class="media media-comment pitch-point-message">
+	<div class="media media-comment">
 	  <div class="media-body">
 		<hr/>
 		<ul class="media-list push">
@@ -124,7 +106,7 @@
 	  </div>
 	</div>
 
-	<div class="media media-comment pitch-point-message">
+	<div class="media media-comment">
 	  <div class="media-body">
 		<hr/>
 		<ul class="media-list push">

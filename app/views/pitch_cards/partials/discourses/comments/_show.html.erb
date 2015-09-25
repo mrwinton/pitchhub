@@ -1,22 +1,18 @@
 <% can_see_author = can? :see_author, comment %>
 <% author = can_see_author ? comment.author_name : "Anonymous" %>
-<% image_pending = 'points/pending/comment.png'%>
-<% image_rejected = 'points/rejected/comment.png'%>
-<% image_accepted = 'points/accepted/comment.png'%>
-<% pending = comment.pending? %>
-<% rejected = comment.rejected? %>
+<% image = 'points/selected/comment.png'%>
+<% can_manage = can? :manage, @pitch_card %>
+<% show_scope = (comment.initiator_content_scope.blank? and can_manage) %>
+
+<% if show_scope %>
+	<div class="push-bit">
+	  <%= render partial: 'pitch_cards/partials/discourses/actions/discourse_action_scope', locals: { inside_short: "", discourse_type: "comment", discourse: comment } %>
+	</div>
+<% end %>
 
 <div class="media">
   <div class="pull-left">
-	<% if pending %>
-		<%= image_tag_with_at2x image_pending, :class =>  "pitch-point-image-restrained" %>
-	<% else %>
-		<% if rejected %>
-			<%= image_tag_with_at2x image_rejected, :class =>  "pitch-point-image-restrained" %>
-		<% else %>
-			<%= image_tag_with_at2x image_accepted, :class =>  "pitch-point-image-restrained" %>
-		<% end %>
-	<% end %>
+	<%= image_tag_with_at2x image, :class =>  "pitch-point-image-restrained" %>
   </div>
   <% can_manage = can? :manage, comment %>
   <% if can_manage %>
@@ -29,53 +25,6 @@
   <div class="media-body">
 	<strong><%= author %></strong>
 	<span class="text-muted"><small><em class="timeago" title="<%= comment.created_at.to_time.iso8601 %>"></em></small></span>
-	<%= simple_format(comment.comment) %>
+	<%= simple_format(comment.comment, class: "trim-bottom") %>
   </div>
 </div>
-
-<!--<div class="row-same-height">-->
-  <!--<div class="col-xs-2 col-xs-height no-left-padding col-middle">-->
-	<!--<div class="text-center">-->
-	  <!--<% if pending %>-->
-		  <!--<%= image_tag_with_at2x image_pending, :class =>  "pitch-point-image-restrained" %>-->
-	  <!--<% else %>-->
-		  <!--<% if rejected %>-->
-			  <!--<%= image_tag_with_at2x image_rejected, :class =>  "pitch-point-image-restrained" %>-->
-		  <!--<% else %>-->
-			  <!--<%= image_tag_with_at2x image_accepted, :class =>  "pitch-point-image-restrained" %>-->
-		  <!--<% end %>-->
-	  <!--<% end %>-->
-	<!--</div>-->
-  <!--</div>-->
-  <!--<% can_manage = can? :manage, comment %>-->
-  <!--<% if can_manage %>-->
-	  <!--<div class="col-xs-9 col-xs-height col-middle">-->
-		<!--<div class="inside">-->
-		  <!--<div class="media-body">-->
-			<!--<div><strong><%= author %></strong></div>-->
-			<!--<span class="text-muted"><small><em><%= comment.created_at.to_time.iso8601 %></em></small></span>-->
-			<!--<p><%= comment.comment %></p>-->
-		  <!--</div>-->
-		<!--</div>-->
-	  <!--</div>-->
-	  <!--<div class="col-xs-1 col-xs-height col-top">-->
-		<!--<%= link_to pitch_card_comment_path(@pitch_card, comment), method: :delete, data: { confirm: 'This will destroy the comment for good. Are you sure?' } do %>-->
-			<!--<i class="fa fa-times delete-pitch"></i>-->
-		<!--<% end %>-->
-	  <!--</div>-->
-  <!--<% else %>-->
-	  <!--<div class="col-xs-10 col-xs-height no-side-padding col-middle">-->
-		<!--<div class="inside">-->
-		  <!--<div class="col-xs-9 col-xs-height col-middle">-->
-			<!--<div class="inside">-->
-			  <!--<div class="media-body">-->
-				<!--<div><strong><%= author %></strong></div>-->
-				<!--<span class="text-muted"><small><em><%= comment.created_at.to_time.iso8601 %></em></small></span>-->
-				<!--<p><%= comment.comment %></p>-->
-			  <!--</div>-->
-			<!--</div>-->
-		  <!--</div>-->
-		<!--</div>-->
-	  <!--</div>-->
-  <!--<% end %>-->
-<!--</div>-->

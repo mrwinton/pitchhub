@@ -145,5 +145,8 @@ textarea.form-control{
 
 .comment-text-area{
   resize:vertical; max-height:300px; min-height:15px;
-  height: 35px !important;
+}
+
+#comment-text-area{
+  height: 35px;
 }

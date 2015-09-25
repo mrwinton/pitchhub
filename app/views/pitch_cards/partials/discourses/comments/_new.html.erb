@@ -1,14 +1,14 @@
 <div class="media">
   <div class="media-body">
 	<%= form_for(Comment.new, :url=>new_pitch_card_comment_path(@pitch_card), id: "modal-form", method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
-		<%= text_area_tag "content", "", class: "form-control comment-text-area", placeholder: "Your comment...", maxlength: DiscoursesHelper.comment_max_length %>
+		<%= text_area_tag "content", "", id:"comment-text-area", class: "form-control comment-text-area", placeholder: "Your comment...", maxlength: DiscoursesHelper.comment_max_length %>
 		<div style="display: none">
 		  <%= text_field_tag "original-content", "" %>
 		  <%= text_field_tag "pitch_point_id", discourse.pitch_point_id %>
 		  <%= text_field_tag "pitch_point_name", discourse.pitch_point_name %>
 		  <%= text_field_tag "parent", discourse._id %>
 		</div>
-		<%= f.button(value: "nested", type: 'submit', class: "btn btn-xs btn-primary modal-submit") do %>
+		<%= f.button(value: "nested", type: 'submit', class: "btn btn-xs btn-primary modal-submit pull-right") do %>
 			<i class="fa fa-pencil"></i> Post Comment
 		<% end %>
 	<% end %>

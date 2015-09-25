@@ -52,6 +52,7 @@ var Discourse = function() {
                 $(content).removeClass("hidden");
                 jQuery("em.timeago").timeago();
                 jQuery("abbr.timeago").timeago();
+                $('.dropdown-toggle').dropdown();
                 scopingInit();
                 registerModalListeners();
                 $(content).addClass("animation-fadeInQuick");

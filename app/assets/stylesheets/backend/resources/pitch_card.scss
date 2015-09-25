@@ -85,6 +85,11 @@ textarea.form-pitch-point::-moz-placeholder { /* Firefox 19+ */ @include form-pi
 textarea.form-pitch-point:-moz-placeholder { /* older Firefox*/ @include form-pitch-point-placeholder-overwrite }
 textarea.form-pitch-point::-webkit-input-placeholder { @include form-pitch-point-placeholder-overwrite  }
 
+textarea.message-form-pitch-point:-ms-input-placeholder { @include form-pitch-point-placeholder-overwrite }
+textarea.message-form-pitch-point::-moz-placeholder { /* Firefox 19+ */ @include form-pitch-point-placeholder-overwrite }
+textarea.message-form-pitch-point:-moz-placeholder { /* older Firefox*/ @include form-pitch-point-placeholder-overwrite }
+textarea.message-form-pitch-point::-webkit-input-placeholder { @include form-pitch-point-placeholder-overwrite  }
+
 .pitch-point-image{
   width: 100%;
   max-width: 50px;
@@ -103,7 +108,7 @@ textarea[disabled].form-pitch-point{
   opacity: 0.6;
 }
 
-textarea[disabled].form-pitch-point.message{
+textarea[disabled].message-form-pitch-point{
   opacity: 1;
   background-color: #fff;
   font-size: 14px;
@@ -113,6 +118,15 @@ textarea[disabled].form-pitch-point.message{
   cursor: pointer;
 }
 
+.message-form-pitch-point{
+  padding: 5px;
+  resize: none;
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: hidden;
+}
+
 .form-pitch-point{
   padding: 5px;
   resize: none;
@@ -120,7 +134,7 @@ textarea[disabled].form-pitch-point.message{
   height: auto;
   display: block;
   overflow: hidden;
-  //background-color: $color_light_ultra;
+  background-color: $color_light_ultra;
   font-size: large;
 }
 
