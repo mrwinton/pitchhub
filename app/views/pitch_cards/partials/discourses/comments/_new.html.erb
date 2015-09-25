@@ -1,7 +1,7 @@
 <div class="media">
   <div class="media-body">
 	<%= form_for(Comment.new, :url=>new_pitch_card_comment_path(@pitch_card), id: "modal-form", method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
-		<%= text_area_tag "content", "", class: "form-control comment-text-area", rows: "1", placeholder: "Your comment...", maxlength: DiscoursesHelper.comment_max_length %>
+		<%= text_area_tag "content", "", class: "form-control comment-text-area", placeholder: "Your comment...", maxlength: DiscoursesHelper.comment_max_length %>
 		<div style="display: none">
 		  <%= text_field_tag "original-content", "" %>
 		  <%= text_field_tag "pitch_point_id", discourse.pitch_point_id %>

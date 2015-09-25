@@ -50,6 +50,7 @@ var Discourse = function() {
             }
             if ($.trim($(content).html())!='') {
                 $(content).removeClass("hidden");
+                jQuery("em.timeago").timeago();
                 jQuery("abbr.timeago").timeago();
                 scopingInit();
                 registerModalListeners();

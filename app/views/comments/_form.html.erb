@@ -5,6 +5,10 @@
 
 	<%= f.hidden_field :pitch_point_id, :value => @pitch_point_id %>
 	<%= f.hidden_field :pitch_point_name, :value => @pitch_point_name %>
+	<%= f.hidden_field :message_type, :value => @comment.message_type %>
+	<% if @comment.parent.present? %>
+		<%= hidden_field_tag "parent_id", @comment.parent.id %>
+	<% end %>
 
 	<div class="form-inputs">
 	  <label><%= name %></label>

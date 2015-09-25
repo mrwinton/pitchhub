@@ -110,6 +110,9 @@ textarea.form-control{
 .push-top{
   margin-top: 40px;
 }
+.nudge-top{
+  margin-top: 5px;
+}
 
 .media-comment {
   margin-top: 0px !important;
@@ -121,6 +124,10 @@ textarea.form-control{
 
 .no-left-padding{
   padding-left: 0px !important;
+}
+
+.no-bottom-margin{
+  margin-bottom: 0px !important;
 }
 
 .no-side-padding{
@@ -138,4 +145,5 @@ textarea.form-control{
 
 .comment-text-area{
   resize:vertical; max-height:300px; min-height:15px;
+  height: 35px !important;
 }

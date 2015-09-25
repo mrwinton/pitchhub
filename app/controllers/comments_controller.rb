@@ -10,6 +10,8 @@ class CommentsController < ApplicationController
     # Retrieve the root comments (suggestions included) that the current user is permitted to see
     @discourses = @pitch_card.comments.root.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
 
+    arr = @discourses.to_a
+
     # TODO for these root comments get their children
     # root_ids = @discourses.collect { |discourse| discourse.id }
 
@@ -52,8 +54,9 @@ class CommentsController < ApplicationController
     # Set the PitchCard initiator's id
     @comment.initiator_id = @pitch_card.initiator.id
 
-    # TODO update with possibility of descendant
-    @comment.message_type = :root
+    if params[:parent_id].present?
+      @comment.parent = Comment.find(params[:parent_id])
+    end
 
     respond_to do |format|
       if @comment.save
