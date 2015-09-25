@@ -8,14 +8,17 @@ class CommentsController < ApplicationController
   # GET /pitch_cards/1/comments.json
   def index
     # Retrieve the root comments (suggestions included) that the current user is permitted to see
-    @discourses = @pitch_card.comments.root.initiator_content_scoped_for(current_user).desc(:_id).page params[:page]
+    @discourses = @pitch_card.comments.root.initiator_content_scoped_for(current_user).order_by(:created_at => 'desc').page params[:page]
 
     arr = @discourses.to_a
 
     # TODO for these root comments get their children
     # root_ids = @discourses.collect { |discourse| discourse.id }
 
-    @comments = @pitch_card.comments.descendant.initiator_content_scoped_for(current_user)#.find({'_id' => { "$in" => root_ids}})
+    @comments = @pitch_card.comments.descendant.initiator_content_scoped_for(current_user).order_by(:created_at => 'asc')
+
+
+        # desc(:created_at)#.find({'_id' => { "$in" => root_ids}})
     @comment = Comment.new
 
     respond_to do |format|
