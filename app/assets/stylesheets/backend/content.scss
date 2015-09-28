@@ -564,7 +564,8 @@ a.widget.widget-hover-effect4:active {
 }
 
 .delete-pitch-raised{
-  z-index: 10000;
+  position:relative;
+  z-index: 2;
 }
 
 .delete-pitch{
