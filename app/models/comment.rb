@@ -17,7 +17,7 @@ class Comment
   enum :message_type, [:root, :descendant]
 
   # == Cyclic relationship
-  has_many :child, :class_name => 'Comment', :inverse_of => :parent
+  has_many :child, :class_name => 'Comment', :inverse_of => :parent, dependent: :delete
   belongs_to :parent, :class_name => 'Comment', :inverse_of => :child
 
   # == Denormalise
