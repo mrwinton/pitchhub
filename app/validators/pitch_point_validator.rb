@@ -31,7 +31,7 @@ class PitchPointValidator < ActiveModel::Validator
     # check that the PitchPoint value is within the character limit (if it exists)
     if pitch_point.value?
       if pitch_point.value.length > PitchPointsHelper.pitch_point_max_length
-        pitch_point.errors[:base] << 'Must be ' + PitchPointsHelper.pitch_point_max_length + ' characters or less!'
+        pitch_point.errors[:base] << 'Must be ' + PitchPointsHelper.pitch_point_max_length.to_s + ' characters or less!'
       end
     end
 
