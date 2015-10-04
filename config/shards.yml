@@ -2,14 +2,38 @@ octopus:
   environments:
     - development
     - test
+    - local
   development:
     pitchhub_sql_shard_1:
-      adapter: sqlite3
-      database: db/sqlite/development/pitchhub_sql_shard_1.sqlite3
+      adapter: postgresql
+      host: aws-us-east-1-portal.8.dblayer.com
+      port: 10156
+      database: compose
+      username: admin
+      password: XRFURCFFJIPKVSHM
     pitchhub_sql_shard_2:
-      adapter: sqlite3
-      database: db/sqlite/development/pitchhub_sql_shard_2.sqlite3
+      adapter: postgresql
+      host: aws-us-east-1-portal.8.dblayer.com
+      port: 10126
+      database: compose
+      username: admin
+      password: RZJCYBMSQLCPLXYI
   test:
+    pitchhub_sql_shard_1:
+      adapter: postgresql
+      host: aws-us-east-1-portal.8.dblayer.com
+      port: 10156
+      database: compose
+      username: admin
+      password: XRFURCFFJIPKVSHM
+    pitchhub_sql_shard_2:
+      adapter: postgresql
+      host: aws-us-east-1-portal.8.dblayer.com
+      port: 10126
+      database: compose
+      username: admin
+      password: RZJCYBMSQLCPLXYI
+  local:
     pitchhub_sql_shard_1:
       adapter: sqlite3
       database: db/sqlite/test/pitchhub_sql_shard_1.sqlite3

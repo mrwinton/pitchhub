@@ -5,6 +5,7 @@ gem 'rails', '4.2.1'
 
 # For redundancy
 gem 'sqlite3'
+gem 'activerecord-postgresql-adapter'
 gem 'ar-octopus'
 
 # Authentication

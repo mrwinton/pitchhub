@@ -7,7 +7,8 @@ module SecretSharingController
 
     db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.first
 
-    PitchCard.with(database: db[:name]).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
+    # PitchCard.with(database: db[:name]).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
+    PitchCard.with(session: db[:name]).where("initiator_id" => { "$eq" => user.id }).desc(:_id).page( page )
 
   end
 
@@ -23,7 +24,8 @@ module SecretSharingController
       collab_cards_ids << card.id
     }
 
-    PitchCard.with(database: db[:name]).where("_id" => { "$in" => collab_cards_ids }).desc(:_id).page( page )
+    # PitchCard.with(database: db[:name]).where("_id" => { "$in" => collab_cards_ids }).desc(:_id).page( page )
+    PitchCard.with(session: db[:name]).where("_id" => { "$in" => collab_cards_ids }).desc(:_id).page( page )
 
   end
 
@@ -32,8 +34,8 @@ module SecretSharingController
     discourses_shares_array = []
 
     SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
-      # discourses_shares_array << pitch_card.comments.with(database: db).initiator_content_scoped_for(user).desc(:_id).page( page )
-      discourses_shares_array << Comment.with(database: db[:name]).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
+      # discourses_shares_array << Comment.with(database: db[:name]).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
+      discourses_shares_array << Comment.with(session: db[:name]).where(pitch_card_id: pitch_card.id).initiator_content_scoped_for(user).desc(:_id).page( page )
     }
 
     if discourses_shares_array.any?
@@ -121,7 +123,8 @@ module SecretSharingController
 
     db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.first
 
-    PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
+    # PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
+    PitchCard.with(session: db[:name]).content_scoped_for(user).desc(:_id).page( page )
 
   end
 
@@ -130,7 +133,8 @@ module SecretSharingController
     pitch_cards_shares_array = []
 
     SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
-      pitch_cards_shares_array << PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
+      # pitch_cards_shares_array << PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
+      pitch_cards_shares_array << PitchCard.with(session: db[:name]).content_scoped_for(user).desc(:_id).page( page )
     }
     # TODO
     # SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|

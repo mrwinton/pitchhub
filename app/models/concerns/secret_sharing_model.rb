@@ -26,10 +26,12 @@ module SecretSharingModel
 
         if db[:type] == "mongo"
           if is_new
-            success = share.with(database: db[:name]).save
+            # success = share.with(database: db[:name]).save
+            success = share.with(session: db[:name]).save
           else
             share.new_record = false
-            success = share.with(database: db[:name]).update
+            # success = share.with(database: db[:name]).update
+            success = share.with(session: db[:name]).update
           end
         else
           # else it's sql
@@ -105,7 +107,8 @@ module SecretSharingModel
       id = self.id
 
       SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
-        model = self.class.with(database: db[:name]).find(id)
+        # model = self.class.with(database: db[:name]).find(id)
+        model = self.class.with(session: db[:name]).find(id)
         model.destroy
       }
       SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|
@@ -125,7 +128,8 @@ module SecretSharingModel
       model_shares = []
 
       SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
-        model_shares << self.with(database: db[:name]).find(model_id)
+        # model_shares << self.with(database: db[:name]).find(model_id)
+        model_shares << self.with(session: db[:name]).find(model_id)
       }
 
       SecretSharingHelper.databases.reject{ |db| db[:type] == "mongo" }.each { |db|

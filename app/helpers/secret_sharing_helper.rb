@@ -2,8 +2,8 @@ module SecretSharingHelper
 
   def self.databases
     [
-        {:name => "pitchhub_mongo_shard_1", :type => "mongo" },
-        {:name => "pitchhub_mongo_shard_2", :type => "mongo" },
+        {:name => "secret_keeper_1", :type => "mongo" },
+        {:name => "secret_keeper_2", :type => "mongo" },
         {:name => "pitchhub_sql_shard_1", :type => "sql" },
         {:name => "pitchhub_sql_shard_2", :type => "sql" }
     ]
