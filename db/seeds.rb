@@ -2,9 +2,11 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 require 'seeds_helper'
-puts "HEY"
 
-number_of_users = 10
+
+offset = 20292
+number_of_users = 5000
+
 
 def power_law(min,max,n)
   max += 1
@@ -13,38 +15,41 @@ def power_law(min,max,n)
 end
 
 def generate_power_law_number
-  power_law(0,80,1)
+  power_law(0,10,1)
 end
 
-if Rails.env.development?
+if Rails.env.test?
   puts "----------------------------------------------------------------"
-  puts "Environment is DEVELOPMENT"
+  puts "Environment is TEST"
   puts "----------------------------------------------------------------"
   # puts "Cleaning the database"
   # DatabaseCleaner.strategy = :truncation
   # DatabaseCleaner.clean
   # puts "Database cleaning successful"
-  puts "----------------------------------------------------------------"
-  puts "Will seed " + number_of_users.to_s + " users..."
-  puts "----------------------------------------------------------------"
-  puts "Seeding users"
-
-  number_of_users.times do |n|
-    SeedsHelper.new_user(Faker::Internet.email, Faker::Name.first_name, Faker::Name.last_name)
-    n = n+1
-    puts "Seeded user[" + n.to_s + "]"
-  end
-
-  puts number_of_users.to_s + " users seeded"
+  # puts "----------------------------------------------------------------"
+  # puts "Will seed " + number_of_users.to_s + " users..."
+  # puts "----------------------------------------------------------------"
+  # puts "Seeding users"
+  #
+  # number_of_users.times do |n|
+  #   SeedsHelper.new_user(n.to_s + Faker::Internet.email, Faker::Name.first_name, Faker::Name.last_name)
+  #   n = n+1
+  #   puts "Seeded user[" + n.to_s + "]"
+  # end
+  #
+  # puts number_of_users.to_s + " users seeded"
   puts "----------------------------------------------------------------"
   puts "Seeding Pitch Cards for each user"
   puts "----------------------------------------------------------------"
   index = 0
 
-  User.each do |user|
+  start_time = Time.now
+  end_time = start_time + 20.minutes #10.hours
+
+  User.no_timeout.skip(offset).each do |user|
     puts "User[" + index.to_s + "] seeding"
     number_of_pitch_cards = generate_power_law_number
-    puts "-- User[" + user._id + "] contributing " + number_of_pitch_cards.to_s + " Pitch Cards"
+    puts "-- User[" + index.to_s + "] contributing " + number_of_pitch_cards.to_s + " Pitch Cards, id:[" + user._id + "]"
 
     number_of_pitch_cards.times do |n|
 
@@ -60,6 +65,13 @@ if Rails.env.development?
     index = index + 1
     puts "User[" +index.to_s+ "] seeded"
     puts " "
+
+    if index == number_of_users or Time.now > end_time
+      puts "Seeded " + index.to_s  + " users, exiting..."
+      puts "New offset:  " + (index + offset).to_s
+      break
+    end
+
   end
 
 else
