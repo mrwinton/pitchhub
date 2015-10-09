@@ -9,6 +9,15 @@ module SecretSharingHelper
     ]
   end
 
+  # def self.databases
+  #   [
+  #       {:name => "secret_keeper_1", :type => "mongo" },
+  #       {:name => "secret_keeper_2", :type => "mongo" },
+  #       {:name => "secret_keeper_3", :type => "mongo" },
+  #       {:name => "secret_keeper_4", :type => "mongo" },
+  #   ]
+  # end
+
   def databases
     SecretSharingHelper.databases
   end
