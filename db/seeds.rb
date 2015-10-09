@@ -4,8 +4,8 @@
 require 'seeds_helper'
 
 
-offset = 23096
-number_of_users = 2000
+offset = 0
+number_of_users = 23096
 
 
 def power_law(min,max,n)
