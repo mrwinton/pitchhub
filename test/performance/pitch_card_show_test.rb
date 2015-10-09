@@ -28,11 +28,8 @@ class PitchCardShowTest < ActionDispatch::PerformanceTest
   end
 
   test "PitchCardShowPage" do
-
-    pitch_card = PitchCard.first
-
+    pitch_card = PitchCard.skip(rand(2000)).first
     pitch_card_path = pitch_card_path(pitch_card)
-
     get pitch_card_path
   end
 end
