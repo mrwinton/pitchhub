@@ -92,7 +92,7 @@ test:
     default:
       database: pitchhub_test
       hosts:
-        - localhost:27017
+        -  mongodb://michael:Composed.fireball.27@lighthouse.5.mongolayer.com:10139,lighthouse.4.mongolayer.com:10139/secret_keeper?replicaSet=set-561877ae03aba7f841000a47
       options:
         read: primary
         # In the test environment we lower the retries and retry interval to
