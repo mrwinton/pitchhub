@@ -21,7 +21,7 @@ class SeedsHelper
   end
 
   def self.new_user(email, first_name, last_name)
-    User.create!(:email => email, :password => 'password123', :first_name => first_name, :last_name => last_name)
+    User.create!(:email => email, :password => 'password123', :first_name => first_name, :last_name => last_name, :access_code => 'PITCH2015')
   end
 
   def self.new_pcard(user, cdat, val, chall, enab, solv, facil, surv, img)

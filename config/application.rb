@@ -34,6 +34,7 @@ module Pitchhub
     config.autoload_paths << "#{Rails.root}/app/models/disclosure_scopes"
     config.autoload_paths << "#{Rails.root}/app/models/groups"
     config.autoload_paths << "#{Rails.root}/app/validators"
+    config.autoload_paths << "#{Rails.root}/app/db"
 
     config.web_console.whitelisted_ips = '10.0.2.2'
 

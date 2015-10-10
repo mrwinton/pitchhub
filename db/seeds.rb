@@ -3,8 +3,8 @@
 
 require 'seeds_helper'
 
-offset = 24069
-number_of_users = 6000
+offset = 0
+number_of_users = 2
 
 def power_law(min,max,n)
   max += 1
@@ -24,18 +24,18 @@ if Rails.env.test?
   # DatabaseCleaner.strategy = :truncation
   # DatabaseCleaner.clean
   # puts "Database cleaning successful"
-  # puts "----------------------------------------------------------------"
-  # puts "Will seed " + number_of_users.to_s + " users..."
-  # puts "----------------------------------------------------------------"
-  # puts "Seeding users"
-  #
-  # number_of_users.times do |n|
-  #   SeedsHelper.new_user(n.to_s + Faker::Internet.email, Faker::Name.first_name, Faker::Name.last_name)
-  #   n = n+1
-  #   puts "Seeded user[" + n.to_s + "]"
-  # end
-  #
-  # puts number_of_users.to_s + " users seeded"
+  puts "----------------------------------------------------------------"
+  puts "Will seed " + number_of_users.to_s + " users..."
+  puts "----------------------------------------------------------------"
+  puts "Seeding users"
+
+  number_of_users.times do |n|
+    SeedsHelper.new_user(n.to_s + Faker::Internet.email, Faker::Name.first_name, Faker::Name.last_name)
+    n = n+1
+    puts "Seeded user[" + n.to_s + "]"
+  end
+
+  puts number_of_users.to_s + " users seeded"
   puts "----------------------------------------------------------------"
   puts "Seeding Pitch Cards for each user"
   puts "----------------------------------------------------------------"
