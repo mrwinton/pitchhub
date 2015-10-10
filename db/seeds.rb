@@ -4,8 +4,8 @@
 require 'seeds_helper'
 
 
-offset = 23096
-number_of_users = 2000
+offset = 24069
+number_of_users = 6000
 
 
 def power_law(min,max,n)
@@ -44,7 +44,7 @@ if Rails.env.test?
   index = 0
 
   start_time = Time.now
-  end_time = start_time + 1.hours
+  end_time = start_time + 6.hours
 
   User.no_timeout.skip(offset).each do |user|
     puts "User[" + index.to_s + "] seeding"

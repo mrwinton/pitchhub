@@ -121,6 +121,13 @@ module SecretSharingController
 
   def get_pitch_cards_encrypted(user, page)
 
+    pitch_cards_shares_array = []
+
+    SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.each { |db|
+      # pitch_cards_shares_array << PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
+      pitch_cards_shares_array << PitchCard.with(session: db[:name]).content_scoped_for(user).desc(:_id).page( page ).to_a
+    }
+
     db = SecretSharingHelper.databases.reject{ |db| db[:type] == "sql" }.first
 
     # PitchCard.with(database: db[:name]).content_scoped_for(user).desc(:_id).page( page )
@@ -163,7 +170,7 @@ module SecretSharingController
 
         matching_shares = other_shares_array.select{ |other_share| share.id == other_share.id }
 
-        if matching_shares.size == 0
+        if matching_shares.size == 1
           matching_share = matching_shares.first
           pitch_card_shares << matching_share
         else
@@ -172,13 +179,13 @@ module SecretSharingController
 
       }
 
-      if pitch_card_shares.size > SecretSharingHelper.threshold
+      if pitch_card_shares.size >= SecretSharingHelper.threshold
 
         discourse = SecretSharingHelper.decrypt_model(PitchCard, pitch_card_shares)
 
         pitch_cards_secrets_array << discourse
       else
-        put "not enough shares"
+        # put "not enough shares"
       end
 
     }

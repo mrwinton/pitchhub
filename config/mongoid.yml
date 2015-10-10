@@ -34,10 +34,10 @@ test:
         - localhost:27017
       options:
     secret_keeper_1:
-      uri: mongodb://michael:Composed.fireball.27@lighthouse.5.mongolayer.com:10122,lighthouse.4.mongolayer.com:10122/secret_keeper_1?replicaSet=set-56105b5dc38ec3daf10015c8
+      uri: mongodb://michael:Composed.fireball.27@c122.lighthouse.4.mongolayer.com:10122,lighthouse.5.mongolayer.com:10122,lighthouse.4.mongolayer.com:10122/secret_keeper_1?replicaSet=set-56105b5dc38ec3daf10015c8
       options:
     secret_keeper_2:
-      uri: mongodb://michael:Composed.fireball.27@lighthouse.5.mongolayer.com:10123,lighthouse.4.mongolayer.com:10123/secret_keeper_2?replicaSet=set-56105e6bb59b798d0500162c
+      uri: mongodb://michael:Composed.fireball.27@c123.lighthouse.4.mongolayer.com:10123,lighthouse.5.mongolayer.com:10123,lighthouse.4.mongolayer.com:10123/secret_keeper_2?replicaSet=set-56105e6bb59b798d0500162c
       options:
 
   # Configure Mongoid specific options. (optional)
