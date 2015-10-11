@@ -4,7 +4,7 @@
 require 'seeds_helper'
 
 
-offset = 24069
+offset = 32069
 number_of_users = 6000
 
 

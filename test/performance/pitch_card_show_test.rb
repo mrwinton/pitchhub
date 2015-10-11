@@ -9,7 +9,7 @@ class PitchCardShowTest < ActionDispatch::PerformanceTest
   # self.profile_options = { runs: 100, metrics: [:wall_time, :memory],
   #                          output: 'tmp/performance/100', formats: [:flat] }
   #
-  self.profile_options = { runs: 10, metrics: [:wall_time, :memory],
+  self.profile_options = { runs: 1000, metrics: [:wall_time, :memory],
                            output: 'tmp/performance/1000', formats: [:flat] }
   #
   # self.profile_options = { runs: 10000, metrics: [:wall_time, :memory],
