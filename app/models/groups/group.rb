@@ -9,7 +9,7 @@ class Group
   field :name,    type: String
 
   # The operation to be applied on this group
-  enum :operation, [:include, :exclude]
+  enum :operation, [:inc, :exc]
 
 #   TODO get base from which to include/exclude members
 
