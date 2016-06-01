@@ -6,6 +6,17 @@
   color: $color_pitch_secondary_text;
 }
 
+.subtle{
+  font-size: small;
+  color: $color_pitch_secondary_text;
+  padding-bottom: 5px;
+}
+
+.viewers-well{
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 .requires-pitch-point{
   position: absolute;
   right: 0;

@@ -24,6 +24,20 @@
 			  <%= link_to 'Mark Active', activate_pitch_card_path(@pitch_card), :method => :post, class: "btn btn-primary"  %>
 		  <% end %>
 		</div>
+		<br>
+		<div class="pitch-card-actions text-center">
+			<a class="subtle" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			  toggle viewers
+			</a>
+		  	<br>
+			<div class="collapse" id="collapseExample">
+			  <div class="well viewers-well">
+				<% @pitch_card.viewers.each do |viewer| %>
+					<span><%= viewer.first_name + " " + viewer.last_name %></span><br>
+				<% end %>
+			  </div>
+			</div>
+		</div>
 	<% end %>
 
 	<br/>
