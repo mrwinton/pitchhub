@@ -1,0 +1,9 @@
+<%= @user %>,
+
+A new suggestion was posted on your pitch card:
+  
+  <%= @comment.content %>
+
+To reply to this suggestion, please have a look at the pitch card at:
+
+  <%= pitch_card_url(@pitch_card) %>
