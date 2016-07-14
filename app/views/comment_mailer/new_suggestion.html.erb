@@ -1,0 +1,13 @@
+<p>
+  <%= @user %>,
+</p>
+<p>
+  A new suggestion was posted on your pitch card:
+</p>
+<blockquote>
+  <em><%= @comment.content %></em>
+</blockquote>
+<p>
+  To reply to this suggestion, please have a look at the
+  <%= link_to "pitch card", @pitch_card %>.
+</p>

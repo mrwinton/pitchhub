@@ -1,6 +1,16 @@
 <div class="block block-bordered pitch-card">
   <%= hidden_field_tag 'pitch-card-id', @pitch_card._id %>
 
+  <!-- Update pitch card -->
+  <% if @pitch_card.initiator == current_user %>  
+    <div align=right>
+      <%= link_to(edit_pitch_card_path) do %>
+        <i class="fa fa-pencil"></i> Update
+      <% end %>
+    </div>
+  <% end %>
+  <!-- END Update pitch card -->
+
   <div class="form-horizontal form-bordered">
 
 	<% if @pitch_card.image.present? %>
@@ -37,6 +47,8 @@
 		<%= render partial: 'pitch_cards/partials/card/pitch_point', locals: { point: point, pitch_point_model: pitch_point_model } %>
 
 	<% end %>
+
+	<%= render partial: 'pitch_cards/partials/discourses/suggestions/new', locals: {} %>
 
 	<% initiator = @pitch_card.initiator %>
 	<% can_see_initiator = can? :see_initiator, @pitch_card %>

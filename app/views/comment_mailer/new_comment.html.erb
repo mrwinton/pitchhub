@@ -1,0 +1,13 @@
+<p>
+  <%= @user %>,
+</p>
+<p>
+  A new comment was posted on your suggestion:
+</p>
+<blockquote>
+  <em><%= @comment.comment %></em>
+</blockquote>
+<p>
+  To reply to this comment, please have a look at the
+  <%= link_to "pitch card", @pitch_card %>.
+</p>

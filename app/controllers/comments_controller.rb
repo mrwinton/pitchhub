@@ -63,6 +63,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        CommentMailer.new_comment(@comment).deliver_now
         current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Comment was successfully created.'
         format.html { redirect_to :back, notice: 'Comment was successfully created.' }
@@ -111,9 +112,9 @@ class CommentsController < ApplicationController
     authorize! :manage, @pitch_card
 
     # Inject the initiator scope object
-    @scopes = ApplicationController.helpers.scopes(current_user)
-    @comment.ic_scope = params[:selected_scope_value]
-    @comment.inject_scopes(@scopes)
+    #@scopes = ApplicationController.helpers.scopes(current_user)
+    #@comment.ic_scope = params[:selected_scope_value]
+    #@comment.inject_scopes(@scopes)
 
     respond_to do |format|
       if @comment.save

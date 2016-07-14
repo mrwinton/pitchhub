@@ -1,0 +1,66 @@
+<div class="media">
+  <div class="media-body">
+	<%= form_for(@suggestion, :url=>new_pitch_card_suggestion_path(@pitch_card), id: "modal-form", method: "get", data: { toggle: "modal", target: "#ajax-modal" }) do |f| %>
+		<div class="form-group form-actions">
+
+		    <% pitch_points = @pitch_card.pitch_points.reject{|p| not p.selected} %>
+	  	    
+		    <%= f.select(:pitch_point_name, { :class => 'select-pitch_point'}) do %>
+			  <% options_for_select( pitch_points, pitch_points ).each do |p| %>
+				  <%= p %>
+			  <% end %>
+		    <% end %>
+
+		</div>
+		<%= text_area_tag "content", "", class: "form-control comment-text-area", placeholder: "Your suggestion...", maxlength: DiscoursesHelper.comment_max_length %>
+		<div style="display: none">
+		  <%= text_field_tag "original-content", "" %>
+		</div>
+		<%= f.button(value: "nested", type: 'submit', class: "btn btn-xs btn-primary modal-submit pull-right") do %>	
+			<i class="fa fa-pencil"></i> Suggest
+		<% end %>
+		<!-- <div class="form-group form-actions">
+
+		  <% identity_scopes = scopes(current_user, :except => ["initiator"]) %>
+		  <% content_scopes = scopes(current_user, :except => ["initiator"]) %>
+		  <% identity_scope = @suggestion.identity_scope.present? ? @suggestion.identity_scope : nil %>
+		  <% content_scope = @suggestion.content_scope.present? ? @suggestion.content_scope : nil %>
+
+		  <div class="col-xs-4">
+		    <label>show my face to</label>
+		    <%= f.select(:i_scope, { :class => 'select-scope'}) do %>
+			  <% options_for_select( identity_scopes, identity_scope ).each do |i| %>
+				  <%= i %>
+			  <% end %>
+		    <% end %>
+
+		    <% if @suggestion.errors[:identity_scope].any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= @suggestion.errors.full_messages_for(:identity_scope).to_sentence %>
+			  </span>
+		    <% end %>
+
+		  </div>
+
+		  <div class="col-xs-5">
+
+		  <label>show this suggestion to</label>
+		    <%= f.select(:c_scope, { :class => 'select-scope'}) do %>
+			  <% options_for_select( content_scopes, content_scope ).each do |c| %>
+				  <%= c %>
+			  <% end %>
+		    <% end %>
+
+		    <% if @suggestion.errors[:content_scope].any? %>
+			  <br/>
+			  <span class="label label-danger">
+				<%= @suggestion.errors.full_messages_for(:content_scope).to_sentence %>
+			  </span>
+		    <% end %>
+
+		  </div>
+		</div> -->
+	<% end %>
+  </div>
+</div>

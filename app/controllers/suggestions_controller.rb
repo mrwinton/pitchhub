@@ -46,6 +46,7 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       if @suggestion.save
+        CommentMailer.new_suggestion(@suggestion).deliver_now
         current_user.collab_pitch_cards << @pitch_card
         flash.now[:notice] = 'Suggestion was successfully created.'
         format.html { redirect_to :back, notice: 'Suggestion was successfully created.' }
